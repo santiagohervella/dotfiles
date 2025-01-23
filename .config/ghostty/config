@@ -1,0 +1,34 @@
+# Remove macOS window decorations, aka the traffic light bar
+window-decoration = false
+
+window-padding-color = background
+
+# Not a fan of font ligatures
+font-feature = -liga
+font-feature = -calt
+font-feature = -dlig
+window-padding-y = 0
+adjust-cell-height = 9
+
+theme = iTerm2 Default
+
+macos-icon = custom-style
+macos-icon-ghost-color = purple
+macos-icon-screen-color = purple,yellow
+macos-icon-frame = plastic
+
+cursor-style = block
+# This is needed for the block cursor to work
+shell-integration-features = no-cursor
+
+mouse-hide-while-typing = true
+
+# Don't ask me if I'm sure I want to quit the terminal when there are running processes
+confirm-close-surface = false
+
+# Enable these lines if you want to play around with transparency again in the future
+# background-opacity = 0.6
+# background-blur-radius = 20
+
+window-colorspace = display-p3
+

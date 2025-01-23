@@ -1,0 +1,37 @@
+# Of course, update [user] if on a work machine
+[user]
+	name = santiagohervella
+	email = 57931354+santiagohervella@users.noreply.github.com
+[core]
+  editor = nvim
+  excludesfile = ~/.gitignore
+  autocrlf = input
+[push]
+  autoSetupRemote = true
+
+
+# Basically everything from here to the end is experimental and is mostly taken from here:
+# https://github.com/SeniorMars/dotfiles/blob/master/.config/git/config
+# Which, it turn is the config that I found by watching this video explaining it:
+# https://www.youtube.com/watch?v=57x4ZzzCr2Y
+# [core]
+#   pager = delta
+#   editor = nvim
+# [delta]
+#   features = side-by-side line-numbers decorations
+# 	navigate = true
+# [delta "decorations"]
+# 	commit-decoration-style = bold yellow box ul
+# 	file-style = bold yellow ul
+# 	file-decoration-style = none
+# [diff]
+# 	algorithm = patience
+# 	compactionHeuristic = true
+# 	tool = nvimdiff
+# [difftool "nvimdiff"]
+# 	cmd = nvim -d \"$LOCAL\" \"$REMOTE\" -c \"wincmd w\" -c \"wincmd L\"
+# [merge]
+# 	tool = nvimdiff4
+# 	prompt = false
+# [mergetool "nvimdiff4"]
+# 	cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'

@@ -1,0 +1,66 @@
+{
+  "profiles": [
+    {
+      "complex_modifications": {
+        "rules": [
+          {
+            "description": "Space bar → Left Control (⌃) (Space bar if alone)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com.apple.dt.Xcode",
+                      "^com.googlecode.iterm2",
+                      "^com.jetbrains.intellij.ce",
+                      "^com.jetbrains.pycharm",
+                      "^com.microsoft.VSCode",
+                      "^com.mitchellh.ghostty",
+                      "^com.neovide.neovide",
+                      "^dev.zed.Zed",
+                      "^net.kovidgoyal.kitty",
+                      "^org.alacritty0.5"
+                    ],
+                    "type": "frontmost_application_if"
+                  },
+                  {
+                    "identifiers": [
+                      {
+                        "product_id": 24866,
+                        "vendor_id": 7504
+                      }
+                    ],
+                    "type": "device_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "spacebar",
+                  "modifiers": {
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "left_control"
+                  }
+                ],
+                "to_if_alone": [
+                  {
+                    "key_code": "spacebar"
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          }
+        ]
+      },
+      "name": "Default profile",
+      "selected": true,
+      "virtual_hid_keyboard": {
+        "country_code": 0,
+        "keyboard_type_v2": "ansi"
+      }
+    }
+  ]
+}

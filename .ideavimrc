@@ -1,0 +1,66 @@
+" From the ideavim documentation: Mappings to <Action> don't work with noremap. So anywhere I would use that I just use map
+" https://github.com/JetBrains/ideavim#executing-actions
+
+let mapleader = " "
+
+" When you have made a change and want to re-source this inside intellij, you can do so like this -> :source ~/.ideavimrc
+set number
+set rnu
+
+" Normal
+" Better window navigation
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+
+" Center when using ctrl d and u
+noremap <C-u> <C-u>zz
+noremap <C-d> <C-d>zz
+
+" Control-C remap to escape
+map <C-c> <Esc>
+
+" Navigate
+map <S-l> <action>(NextTab)
+map <S-h> <action>(PreviousTab)
+map <leader>bd <action>(CloseEditor)
+map <leader>e <action>(SelectIn)
+
+" Better paste
+vnoremap p \"_dP
+" Lets you copy paste from the system and PyCharm clipboards.
+set clipboard=unnamed
+set clipboard+=ideaput
+
+" Visual
+" Stay in indent mode
+vnoremap < <gv
+vnoremap > >gv
+
+" null-ls style handlers
+map gl <action>(ShowErrorDescription)
+map gr <action>(FindUsages)
+map <leader>la <action>(ShowIntentionActions)
+map <leader>lf <action>(Javascript.Linters.EsLint.Fix)<action>(ReformatCode)
+
+" Telescope style handlers
+map <leader>ff <action>(SearchEverywhere)
+map <leader>ft <action>(FindInPath)
+
+" Comment
+map <leader>/ <action>(CommentByLineComment)
+
+" Cusorline. This doesn't seem to do anything unfortunately
+" set cursorline
+
+" This is an attempt at only having relative line numbers enabled when in a file
+" The idea being that when you navigate away that file gets set back to regular line numbers
+" I got this snippet from here: https://jeffkreeftmeijer.com/vim-number/
+":augroup numbertoggle
+":  autocmd!
+":  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
+":  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
+":augroup END
+
+set scrolloff=999         " the cursor is centered vertically if possible
