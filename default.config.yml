@@ -45,7 +45,6 @@ common_homebrew_cask_apps:
   - uhk-agent
   - vlc
   - zed
-  - zoom
 
   # Terminals, gotta catch 'em all!
   - alacritty
@@ -61,6 +60,7 @@ personal_homebrew_cask_apps:
   - tor-browser
   - transnomino
   - transmission
+  - zoom
 
 work_homebrew_cask_apps:
   - beekeeper-studio
