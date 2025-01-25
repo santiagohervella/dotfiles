@@ -31,6 +31,7 @@ common_hombrew_cask_apps:
   - 1password
   - alt-tab
   - arc
+  - grandperspective
   - hammerspoon
   - handbrake
   - istat-menus # I'd need to buy a license?
@@ -41,6 +42,7 @@ common_hombrew_cask_apps:
   - postman
   - raycast
   - tailscale
+  - uhk-agent
   - vlc
   - zed
   - zoom
@@ -56,6 +58,7 @@ personal_homebrew_cask_apps:
   - easyfind
   - little-snitch@5
   - mullvadvpn
+  - tor-browser
   - transnomino
   - transmission
 
@@ -87,9 +90,6 @@ mas_installed_apps:
   # - { id: 1088779979, name: "Mini Calendar (1.5.8)" }
   # - { id: 6449708232, name: "Linkeeper (2.0.1)" }
   # - { id: 6498891868, name: "Persona Webcam (1.3.1)" }
-
-mas_email: ""
-mas_password: ""
 
 osx_script: "~/.macos.sh --no-restart"
 osx_personal_script: "~/.macos-personal-only.sh --no-restart"

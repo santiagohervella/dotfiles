@@ -1,12 +1,12 @@
 ---
-- name: Bootstrap macOS
+- name: Setup macOS machine
   hosts: localhost
 
   # These variables get loaded first, before pre_tasks is run
   vars_files:
     - default.config.yml
 
-  # Variables get overridden by any in config.yml. This iterates through each variable in
+  # Variables get overridden by any in config.yml
   pre_tasks:
     - name: Include playbook configuration.
       include_vars: "{{ item }}"
@@ -19,7 +19,7 @@
     - role: geerlingguy.mac.homebrew
       tags: ["homebrew"]
     - role: geerlingguy.mac.mas
-      when: mas_installed_apps or mas_installed_app_ids
+      when: mas_installed_apps
       tags: ["mas"]
 
   tasks:
