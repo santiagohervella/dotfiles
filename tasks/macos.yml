@@ -1,0 +1,22 @@
+---
+- name: Run .macos.sh to set up preferences
+  command: "{{ osx_script }}"
+  changed_when: false
+  when: configure_osx
+  tags: ["osx"]
+
+- name: >
+    Run .macos-personal-only.sh to set up preferences specific to a 
+    personal machine
+  command: "{{ osx_personal_script }}"
+  changed_when: false
+  when: configure_osx and machine_type == "personal"
+  tags: ["osx"]
+
+- name: >
+    Run .macos-work-only.sh to set up preferences specific to a 
+    work machine
+  command: "{{ osx_work_script }}"
+  changed_when: false
+  when: configure_osx and machine_type == "work"
+  tags: ["osx"]

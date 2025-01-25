@@ -2,3 +2,10 @@
 *.LSOverride
 Thumbs.db
 .bundle
+roles*
+
+# TODO: Clean up. Not sure if I need these
+*.vagrant
+*.retry
+coast-files/
+default-diffs/
