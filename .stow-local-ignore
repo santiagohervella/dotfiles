@@ -14,7 +14,7 @@ venv
 ^/README.md
 ^/bootstrap-.*.yml
 ^/main.yml
-^/\.macos-.*.sh
+^/\.macos.*.sh
 ^/requirements.yml
 ^/ansible.cfg
 ^/install

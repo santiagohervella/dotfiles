@@ -31,10 +31,6 @@
       when: configure_osx
       tags: ["osx"]
 
-    - import_tasks: tasks/stow.yml
-      when: configure_dotfiles
-      tags: ["dotfiles"]
-
     - import_tasks: tasks/extra-packages.yml
       tags: ["extra-packages"]
 
