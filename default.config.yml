@@ -67,14 +67,11 @@ work_homebrew_cask_apps:
   - docker
   - sequel-ace # Beekeeper competitor, let's see if I like it
 
-homebrew_cask_apps: >
-  {% if machine_type == 'personal' %}
-    {{ common_homebrew_cask_apps + personal_homebrew_cask_apps }}
-  {% elif machine_type == 'work' %}
-    {{ common_homebrew_cask_apps + work_homebrew_cask_apps }}
-  {% else %}
-    {{ common_homebrew_cask_apps }}
-  {% endif %}
+homebrew_cask_apps: >-
+  {{
+    common_homebrew_cask_apps +
+    (personal_homebrew_cask_apps if machine_type == 'personal' else work_homebrew_cask_apps)
+  }}
 
 # See `geerlingguy.mac.mas` role documentation for usage instructions.
 # https://github.com/geerlingguy/ansible-collection-mac/blob/master/roles/mas/README.md
