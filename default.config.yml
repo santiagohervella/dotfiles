@@ -27,7 +27,7 @@ homebrew_taps: []
 homebrew_cask_appdir: /Applications
 
 # List of apps common to all machine types
-common_hombrew_cask_apps:
+common_homebrew_cask_apps:
   - 1password
   - alt-tab
   - arc
