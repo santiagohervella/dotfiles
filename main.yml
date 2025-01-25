@@ -1,6 +1,6 @@
 ---
 - name: Setup macOS machine
-  hosts: localhost
+  hosts: all
 
   # These variables get loaded first, before pre_tasks is run
   vars_files:

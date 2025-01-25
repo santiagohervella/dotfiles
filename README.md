@@ -20,6 +20,14 @@ cd dotfiles
 ./install
 ```
 
+## Add Ansible to PATH
+
+Ansible and it's goodies get installed inside Python's bin directory. PATH will get set up with `.zshrc` once we run the playbook. We just need to add Python's bin to the PATH for our current session so that we can call `ansible`.
+
+```sh
+export PATH="$HOME/Library/Python/3.9/bin:$PATH"
+```
+
 # Configure playbook
 
 Change the `machine_type` variable in `./default.config.yml` to be 'personal' or 'work'

@@ -5,8 +5,6 @@ set -e
 sudo pip3 install --upgrade pip
 pip3 install ansible
 
-# ansible and it's goodies get installed inside python's bin directory
-export PATH="$HOME/Library/Python/3.9/bin"
 
 export PATH="$PATH:~/.local/bin"
 ansible-galaxy install -r requirements.yml
