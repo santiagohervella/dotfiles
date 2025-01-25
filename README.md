@@ -7,6 +7,7 @@
 # Clone the repository
 
 ```sh
+mkdir ~/Documents/projects
 cd ~/Documents/projects
 git clone git@github.com:santiagohervella/dotfiles.git
 cd dotfiles
