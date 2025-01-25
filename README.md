@@ -14,18 +14,21 @@ git clone https://github.com/santiagohervella/dotfiles.git
 cd dotfiles
 ```
 
-# Install Ansible
+# Install ansible
 
 ```sh
 ./install
 ```
 
-## Add Ansible to PATH
+## Add ansible and homebrew to PATH
 
 Ansible and it's goodies get installed inside Python's bin directory. PATH will get set up with `.zshrc` once we run the playbook. We just need to add Python's bin to the PATH for our current session so that we can call `ansible`.
 
+Same deal with homebrew.
+
 ```sh
 export PATH="$HOME/Library/Python/3.9/bin:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"
 ```
 
 # Configure playbook
