@@ -19,6 +19,10 @@ cd dotfiles
 ./install
 ```
 
+# Configure playbook
+
+Change the `machine_type` variable in `./default.config.yml` to be 'personal' or 'work'
+
 # Run playbook
 
 ```sh
