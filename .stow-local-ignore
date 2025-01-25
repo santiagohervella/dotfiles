@@ -18,6 +18,7 @@ venv
 ^/requirements.yml
 ^/ansible.cfg
 ^/install
+^/inventory
 
 ^/\.stowrc
 

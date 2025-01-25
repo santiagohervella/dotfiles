@@ -35,8 +35,8 @@ Change the `machine_type` variable in `./default.config.yml` to be 'personal' or
 # Run playbook
 
 ```sh
-# Bootstrap macOS
-ansible-playbook main.yml
+# Set up macOS
+ansible-playbook main.yml --ask-become-pass
 ```
 
 # Remaining manual steps
