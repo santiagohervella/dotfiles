@@ -399,9 +399,6 @@ osascript -e 'tell application "System Events" to make login item at end with pr
 # Menu Bar Calendar
 osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Menu Bar Calendar.app", hidden:true}' > /dev/null
 
-# Launch any apps that aren't login items but need to be running
-open -a "Karabiner-Elements"
-
 ###############################################################################
 # Kill/restart affected applications                                          #
 ###############################################################################
