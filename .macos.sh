@@ -340,6 +340,17 @@ defaults write com.apple.TextEdit RichText -int 0
 # Change it to be in ~/.config/
 defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
 
+# Found these preferences here:
+# https://github.com/sbusso/nixconfig/blob/main/home/programs/hammerspoon/default.nix
+defaults write org.hammerspoon.Hammerspoon HSAutoLoadExtensions -bool true
+defaults write org.hammerspoon.Hammerspoon HSConsoleDarkModeKey -bool true
+defaults write org.hammerspoon.Hammerspoon HSPreferencesDarkModeKey -bool true
+defaults write org.hammerspoon.Hammerspoon MJShowDockIconKey -bool false
+defaults write org.hammerspoon.Hammerspoon MJShowMenuIconKey -bool true
+defaults write org.hammerspoon.Hammerspoon SUAutomaticallyUpdate -bool true
+defaults write org.hammerspoon.Hammerspoon SUEnableAutomaticChecks -bool true
+defaults write org.hammerspoon.Hammerspoon SUEnableAutomaticChecks -bool true
+
 ###############################################################################
 # iTerm2
 ###############################################################################
@@ -366,6 +377,8 @@ defaults write com.omnigroup.OmniFocus4 NSUserKeyEquivalents -dict-add "Search E
 if [ -f "$HOME/Library/Preferences/kdiff3rc" ]; then
   rm "$HOME/Library/Preferences/kdiff3rc"
 fi
+# For reference, this is how I found out the correct path:
+# https://github.com/dracula/kdiff3/issues/4#issuecomment-1501010105
 ln -s $HOME/.config/kdiff3/kdiff3rc $HOME/Library/Preferences/kdiff3rc
 
 ###############################################################################
@@ -392,7 +405,7 @@ osascript -e 'tell application "System Events" to make login item at end with pr
 
 # Restart affected applications if `--no-restart` flag is not present.
 if [[ ! ($* == *--no-restart*) ]]; then
-  for app in "cfprefsd" "Dock" "Finder" "SystemUIServer" "Terminal" "Activity Monitor" "TextEdit" "iTerm2"; do
+  for app in "cfprefsd" "Dock" "Finder" "SystemUIServer" "Terminal" "Activity Monitor" "TextEdit" "iTerm2" "Hammerspoon"; do
     killall "${app}" > /dev/null 2>&1
   done
 fi

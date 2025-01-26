@@ -58,6 +58,19 @@ ansible-playbook main.yml --ask-become-pass
   - iMovie
   - Pages
 - Test screen for dead pixels using [Test My Screen](https://testmyscreen.com/)
+- Give apps the proper permissions:
+  - Accessibility
+    - Hammerspoon
+    - Keyboard Maestro Engine
+    - Raycast
+  - Full Disk Access
+    - Alacritty
+    - Ghostty
+    - Kitty
+    - Terminal
+    - WezTerm
+    - Zed
+    - iTerm2
 
 ## On personal Macs
 
@@ -91,3 +104,4 @@ I'll try to roughly walk you through the flow.
 
 - iTerm2 profiles
 - Maybe make the kdiff3 config symlinking an ansible task rather than doing it in the `.macos.sh` script
+- Keyboard Maestro macros
