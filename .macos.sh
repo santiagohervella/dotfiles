@@ -41,6 +41,9 @@ osascript -e 'tell application "System Preferences" to quit'
 # General UI/UX                                                               #
 ###############################################################################
 
+# Enable Dark Mode
+osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to true'
+
 # Save to disk (not to iCloud) by default
 defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 

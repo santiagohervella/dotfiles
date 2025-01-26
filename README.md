@@ -77,6 +77,7 @@ ansible-playbook main.yml --ask-become-pass
     - WezTerm
     - Zed
     - iTerm2
+    - karabiner_grabber
   - Input Monitoring
     - Karabiner-EventViewer
     - karabiner_grabber
