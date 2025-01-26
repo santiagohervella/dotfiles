@@ -376,6 +376,16 @@ defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
 # Setup shortcut to Search Everything using the menu bar command to shift+command+e
 defaults write com.omnigroup.OmniFocus4 NSUserKeyEquivalents -dict-add "Search Everything" -string "@$e"
 
+
+###############################################################################
+# Keyboard Maestro
+###############################################################################
+
+# Don't show the welcome window
+defaults read com.stairways.keyboardmaestro.editor DisplayWelcomeWindow -bool false
+# Don't show the Keyboard Maestro applications palette that shows up by default
+defaults write com.stairways.keyboardmaestro.engine ShowApplicationsPalette -bool false
+
 ###############################################################################
 # kdiff3
 ###############################################################################
