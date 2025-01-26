@@ -59,6 +59,10 @@ ansible-playbook main.yml --ask-become-pass
   - Pages
 - Test screen for dead pixels using [Test My Screen](https://testmyscreen.com/)
 - Launch Karabiner and follow all the instructions to let it set up
+- Keyboard Maestro
+  - Delete all default macros from Keyboard Maestro
+  - Navigate to `~/.config/keyboard-maestro` and double click on the appropriate macro library. In the popup window, click "Insert" to import the macros
+  - Fill in all the sensitive information in each macro that has "FILL ME IN" anywhere
 - Give apps the proper permissions:
   - Accessibility
     - AltTab
@@ -90,6 +94,7 @@ ansible-playbook main.yml --ask-become-pass
     - Arc
     - Keyboard Maestro
     - Raycast
+    - Slack
     - zoom.us
 
 ## On personal Macs
@@ -127,7 +132,9 @@ TODO: Write this explanation
 ## Required
 
 - Figure out bartender / menu bar spacing situation
-- Keyboard Maestro macros
+- tmux
+- nvim
+- Browser setup
 
 ## Improvements
 

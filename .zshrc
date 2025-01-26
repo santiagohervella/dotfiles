@@ -9,10 +9,6 @@ export VISUAL="$EDITOR"
 # This is so programs don't look for config files in application support
 export XDG_CONFIG_HOME="$HOME/.config"
 
-# https://github.com/jimeh/tmuxifier
-export PATH="$HOME/.config/tmuxifier/bin:$PATH"
-eval "$(tmuxifier init -)"
-
 # Everything we want to use globally through Python needs to be in the PATH
 # ansible and friends primarily
 export PATH="$HOME/Library/Python/3.9/bin:$PATH"

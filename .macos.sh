@@ -419,7 +419,7 @@ osascript -e 'tell application "System Events" to make login item at end with pr
 
 # Restart affected applications if `--no-restart` flag is not present.
 if [[ ! ($* == *--no-restart*) ]]; then
-  for app in "cfprefsd" "Dock" "Finder" "SystemUIServer" "Terminal" "Activity Monitor" "TextEdit" "iTerm2" "Hammerspoon"; do
+  for app in "cfprefsd" "Dock" "Finder" "SystemUIServer" "Terminal" "Activity Monitor" "TextEdit" "iTerm2" "Hammerspoon" "Keyboard Maestro"; do
     killall "${app}" > /dev/null 2>&1
   done
 fi
