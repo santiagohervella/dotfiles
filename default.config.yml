@@ -6,14 +6,14 @@ configure_osx: true
 machine_type: "personal"
 
 homebrew_installed_packages:
-  # - ansible # Installed via Pip.
   - bat
   - csvlens
   - dockutil
   - duti
-  - git
-  - gh
   - ffmpeg
+  - fzf
+  - gh
+  - git
   - jq
   - lazygit
   - neovim
