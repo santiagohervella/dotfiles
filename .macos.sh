@@ -42,6 +42,7 @@ osascript -e 'tell application "System Preferences" to quit'
 ###############################################################################
 
 # Enable Dark Mode
+# https://brettterpstra.com/2018/09/26/shell-tricks-toggling-dark-mode-from-terminal/
 osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to true'
 
 # Save to disk (not to iCloud) by default

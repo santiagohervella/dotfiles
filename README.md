@@ -120,9 +120,16 @@ I'll try to roughly walk you through the flow.
 
 #### Running the ./install script
 
-# TODO
+TODO: Write this explanation
 
-- iTerm2 profiles
-- Maybe make the kdiff3 config symlinking an ansible task rather than doing it in the `.macos.sh` script
+# TODOs
+
+## Required
+
+- Figure out bartender / menu bar spacing situation
 - Keyboard Maestro macros
+
+## Improvements
+
+- Maybe make the kdiff3 config symlinking an ansible task rather than doing it in the `.macos.sh` script
 - Caps Lock -> Control could be done through Karabiner instead of System Settings to remove one manual step
