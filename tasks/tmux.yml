@@ -1,0 +1,21 @@
+---
+- name: Ensure tmux is installed on macOS
+  community.general.homebrew:
+    name:
+      - tmux
+    state: present
+
+- name: Ensure ~/.config/tmux/plugins directory exists
+  file:
+    path: "{{ ansible_env.HOME }}/.config/tmux/plugins"
+    state: directory
+    mode: "0755"
+
+- name: Clone TPM repository
+  git:
+    repo: "https://github.com/tmux-plugins/tpm.git"
+    dest: "{{ ansible_env.HOME }}/.config/tmux/plugins/tpm"
+    update: yes
+
+- name: Install TPM plugins
+  command: "{{ ansible_env.HOME }}/.config/tmux/plugins/tpm/bin/install_plugins"

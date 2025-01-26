@@ -31,6 +31,9 @@
       when: configure_osx
       tags: ["osx"]
 
+    - import_tasks: tasks/tmux.yml
+      tags: ["dotfiles"]
+
     - import_tasks: tasks/extra-packages.yml
       tags: ["extra-packages"]
 
