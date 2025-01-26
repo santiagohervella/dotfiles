@@ -344,8 +344,12 @@ defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/i
 # iTerm2
 ###############################################################################
 
-# Don’t display the annoying prompt when quitting iTerm
+# Don’t display the are you sure prompt when quitting iTerm
 defaults write com.googlecode.iterm2 PromptOnQuit -bool false
+
+# Set iTerm2 preferences
+defaults write com.googlecode.iterm2 PrefsCustomFolder -string "~/.config/iterm2"
+defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
 
 ###############################################################################
 # OmniFocuse 4
@@ -353,6 +357,34 @@ defaults write com.googlecode.iterm2 PromptOnQuit -bool false
 
 # Setup shortcut to Search Everything using the menu bar command to shift+command+e
 defaults write com.omnigroup.OmniFocus4 NSUserKeyEquivalents -dict-add "Search Everything" -string "@$e"
+
+###############################################################################
+# kdiff3
+###############################################################################
+
+# Symlink kdiff3 config
+if [ -f "$HOME/Library/Preferences/kdiff3rc" ]; then
+  rm "$HOME/Library/Preferences/kdiff3rc"
+fi
+ln -s $HOME/.config/kdiff3/kdiff3rc $HOME/Library/Preferences/kdiff3rc
+
+###############################################################################
+# Login Items
+###############################################################################
+
+# Hammerspoon
+osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Hammerspoon.app", hidden:true}' > /dev/null
+# Keyboard Maestro Engine
+osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Keyboard Maestro.app/Contents/MacOS/Keyboard Maestro Engine.app", hidden:true}' > /dev/null
+# Raycast
+osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Raycast.app", hidden:true}' > /dev/null
+# Supercharge
+osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Supercharge.app", hidden:true}' > /dev/null
+# Menu Bar Calendar
+osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Menu Bar Calendar.app", hidden:true}' > /dev/null
+
+
+
 
 ###############################################################################
 # Kill/restart affected applications                                          #

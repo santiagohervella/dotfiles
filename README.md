@@ -70,6 +70,7 @@ ansible-playbook main.yml --ask-become-pass
 - Install Logic Pro
 - Install DaisyDisk with `brew install --cask daisydisk`
 - Install [Reeder Classic](https://apps.apple.com/us/app/reeder-classic/id1529448980) from the Mac App Store
+- Add Hyperduck to login items with `osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Hyperduck.app", hidden:true}' > /dev/null`
 
 ## On work Macs
 
@@ -89,3 +90,4 @@ I'll try to roughly walk you through the flow.
 # TODO
 
 - iTerm2 profiles
+- Maybe make the kdiff3 config symlinking an ansible task rather than doing it in the `.macos.sh` script

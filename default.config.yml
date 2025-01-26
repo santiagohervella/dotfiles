@@ -32,6 +32,7 @@ common_homebrew_cask_apps:
   - 1password
   - alt-tab
   - arc
+  - font-meslo-lg-nerd-font # Not sure why a font is a cask, but ok
   - grandperspective
   - hammerspoon
   - handbrake
