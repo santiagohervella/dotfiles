@@ -125,3 +125,4 @@ I'll try to roughly walk you through the flow.
 - iTerm2 profiles
 - Maybe make the kdiff3 config symlinking an ansible task rather than doing it in the `.macos.sh` script
 - Keyboard Maestro macros
+- Caps Lock -> Control could be done through Karabiner instead of System Settings to remove one manual step
