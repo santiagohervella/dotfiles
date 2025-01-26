@@ -63,9 +63,26 @@ ansible-playbook main.yml --ask-become-pass
   - Delete all default macros from Keyboard Maestro
   - Navigate to `~/.config/keyboard-maestro` and double click on the appropriate macro library. In the popup window, click "Insert" to import the macros
   - Fill in all the sensitive information in each macro that has "FILL ME IN" anywhere
+  - Add the license (stored in 1Password)
+    - Bartender
+      - Right to left (not all apply to all machines. If not, just skip):
+        - System clock should be the analog clock. Find the defaults command for this
+        - Use Mini Calendar to show "Jan 26 5:15:05 PM"
+        - Use Menu Bar Calendar as the icon to click to browse the calendar
+        - System battery with percentage
+        - Wifi
+        - Sound
+        - Bartender `···`
+        - iStat Menus network activity
+        - iStat Menus CPU graph
+        - iStat Menus GPU graph
+        - Backblaze
+        - Mullvad
+      - Anything not mentioned here lives in Bartender
 - Give apps the proper permissions:
   - Accessibility
     - AltTab
+    - Bartender 5
     - Festivitas
     - Hammerspoon
     - Keyboard Maestro
@@ -91,6 +108,7 @@ ansible-playbook main.yml --ask-become-pass
     - zoom.us
   - Screen & System Audio Recording
     - AltTab
+    - Bartender 5
     - Arc
     - Keyboard Maestro
     - Raycast
@@ -131,9 +149,10 @@ TODO: Write this explanation
 
 ## Required
 
-- Figure out bartender / menu bar spacing situation
-- tmux
 - nvim
+- Figure out bartender / menu bar spacing situation
+- Raycast scripts directory
+  - Check to see if the UUID is preserved in the Keyboard Maestro macros
 - Browser setup
 
 ## Improvements

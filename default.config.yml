@@ -11,7 +11,7 @@ homebrew_installed_packages:
   - dockutil
   - duti
   - ffmpeg
-  - fzf
+  - fzf # Used by tmux-sessionizer script
   - gh
   - git
   - jq
@@ -32,13 +32,13 @@ common_homebrew_cask_apps:
   - 1password
   - alt-tab
   - arc
+  - bartender
   - font-meslo-lg-nerd-font # Not sure why a font is a cask, but ok
   - grandperspective
   - hammerspoon
-  - handbrake
   - istat-menus # I'd need to buy a license?
   - karabiner-elements
-  - kdiff3
+  - kdiff3 # Diffing tool I'm trying out
   - keyboard-maestro
   - microsoft-edge
   - obsidian
@@ -59,6 +59,7 @@ common_homebrew_cask_apps:
 
 personal_homebrew_cask_apps:
   - easyfind
+  - handbrake
   - little-snitch@5
   - mullvadvpn
   - tor-browser
@@ -69,6 +70,8 @@ personal_homebrew_cask_apps:
 work_homebrew_cask_apps:
   - beekeeper-studio
   - docker
+  - intellij-idea-ce
+  - pycharm
   - sequel-ace # Beekeeper competitor, let's see if I like it
 
 homebrew_cask_apps: >-
