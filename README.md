@@ -58,7 +58,7 @@ ansible-playbook main.yml --ask-become-pass
   - iMovie
   - Pages
 - Test screen for dead pixels using [Test My Screen](https://testmyscreen.com/)
-- Launch Karabiner to let it set up
+- Follow all the Karabiner instructions to let it set up
 - Give apps the proper permissions:
   - Accessibility
     - AltTab
