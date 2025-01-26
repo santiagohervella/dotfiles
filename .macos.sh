@@ -252,7 +252,10 @@ defaults write com.apple.dock autohide-time-modifier -float 0
 defaults write com.apple.universalaccess reduceTransparency -bool true
 
 # Turn off "Show suggested and recent apps in Dock"
-defaults write com.apple.dock showhidden -bool true
+defaults write com.apple.dock show-recents -bool false
+
+# Make sure hidden apps are not translucent in the dock
+defaults write com.apple.dock showhidden -bool false
 
 # Use dockutil to remove everything from the dock
 dockutil --remove all
