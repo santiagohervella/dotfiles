@@ -58,11 +58,17 @@ ansible-playbook main.yml --ask-become-pass
   - iMovie
   - Pages
 - Test screen for dead pixels using [Test My Screen](https://testmyscreen.com/)
+- Launch Karabiner to let it set up
 - Give apps the proper permissions:
   - Accessibility
+    - AltTab
+    - Festivitas
     - Hammerspoon
+    - Keyboard Maestro
     - Keyboard Maestro Engine
     - Raycast
+    - Supercharge
+    - zoom.us
   - Full Disk Access
     - Alacritty
     - Ghostty
@@ -71,6 +77,19 @@ ansible-playbook main.yml --ask-become-pass
     - WezTerm
     - Zed
     - iTerm2
+  - Input Monitoring
+    - Karabiner-EventViewer
+    - karabiner_grabber
+  - Camera
+    - Arc
+    - Persona Webcam
+    - zoom.us
+  - Screen & System Audio Recording
+    - AltTab
+    - Arc
+    - Keyboard Maestro
+    - Raycast
+    - zoom.us
 
 ## On personal Macs
 

@@ -37,6 +37,7 @@ common_homebrew_cask_apps:
   - hammerspoon
   - handbrake
   - istat-menus # I'd need to buy a license?
+  - karabiner-elements
   - kdiff3
   - keyboard-maestro
   - microsoft-edge
