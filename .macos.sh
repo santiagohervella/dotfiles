@@ -67,6 +67,9 @@ defaults write com.apple.controlcenter "NSStatusItem Visible Battery" -bool true
 # Disable the “Are you sure you want to open this application?” dialog
 defaults write com.apple.LaunchServices LSQuarantine -bool false
 
+# Set the default app for .mp3 files to QuickTime Player instead of Music
+duti -s com.apple.QuickTimePlayerX mp3 all
+
 ###############################################################################
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
 ###############################################################################
@@ -103,6 +106,61 @@ defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
 defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144
 
+# Set the Globe key to do nothing
+defaults write com.apple.HIToolbox AppleFnUsageType -int 0
+
+# Keyboard -> Keyboard shortcuts
+
+# Disable both "Spotlight" keyboard shortcuts
+defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 64 "<dict><key>enabled</key><false/></dict>"
+defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 65 "<dict><key>enabled</key><false/></dict>"
+
+# Disable both "Launchpad & Dock" shortcuts
+defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 160 "<dict><key>enabled</key><false/></dict>"
+defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 52 "<dict><key>enabled</key><false/></dict>"
+
+# Disable all "Mission Control" shortcuts except "Application Windows"
+defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 118 "<dict><key>enabled</key><false/></dict>"
+defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 163 "<dict><key>enabled</key><false/></dict>"
+defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 175 "<dict><key>enabled</key><false/></dict>"
+defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 190 "<dict><key>enabled</key><false/></dict>"
+defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 222 "<dict><key>enabled</key><false/></dict>"
+defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 32 "<dict><key>enabled</key><false/></dict>"
+defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 36 "<dict><key>enabled</key><false/></dict>"
+defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 79 "<dict><key>enabled</key><false/></dict>"
+defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 81 "<dict><key>enabled</key><false/></dict>"
+
+# "Input Sources" shortcuts
+# Disable "Select the previous input source"
+defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 60 "<dict><key>enabled</key><false/></dict>"
+# Set "Select next source in Input menu" to ctrl+option+shift+command+space
+defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 61 "
+  <dict>
+    <key>enabled</key><true/>
+    <key>value</key><dict>
+      <key>type</key><string>standard</string>
+      <key>parameters</key>
+      <array>
+        <integer>32</integer>
+        <integer>49</integer>
+        <integer>1966080</integer>
+      </array>
+    </dict>
+  </dict>
+"
+
+# "App Shortcuts" shortcuts
+# Disable "Show Help menu" under "All Applications"
+defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 98 "<dict><key>enabled</key><false/></dict>"
+
+# For reference:
+# @: Command
+# $: Shift
+# ~: Alt
+# ^: Ctrl
+# Launch System Settings using the global Apple menu with ctrl+option+command+s
+defaults write NSGlobalDomain NSUserKeyEquivalents -dict-add "System Settings..." -string "@~^s"
+ 
 ###############################################################################
 # Screen                                                                      #
 ###############################################################################
@@ -127,8 +185,8 @@ defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Down
 
 # Show icons for hard drives, servers, and removable media on the desktop
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
-defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
-defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
+defaults write com.apple.finder ShowHardDrivesOnDesktop -bool false
+defaults write com.apple.finder ShowMountedServersOnDesktop -bool false
 defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
 
 # Finder: show hidden files by default
@@ -174,7 +232,10 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict \
 # Dock, Dashboard, and hot corners                                            #
 ###############################################################################
 
-# Set the icon size of Dock items
+# Hide the dock
+defaults write com.apple.dock autohide -bool true
+
+# Set the icon size of dock items
 defaults write com.apple.dock tilesize -int 65
 
 # Set delay to show the dock to 0
@@ -188,7 +249,7 @@ defaults write com.apple.dock autohide-time-modifier -float 0
 defaults write com.apple.universalaccess reduceTransparency -bool true
 
 # Turn off "Show suggested and recent apps in Dock"
-defaults write com.apple.dock autohide-time-modifier -bool false
+defaults write com.apple.dock showhidden -bool true
 
 # Use dockutil to remove everything from the dock
 dockutil --remove all
@@ -280,12 +341,26 @@ defaults write com.apple.TextEdit RichText -int 0
 defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
 
 ###############################################################################
+# iTerm2
+###############################################################################
+
+# Don’t display the annoying prompt when quitting iTerm
+defaults write com.googlecode.iterm2 PromptOnQuit -bool false
+
+###############################################################################
+# OmniFocuse 4
+###############################################################################
+
+# Setup shortcut to Search Everything using the menu bar command to shift+command+e
+defaults write com.omnigroup.OmniFocus4 NSUserKeyEquivalents -dict-add "Search Everything" -string "@$e"
+
+###############################################################################
 # Kill/restart affected applications                                          #
 ###############################################################################
 
 # Restart affected applications if `--no-restart` flag is not present.
 if [[ ! ($* == *--no-restart*) ]]; then
-  for app in "cfprefsd" "Dock" "Finder" "SystemUIServer" "Terminal" "Activity Monitor" "TextEdit"; do
+  for app in "cfprefsd" "Dock" "Finder" "SystemUIServer" "Terminal" "Activity Monitor" "TextEdit" "iTerm2"; do
     killall "${app}" > /dev/null 2>&1
   done
 fi

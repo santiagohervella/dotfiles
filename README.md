@@ -46,12 +46,17 @@ ansible-playbook main.yml --ask-become-pass
 
 ## On all Macs
 
+- Set screen resolution. This could probably be done with a script, but since each machine is different, let's keep it manual
+- Set up TouchID if on a MacBook
 - Sign into iCloud
+- Set up Raycast settings by navigating to `~/.config/raycast/` and double clicking on the latest `.rayconfig` file
 - Installation of apps from the Mac App Store will fail if you don't manually sign in beforehand.
 - Install [Supercharge](https://sindresorhus.gumroad.com/l/supercharge) by Sindre Sorhus
 - Install [Festivitas](https://www.festivitas.app/) by Simon Støvring
+- Remap Caps Lock to Control is System Settings. Couldn't find a way to do this programatically. This is mostly so we don't accidentally turn on Caps Lock, but very very occassionally it can be nice to have as Control
 - Use Launchpad to go through pre-installed apps and delete ones that are not needed
   - iMovie
+  - Pages
 - Test screen for dead pixels using [Test My Screen](https://testmyscreen.com/)
 
 ## On personal Macs
@@ -80,3 +85,7 @@ I'll try to roughly walk you through the flow.
 - Cloning this repo locally is self-explanatory
 
 #### Running the ./install script
+
+# TODO
+
+- iTerm2 profiles
