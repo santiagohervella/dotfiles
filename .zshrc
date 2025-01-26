@@ -13,6 +13,12 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export PATH="$HOME/.config/tmuxifier/bin:$PATH"
 eval "$(tmuxifier init -)"
 
+# Everything we want to use globally through Python needs to be in the PATH
+# ansible and friends primarily
+export PATH="$HOME/Library/Python/3.9/bin:$PATH"
+# homebrew installed tools should be in the PATH
+export PATH="/opt/homebrew/bin:$PATH"
+
 alias n="nvim"
 alias "n."="nvim ."
 alias "cd../"="cd ../"
