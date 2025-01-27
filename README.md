@@ -49,7 +49,11 @@ ansible-playbook main.yml --ask-become-pass
 - Set screen resolution. This could probably be done with a script, but since each machine is different, let's keep it manual
 - Set up TouchID if on a MacBook
 - Sign into iCloud
-- Set up Raycast settings by navigating to `~/.config/raycast/` and double clicking on the latest `.rayconfig` file
+- Raycast
+  - Set up Raycast settings by navigating to `~/.config/raycast/` and double clicking on the latest `.rayconfig` file
+  - Go to Script Commands under Extensions in preferences and manually set the aliases for any scripts
+    - rr -> Rather reasonable size
+    - ps -> Presentation size
 - Installation of apps from the Mac App Store will fail if you don't manually sign in beforehand.
 - Install [Supercharge](https://sindresorhus.gumroad.com/l/supercharge) by Sindre Sorhus
 - Install [Festivitas](https://www.festivitas.app/) by Simon Støvring

@@ -4,7 +4,7 @@ Thumbs.db
 .bundle
 roles*
 .config/raycast/extensions/
-.config/iterm2/AppSupport/
+.config/iterm2/AppSupport
 .config/tmux/plugins/
 
 # TODO: Clean up. Not sure if I need these

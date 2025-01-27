@@ -64,9 +64,16 @@ defaults write NSGlobalDomain AppleReduceDesktopTinting -int 1
 defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -int 0
 
 # Show battery in menu bar. 
-# Sadly, showing the percentage doesn't seem like a default 
-# and must be set manually
 defaults write com.apple.controlcenter "NSStatusItem Visible Battery" -bool true
+
+# Show battery percentage in the menu bar
+defaults -currentHost write com.apple.controlcenter BatteryShowPercentage -bool true
+
+# Don't show the now playing item in the menu bar
+defaults write com.apple.controlcenter 'NSStatusItem Visible NowPlaying' -bool false
+
+# Show the sound item in the menu bar
+defaults write com.apple.controlcenter 'NSStatusItem Visible Sound' -bool true
 
 # Disable the “Are you sure you want to open this application?” dialog
 defaults write com.apple.LaunchServices LSQuarantine -bool false
