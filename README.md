@@ -138,6 +138,8 @@ ansible-playbook main.yml --ask-become-pass
 
 # In case you completely forget how any of this works
 
+I found [this post](https://phelipetls.github.io/posts/introduction-to-ansible/) a bit too late after I'd already done tons of reading / learning on Ansible, but if you forget everything it would make for a great refresher!
+
 This repo is set up to use Ansible to manage a macOS machine. This includes system settings, apps and packages with homebrew, and your dev environment using neovim.
 
 I'll try to roughly walk you through the flow.
@@ -153,13 +155,21 @@ TODO: Write this explanation
 
 ## Required
 
-- nvim
 - Figure out bartender / menu bar spacing situation
-- Raycast scripts directory
-  - Check to see if the UUID is preserved in the Keyboard Maestro macros
 - Browser setup
 
 ## Improvements
 
+- Terimnal prompt
+- Cargo + bob for managing nvim versions
+- Finder sidebar config
 - Maybe make the kdiff3 config symlinking an ansible task rather than doing it in the `.macos.sh` script
 - Caps Lock -> Control could be done through Karabiner instead of System Settings to remove one manual step
+- Try kdiff3's 3 way merge and if so, set is as the merge tool in the git config like this:
+  `https://github.com/geerlingguy/dotfiles/blob/master/.gitconfig#L21`
+- Avante for nvim? Check out these links:
+  - [AI in Neovim (NeovimConf 2024)](https://www.joshmedeski.com/posts/ai-in-neovim-neovimconf-2024/)
+  - [Get the Cursor AI experience in Neovim with avante nvim](https://www.youtube.com/watch?v=4kzSV2xctjc)
+  - [avante.nvim](https://github.com/yetone/avante.nvim)
+- New Neovim config has a bunch of quirks that are not fun. Try to figure those out...
+- Explore zsh's vi mode
