@@ -1,10 +1,7 @@
-# TODO: Bring in anything from Coast .zshrc and take another look at the one on your personal machine at ~/.zshrc
-
-# tmux
-bindkey -s ^f "~/.config/tmux/tmux-sessionizer\n"
-
 export EDITOR=nvim
 export VISUAL="$EDITOR"
+
+bindkey -s ^f "~/.config/tmux/tmux-sessionizer\n"
 
 # This is so programs don't look for config files in application support
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -24,6 +21,16 @@ alias cat='bat'
 alias prc='gh pr create -w'
 alias prv='gh pr view -w'
 
+# I don't want to use oh-my-zsh, but I used these aliases from the git plugin
+# https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/git/README.md
+alias gst="git status"
+alias gco="git checkout"
+alias gl="git pull"
+alias gcm="git checkout main"
+
 # Used to undo a commit that has not yet been pushed. It takes the files in the commit and puts them back into local staged files.
 # Can't remember what happens to existing local changes when you do this, so maybe just stash them or do a non-committal test?
 alias gitundo='git reset HEAD~1'
+
+eval "$(starship init zsh)"
+export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"

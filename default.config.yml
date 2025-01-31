@@ -20,6 +20,7 @@ homebrew_installed_packages:
   - node
   - nodenv
   - ripgrep # Used by Telescope nvim plugin
+  - starship
   - stow
   - tmux
   - tmuxinator
