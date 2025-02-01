@@ -24,6 +24,25 @@ fi
 # Set background to dark-grey color
 osascript -e 'tell application "Finder" to set desktop picture to POSIX file "/System/Library/Desktop Pictures/Solid Colors/Black.png"'
 
+
+###############################################################################
+# Bartender
+###############################################################################
+
+# Get the directory where the script is located
+directory_of_macos_work_script="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Path to the ProfileSettings.plist file
+bartender_arrangement_path="$directory_of_macos_work_script/files/bartender/work-menu-bar-arrangement.plist"
+bartender_plist="$HOME/Library/Preferences/com.surteesstudios.Bartender.plist"
+
+# Skip if bartender has never been opened
+if [ -f "$bartender_plist" ]; then
+    /usr/libexec/PlistBuddy -c "Delete :ProfileSettings" "$bartender_plist"
+    # Merge only works with an existing key...
+    /usr/libexec/PlistBuddy -c "Add :ProfileSettings dict" "$bartender_plist"
+    /usr/libexec/PlistBuddy -c "Merge ${bartender_arrangement_path} :ProfileSettings" "$bartender_plist"
+fi
+
 ###############################################################################
 # Kill/restart affected applications                                          #
 ###############################################################################

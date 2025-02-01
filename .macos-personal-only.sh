@@ -54,6 +54,25 @@ defaults write org.m0k.transmission RatioLimit -int 0
 defaults write org.m0k.transmission UploadLimit -int 0
 
 ###############################################################################
+# Bartender
+###############################################################################
+
+
+# Get the directory where the script is located
+directory_of_macos_personal_script="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Path to the ProfileSettings.plist file
+bartender_arrangement_path="$directory_of_macos_personal_script/files/bartender/work-menu-bar-arrangement.plist"
+bartender_plist="$HOME/Library/Preferences/com.surteesstudios.Bartender.plist"
+
+# Skip if bartender has never been opened
+if [ -f "$bartender_plist" ]; then
+    /usr/libexec/PlistBuddy -c "Delete :ProfileSettings" "$bartender_plist"
+    # Merge only works with an existing key...
+    /usr/libexec/PlistBuddy -c "Add :ProfileSettings dict" "$bartender_plist"
+    /usr/libexec/PlistBuddy -c "Merge ${bartender_arrangement_path} :ProfileSettings" "$bartender_plist"
+fi
+
+###############################################################################
 # Kill/restart affected applications                                          #
 ###############################################################################
 

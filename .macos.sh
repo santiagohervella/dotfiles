@@ -389,9 +389,23 @@ defaults write com.omnigroup.OmniFocus4 NSUserKeyEquivalents -dict-add "Search E
 ###############################################################################
 
 # Don't show the welcome window
-defaults read com.stairways.keyboardmaestro.editor DisplayWelcomeWindow -bool false
+defaults write com.stairways.keyboardmaestro.editor DisplayWelcomeWindow -bool false
 # Don't show the Keyboard Maestro applications palette that shows up by default
 defaults write com.stairways.keyboardmaestro.engine ShowApplicationsPalette -bool false
+
+
+###############################################################################
+# Bartender - Base settings
+# Menu bar arrangements are set in ./.macos-work-only.sh
+# or ./.macos-personal-only.sh
+###############################################################################
+
+defaults write com.surteesstudios.Bartender ReduceMenuItemSpacing -int 1
+defaults write com.surteesstudios.Bartender SUEnableAutomaticChecks -int 0
+defaults write com.surteesstudios.Bartender ShowDivider -int 0
+defaults write com.surteesstudios.Bartender UseBartenderBar -int 1
+defaults write com.surteesstudios.Bartender bartenderBarDoesntAutohide -int 1
+defaults write com.surteesstudios.Bartender MouseOverMenuBarTogglesBartender -int 0
 
 ###############################################################################
 # kdiff3

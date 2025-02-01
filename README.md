@@ -153,14 +153,20 @@ TODO: Write this explanation
 
 # TODOs
 
+## Done but needs to be tested
+
+- Bartender / menu bar spacing
+  - Still needs work arrangement plist file brought into the repo
+
 ## Required
 
-- Figure out bartender / menu bar spacing situation
 - Browser setup
 
 ## Improvements
 
-- Terimnal prompt
+- Superchange keyboard shortcuts
+- node + nodenv
+- python + pyenv
 - Cargo + bob for managing nvim versions
 - Finder sidebar config
 - Maybe make the kdiff3 config symlinking an ansible task rather than doing it in the `.macos.sh` script
@@ -172,4 +178,5 @@ TODO: Write this explanation
   - [Get the Cursor AI experience in Neovim with avante nvim](https://www.youtube.com/watch?v=4kzSV2xctjc)
   - [avante.nvim](https://github.com/yetone/avante.nvim)
 - New Neovim config has a bunch of quirks that are not fun. Try to figure those out...
+  - I don't love how the folkse todo plugin highlights things. I keep hitting my keymap to disable highlighting, but I otherwise like the plugin
 - Explore zsh's vi mode
