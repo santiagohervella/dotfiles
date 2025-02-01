@@ -46,13 +46,11 @@ return {
 			-- 	width = 50,
 			-- },
 
-			-- disable window_picker for
-			-- explorer to work well with
-			-- window splits
 			actions = {
 				open_file = {
+					-- If there are splits, ask which split to open a file in rather than just opening in the more recent one
 					window_picker = {
-						enable = false,
+						enable = true,
 					},
 				},
 			},
