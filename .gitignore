@@ -6,6 +6,7 @@ roles*
 .config/raycast/extensions/
 .config/iterm2/AppSupport
 .config/tmux/plugins/
+.config/gh
 
 # TODO: Clean up. Not sure if I need these
 *.vagrant
