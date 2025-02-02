@@ -9,7 +9,8 @@ right_format = ''
 command_timeout = 1000
 
 [character]
-vicmd_symbol = "[N] >>>"
+# This seems to occasionally cause issues, commenting out for new
+# vicmd_symbol = "[N] >>>"
 success_symbol = '[➜](bold green)'
 error_symbol = '[➜](bold red)'
 

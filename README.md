@@ -48,13 +48,15 @@ ansible-playbook main.yml --ask-become-pass
 
 - Set screen resolution. This could probably be done with a script, but since each machine is different, let's keep it manual
 - Set up TouchID if on a MacBook
+- Sign into 1Password
 - Sign into iCloud
 - Raycast
   - Set up Raycast settings by navigating to `~/.config/raycast/` and double clicking on the latest `.rayconfig` file
   - Go to Script Commands under Extensions in preferences and manually set the aliases for any scripts
     - rr -> Rather reasonable size
     - ps -> Presentation size
-- Installation of apps from the Mac App Store will fail if you don't manually sign in beforehand.
+- Manually sign into the Mac App Store
+  - Programatic installation of apps from the Mac App Store will fail if you don't manually sign in beforehand.
 - Install [Supercharge](https://sindresorhus.gumroad.com/l/supercharge) by Sindre Sorhus
 - Install [Festivitas](https://www.festivitas.app/) by Simon Støvring
 - Remap Caps Lock to Control is System Settings. Couldn't find a way to do this programatically. This is mostly so we don't accidentally turn on Caps Lock, but very very occassionally it can be nice to have as Control
@@ -71,6 +73,17 @@ ansible-playbook main.yml --ask-become-pass
 - Bartender
   - Add the license (stored in 1Password)
   - In general settings, check the box to start Bartender at login
+- Choose, install, and use a global version of `node` using `nodenv`
+  - To list all remote versions you can install, use `nodenv install --list-all`
+- Arc Browser
+  - Copy over the Application Support directory from previous relevant Mac
+  - Log in to relevant Arc account
+  - Log into all accounts (Google, etc)
+  - Reinstall Chrome extensions
+    - No need to adjust any extension settings, those are all brought over by the Application Support directory
+- Set up the GitHub CLI by running `gh auth login`
+  - Select HTTPS for the preferred protocol and authenticate with an authentication token
+- Clone all relevant repos
 - Give apps the proper permissions:
   - Accessibility
     - AltTab
@@ -106,7 +119,8 @@ ansible-playbook main.yml --ask-become-pass
     - Raycast
     - Slack
     - zoom.us
-- Choose, install, and use a global version of `node` using `nodenv`
+- Adjust notifications
+  - Turn off for Tips app
 
 ## On personal Macs
 
@@ -134,15 +148,9 @@ ansible-playbook main.yml --ask-become-pass
 - Install DaisyDisk with `brew install --cask daisydisk`
 - Install [Reeder Classic](https://apps.apple.com/us/app/reeder-classic/id1529448980) from the Mac App Store
 - Add Hyperduck to login items with `osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Hyperduck.app", hidden:true}' > /dev/null`
-- Arc Browser
-  - Copy over the Application Support directory from previous primary Mac
-  - Log in to personal Arc account
 
 ## On work Macs
 
-- Arc Browser
-  - Copy over the Application Support directory from previous work Mac
-  - Log in to work Arc account
 - Finder
   - Customize the sidebar to be in this order
     - AirDrop
@@ -153,6 +161,10 @@ ansible-playbook main.yml --ask-become-pass
     - Home
     - Volumes
     - iCloud Drive
+- Set up iMessage with work Apple Account
+- PyCharm
+  - Log into work Jetbrains account to get the license
+  - Install IdeaVim plugin
 
 # In case you completely forget how any of this works
 

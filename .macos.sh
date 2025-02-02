@@ -393,6 +393,21 @@ defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
 # Setup shortcut to Search Everything using the menu bar command to shift+command+e
 defaults write com.omnigroup.OmniFocus4 NSUserKeyEquivalents -dict-add "Search Everything" -string "@$e"
 
+###############################################################################
+# Arc
+###############################################################################
+
+# Better tab navigation shortcuts
+defaults write com.thebrowser.Browser NSUserKeyEquivalents -dict-add "Next Tab" -string "@~\\U2192"
+defaults write com.thebrowser.Browser NSUserKeyEquivalents -dict-add "Previous Tab" -string "@~\\U2190"
+
+###############################################################################
+# Postman
+###############################################################################
+
+# Better tab navigation shortcuts
+defaults write com.postmanlabs.mac NSUserKeyEquivalents -dict-add "Next Tab" -string "@~\\U2192"
+defaults write com.postmanlabs.mac NSUserKeyEquivalents -dict-add "Previous Tab" -string "@~\\U2190"
 
 ###############################################################################
 # Keyboard Maestro

@@ -85,16 +85,15 @@ homebrew_cask_apps: >-
 # See `geerlingguy.mac.mas` role documentation for usage instructions.
 # https://github.com/geerlingguy/ansible-collection-mac/blob/master/roles/mas/README.md
 mas_installed_apps:
-  []
+  - { id: 1558360383, name: "Menu Bar Calendar (1.4.1)" }
+  - { id: 1088779979, name: "Mini Calendar (1.5.8)" }
+  - { id: 6498891868, name: "Persona Webcam (1.3.1)" }
   # - { id: 1596506190, name: "Play (2.4.0)" }
   # - { id: 1614730313, name: "MusicBox (1.4.7)" }
   # - { id: 1289583905, name: "Pixelmator Pro (3.6.14)" }
   # - { id: 6444667067, name: "Hyperduck (1.2.1)" }
   # - { id: 937984704, name: "Amphetamine (5.3.2)" }
-  # - { id: 1558360383, name: "Menu Bar Calendar (1.4.1)" }
-  # - { id: 1088779979, name: "Mini Calendar (1.5.8)" }
   # - { id: 6449708232, name: "Linkeeper (2.0.1)" }
-  # - { id: 6498891868, name: "Persona Webcam (1.3.1)" }
 
 osx_script: "./.macos.sh --no-restart"
 osx_personal_script: "./.macos-personal-only.sh --no-restart"
