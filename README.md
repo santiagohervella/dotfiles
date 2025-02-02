@@ -57,6 +57,7 @@ ansible-playbook main.yml --ask-become-pass
     - ps -> Presentation size
 - Manually sign into the Mac App Store
   - Programatic installation of apps from the Mac App Store will fail if you don't manually sign in beforehand.
+  - Only previously purchased apps can be installed
 - Install [Supercharge](https://sindresorhus.gumroad.com/l/supercharge) by Sindre Sorhus
 - Install [Festivitas](https://www.festivitas.app/) by Simon Støvring
 - Remap Caps Lock to Control is System Settings. Couldn't find a way to do this programatically. This is mostly so we don't accidentally turn on Caps Lock, but very very occassionally it can be nice to have as Control

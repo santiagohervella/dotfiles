@@ -13,3 +13,7 @@ roles*
 *.retry
 coast-files/
 default-diffs/
+
+# Work related
+.config/AWS VPN Client
+.config/AWSVPNClient
