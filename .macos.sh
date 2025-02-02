@@ -195,10 +195,20 @@ defaults write com.apple.finder NewWindowTarget -string "PfLo"
 defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Downloads/"
 
 # Show icons for hard drives, servers, and removable media on the desktop
-defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
 defaults write com.apple.finder ShowHardDrivesOnDesktop -bool false
 defaults write com.apple.finder ShowMountedServersOnDesktop -bool false
-defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
+defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool false
+
+# Finder sidebar
+# Can't configure everything, but we'll do what we can and do the rest manually
+defaults write com.apple.finder ShowSidebar -bool true
+defaults write com.apple.finder SidebarDevicesSectionDisclosedState -bool true
+defaults write com.apple.finder SidebarPlacesSectionDisclosedState -bool true
+defaults write com.apple.finder SidebarShowingSignedIntoiCloud -bool true
+defaults write com.apple.finder SidebarShowingiCloudDesktop -bool false
+defaults write com.apple.finder SidebarTagsSctionDisclosedState -bool true
+defaults write com.apple.finder SidebariCloudDriveSectionDisclosedState -bool true
 
 # Finder: show hidden files by default
 # defaults write com.apple.finder AppleShowAllFiles -bool true
@@ -440,6 +450,8 @@ osascript -e 'tell application "System Events" to make login item at end with pr
 osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Supercharge.app", hidden:true}' > /dev/null
 # Menu Bar Calendar
 osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Menu Bar Calendar.app", hidden:true}' > /dev/null
+# Bartender
+osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Bartender 5.app", hidden:true}' > /dev/null
 
 ###############################################################################
 # Kill/restart affected applications                                          #

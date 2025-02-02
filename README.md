@@ -68,21 +68,9 @@ ansible-playbook main.yml --ask-become-pass
   - Navigate to `~/.config/keyboard-maestro` and double click on the appropriate macro library. In the popup window, click "Insert" to import the macros
   - Fill in all the sensitive information in each macro that has "FILL ME IN" anywhere
   - Add the license (stored in 1Password)
-    - Bartender
-      - Right to left (not all apply to all machines. If not, just skip):
-        - System clock should be the analog clock. Find the defaults command for this
-        - Use Mini Calendar to show "Jan 26 5:15:05 PM"
-        - Use Menu Bar Calendar as the icon to click to browse the calendar
-        - System battery with percentage
-        - Wifi
-        - Sound
-        - Bartender `···`
-        - iStat Menus network activity
-        - iStat Menus CPU graph
-        - iStat Menus GPU graph
-        - Backblaze
-        - Mullvad
-      - Anything not mentioned here lives in Bartender
+- Bartender
+  - Add the license (stored in 1Password)
+  - In general settings, check the box to start Bartender at login
 - Give apps the proper permissions:
   - Accessibility
     - AltTab
@@ -118,8 +106,23 @@ ansible-playbook main.yml --ask-become-pass
     - Raycast
     - Slack
     - zoom.us
+- Choose, install, and use a global version of `node` using `nodenv`
 
 ## On personal Macs
+
+- Finder
+  - Customize the sidebar to be in this order
+    - AirDrop
+    - Applications
+    - Desktop
+    - Documents
+    - Audiobooks (Primary only)
+    - Downloads
+    - Home
+    - Shortcuts (Primary only)
+    - Logic (Primary only)
+    - Volumes
+    - iCloud Drive
 
 ### If primary Mac
 
@@ -131,10 +134,25 @@ ansible-playbook main.yml --ask-become-pass
 - Install DaisyDisk with `brew install --cask daisydisk`
 - Install [Reeder Classic](https://apps.apple.com/us/app/reeder-classic/id1529448980) from the Mac App Store
 - Add Hyperduck to login items with `osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Hyperduck.app", hidden:true}' > /dev/null`
+- Arc Browser
+  - Copy over the Application Support directory from previous primary Mac
+  - Log in to personal Arc account
 
 ## On work Macs
 
-- TODO
+- Arc Browser
+  - Copy over the Application Support directory from previous work Mac
+  - Log in to work Arc account
+- Finder
+  - Customize the sidebar to be in this order
+    - AirDrop
+    - Applications
+    - Desktop
+    - Documents
+    - Downloads
+    - Home
+    - Volumes
+    - iCloud Drive
 
 # In case you completely forget how any of this works
 
@@ -160,15 +178,10 @@ TODO: Write this explanation
 
 ## Required
 
-- Browser setup
-
 ## Improvements
 
 - Superchange keyboard shortcuts
-- node + nodenv
-- python + pyenv
 - Cargo + bob for managing nvim versions
-- Finder sidebar config
 - Maybe make the kdiff3 config symlinking an ansible task rather than doing it in the `.macos.sh` script
 - Caps Lock -> Control could be done through Karabiner instead of System Settings to remove one manual step
 - Try kdiff3's 3 way merge and if so, set is as the merge tool in the git config like this:

@@ -17,8 +17,8 @@ homebrew_installed_packages:
   - jq
   - lazygit
   - neovim
-  - node
   - nodenv
+  - pyenv
   - ripgrep # Used by Telescope nvim plugin
   - starship
   - stow

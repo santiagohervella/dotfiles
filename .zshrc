@@ -34,3 +34,14 @@ alias gitundo='git reset HEAD~1'
 
 eval "$(starship init zsh)"
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
+
+
+# nodenv as the node version manager
+# https://github.com/nodenv/nodenv
+eval "$(nodenv init -)"
+
+# pyenv as the python version manager
+# https://github.com/pyenv/pyenv?tab=readme-ov-file#zsh
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
