@@ -69,6 +69,15 @@ defaults write com.apple.controlcenter "NSStatusItem Visible Battery" -bool true
 # Show battery percentage in the menu bar
 defaults -currentHost write com.apple.controlcenter BatteryShowPercentage -bool true
 
+# Or is this the command that will show the percentage?
+defaults write com.apple.menuextra.battery ShowPercent -string YES
+
+# Make sure the clock is digital
+defaults write com.apple.menuextra.clock IsAnalog -bool false
+
+# Show seconds!
+defaults write com.apple.menuextra.clock ShowSeconds -bool true
+
 # Don't show the now playing item in the menu bar
 defaults write com.apple.controlcenter 'NSStatusItem Visible NowPlaying' -bool false
 
@@ -398,16 +407,19 @@ defaults write com.omnigroup.OmniFocus4 NSUserKeyEquivalents -dict-add "Search E
 ###############################################################################
 
 # Better tab navigation shortcuts
-defaults write com.thebrowser.Browser NSUserKeyEquivalents -dict-add "Next Tab" -string "@~\\U2192"
-defaults write com.thebrowser.Browser NSUserKeyEquivalents -dict-add "Previous Tab" -string "@~\\U2190"
+# When I read these defaults on my current machine, it shows up as @~\\U2192
+# But based on looking at other configs, it seems that when you do -string
+# You only need one `\` instead of two. Without -string you need both `\`
+defaults write com.thebrowser.Browser NSUserKeyEquivalents -dict-add "Next Tab" -string "@~\U2192"
+defaults write com.thebrowser.Browser NSUserKeyEquivalents -dict-add "Previous Tab" -string "@~\U2190"
 
 ###############################################################################
 # Postman
 ###############################################################################
 
 # Better tab navigation shortcuts
-defaults write com.postmanlabs.mac NSUserKeyEquivalents -dict-add "Next Tab" -string "@~\\U2192"
-defaults write com.postmanlabs.mac NSUserKeyEquivalents -dict-add "Previous Tab" -string "@~\\U2190"
+defaults write com.postmanlabs.mac NSUserKeyEquivalents -dict-add "Next Tab" -string "@~\U2192"
+defaults write com.postmanlabs.mac NSUserKeyEquivalents -dict-add "Previous Tab" -string "@~\U2190"
 
 ###############################################################################
 # Keyboard Maestro
@@ -418,6 +430,15 @@ defaults write com.stairways.keyboardmaestro.editor DisplayWelcomeWindow -bool f
 # Don't show the Keyboard Maestro applications palette that shows up by default
 defaults write com.stairways.keyboardmaestro.engine ShowApplicationsPalette -bool false
 
+###############################################################################
+# Supercharge
+###############################################################################
+
+defaults write com.sindresorhus.Supercharge "KeyboardShortcuts_clearVisibleNotifications" -string "{\"carbonKeyCode\":4,\"carbonModifiers\":6400}";
+defaults write com.sindresorhus.Supercharge "KeyboardShortcuts_hideAllWindows" -string "{\"carbonModifiers\":6400,\"carbonKeyCode\":38}";
+
+ defaults write com.sindresorhus.Supercharge accidentalQuitPreventionHoldDuration -string "[0,1000000000000000000]";
+ defaults write com.sindresorhus.Supercharge accidentalQuitPreventionMode -string hold;
 
 ###############################################################################
 # Bartender - Base settings

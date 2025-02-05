@@ -32,7 +32,6 @@
           </array>
           <key>Show</key>
           <array>
-              <string>com.bjango.istatmenus.status-com.bjango.istatmenus.time</string>
               <string>com.sindresorhus.Menu-Bar-Calendar-Item-0</string>
               <string>com.apple.controlcenter-Battery</string>
               <string>com.apple.controlcenter-WiFi</string>
@@ -41,9 +40,8 @@
               <string>com.surteesstudios.Bartender-statusItem</string>
               <string>com.bjango.istatmenus.status-com.bjango.istatmenus.network</string>
               <string>com.bjango.istatmenus.status-com.bjango.istatmenus.cpu</string>
-              <string>org.videolan.vlc-statusBarItem</string>
               <string>com.bjango.istatmenus.status-com.bjango.istatmenus.memory</string>
-              <string>com.antlogic.minicalendar-Item-0</string>
+              <string>org.videolan.vlc-statusBarItem</string>
               <string>io.tailscale.ipn.macos-Item-0</string>
               <string>com.apple.controlcenter-ScreenMirroring</string>
               <string>com.backblaze.bzbmenu-Item-1</string>

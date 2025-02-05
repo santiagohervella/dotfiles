@@ -39,6 +39,7 @@ Change the `machine_type` variable in `./default.config.yml` to be 'personal' or
 
 ```sh
 # Set up macOS
+# Do not run this command inside of tmux as it makes something go wonky
 ansible-playbook main.yml --ask-become-pass
 ```
 
@@ -187,7 +188,6 @@ TODO: Write this explanation
 ## Done but needs to be tested
 
 - Bartender / menu bar spacing
-  - Still needs work arrangement plist file brought into the repo
 
 ## Required
 
