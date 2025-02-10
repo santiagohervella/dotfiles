@@ -107,6 +107,9 @@ defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 defaults write NSGlobalDomain InitialKeyRepeat -int 10
 defaults write NSGlobalDomain KeyRepeat -int 1
 
+# Disable double-space to period
+defaults write -g NSAutomaticPeriodSubstitutionEnabled -bool false
+
 # Disable auto-correct
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
@@ -116,11 +119,20 @@ defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
 # Disable automatic period substitution as it’s annoying when typing code
 defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
 
+
+# Enable tap to click for the built-in trackpad
+defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
+
+# These were some older commands I'd found for the trackpad
 # https://github.com/mathiasbynens/dotfiles/blob/main/.macos#L127C1-L130C65
 # Trackpad: enable tap to click for this user and for the login screen
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
+# Trackpad: use three finger tap to Look up
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerTapGesture -int 2
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerTapGesture -int 2
 
 # Use scroll gesture with the Ctrl (^) modifier key to zoom
 defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
@@ -437,8 +449,8 @@ defaults write com.stairways.keyboardmaestro.engine ShowApplicationsPalette -boo
 defaults write com.sindresorhus.Supercharge "KeyboardShortcuts_clearVisibleNotifications" -string "{\"carbonKeyCode\":4,\"carbonModifiers\":6400}";
 defaults write com.sindresorhus.Supercharge "KeyboardShortcuts_hideAllWindows" -string "{\"carbonModifiers\":6400,\"carbonKeyCode\":38}";
 
- defaults write com.sindresorhus.Supercharge accidentalQuitPreventionHoldDuration -string "[0,1000000000000000000]";
- defaults write com.sindresorhus.Supercharge accidentalQuitPreventionMode -string hold;
+defaults write com.sindresorhus.Supercharge accidentalQuitPreventionHoldDuration -string "[0,1000000000000000000]";
+defaults write com.sindresorhus.Supercharge accidentalQuitPreventionMode -string hold;
 
 ###############################################################################
 # Bartender - Base settings
@@ -476,18 +488,26 @@ $HOME/.config/tmux/plugins/tpm/tpm --install
 # Login Items
 ###############################################################################
 
-# Hammerspoon
-osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Hammerspoon.app", hidden:true}' > /dev/null
-# Keyboard Maestro Engine
-osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Keyboard Maestro.app/Contents/MacOS/Keyboard Maestro Engine.app", hidden:true}' > /dev/null
-# Raycast
-osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Raycast.app", hidden:true}' > /dev/null
-# Supercharge
-osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Supercharge.app", hidden:true}' > /dev/null
-# Menu Bar Calendar
-osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Menu Bar Calendar.app", hidden:true}' > /dev/null
-# Bartender
-osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Bartender 5.app", hidden:true}' > /dev/null
+
+# Found this nice shorthand loop here:
+# https://github.com/megalithic/dotfiles/blob/106a574767ec5dab29ac86e754396df5726d1085/macos#L598C1-L616C5
+# This way I don't have to duplicate the applescript line for each app
+apps_to_startup=(
+  "Bartender 5"
+  "Hammerspoon"
+  # "iStat Menus" # TODO: Does this need to be here?
+  # "Karabiner-Elements" # TODO: Does this need to be here?
+  "Keyboard Maestro"
+  "Raycast"
+  "Supercharge"
+  "Menu Bar Calendar"
+)
+for app in "${apps_to_startup[@]}"; do
+  log "setting to \"${app}\" to launch at startup."
+
+  # Enable apps at startup
+  osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/${app}.app", hidden:true}' >/dev/null && log_ok "DONE"
+done
 
 ###############################################################################
 # Kill/restart affected applications                                          #
