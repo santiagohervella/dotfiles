@@ -3,6 +3,7 @@ return {
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 	},
+	enabled = false,
 	config = function()
 		-- set keymaps
 		local keymap = vim.keymap -- for conciseness

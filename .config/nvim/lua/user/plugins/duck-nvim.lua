@@ -1,11 +1,12 @@
 return {
 	"tamton-aquib/duck.nvim",
+	enabled = false,
 	config = function()
 		vim.keymap.set("n", "<leader>dh", function()
 			require("duck").hatch()
-		end, {})
+		end, { desc = "Hatch a duck" })
 		vim.keymap.set("n", "<leader>dc", function()
 			require("duck").cook_all()
-		end, {})
+		end, { desc = "Cook all ducks" })
 	end,
 }
