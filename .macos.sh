@@ -425,6 +425,12 @@ defaults write com.omnigroup.OmniFocus4 NSUserKeyEquivalents -dict-add "Search E
 defaults write com.thebrowser.Browser NSUserKeyEquivalents -dict-add "Next Tab" -string "@~\U2192"
 defaults write com.thebrowser.Browser NSUserKeyEquivalents -dict-add "Previous Tab" -string "@~\U2190"
 
+# Set auto archive time threshold to 30 days, default: twelveHours
+defaults write company.thebrowser.Browser autoArchiveTimeThreshold -string "thirtyDays"
+
+# Restore windows from previous session when opening Arc, default: false
+defaults write company.thebrowser.Browser arc_quitAlwaysKeepsWindows -bool true
+
 ###############################################################################
 # Postman
 ###############################################################################
