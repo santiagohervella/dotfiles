@@ -205,15 +205,32 @@ TODO: Write this explanation
 
 ### Neovim
 
-- Read the entirety of [this famous vim stackoverflow response](https://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim/1220118#1220118)
-- Avante for nvim? Check out these links:
-  - [AI in Neovim (NeovimConf 2024)](https://www.joshmedeski.com/posts/ai-in-neovim-neovimconf-2024/)
-  - [Get the Cursor AI experience in Neovim with avante nvim](https://www.youtube.com/watch?v=4kzSV2xctjc)
-  - [avante.nvim](https://github.com/yetone/avante.nvim)
-- Similarly, properly set up [CopilotChat](https://github.com/CopilotC-Nvim/CopilotChat.nvim)
-  - [This](https://github.com/newtoallofthis123/nvim-config/blob/main/lua/noobscience/plugins/copilotchat.lua) could be a good setup to reference that I found by searching GitHub
+#### Ideas
+
+- Breakpoints, DAP
+  - Omerxx video, [DEBUG in Neovim. Like a BOSS.](https://www.youtube.com/watch?v=RziPWdTzSV8)
+- LLMs?
+  - Avante for nvim? Check out these links:
+    - [AI in Neovim (NeovimConf 2024)](https://www.joshmedeski.com/posts/ai-in-neovim-neovimconf-2024/)
+    - [Get the Cursor AI experience in Neovim with avante nvim](https://www.youtube.com/watch?v=4kzSV2xctjc)
+    - [avante.nvim](https://github.com/yetone/avante.nvim)
+  - Similarly, properly set up [CopilotChat](https://github.com/CopilotC-Nvim/CopilotChat.nvim)
+    - [This](https://github.com/newtoallofthis123/nvim-config/blob/main/lua/noobscience/plugins/copilotchat.lua) could be a good setup to reference that I found by searching GitHub
 - New Neovim config has a bunch of quirks that are not fun. Try to figure those out...
-- Revisit [this omerxx video](https://www.youtube.com/watch?v=x__SZUuLOxw) for references to debugging and also obsidian
+  - The LSP diagnostics don't always refresh upon exiting insert mode. Hard to reproduce so I'll just have to be on the lookout for this
+- Maybe set look into Obsidian plugins or general note taking improvements
+  - Omerxx's video [The Holy Grail of Neovim Note Taking](https://www.youtube.com/watch?v=5ht8NYkU9wQ)
+  - Linkarzu's recent videos on the subject
+    - [How I Recreated (and Improved) My Obsidian Note-Taking Workflow in Neovim](https://www.youtube.com/watch?v=k_g8q5JeisY)
+    - [My complete Neovim markdown setup and workflow in 2025](https://www.youtube.com/watch?v=1YEbKDlxfss)
+  - [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) to preview markdown in the browser and have the position of the page synced to the editor
+- Maybe check out [lsp-timeout.nvim](https://github.com/hinell/lsp-timeout.nvim/tree/main) to kill LSP servers after a certain amount of time
+- I don't really think I need this one, but before deciding on that, I should do a bit of research while I'm working to see if there are tons of leftover language servers all the time
+
+#### To read or watch
+
+- Check out some of the talks linked in [the readme](https://github.com/preservim/vim-pencil) of the vim-pencil plugin
+- Read the entirety of [this famous vim stackoverflow response](https://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim/1220118#1220118)
 
 ### Terminal Emulators
 
