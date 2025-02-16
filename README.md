@@ -193,7 +193,6 @@ TODO: Write this explanation
 
 ## Improvements
 
-- Superchange keyboard shortcuts
 - Cargo + bob for managing nvim versions
 - Maybe make the kdiff3 config symlinking an ansible task rather than doing it in the `.macos.sh` script
 - Caps Lock -> Control could be done through Karabiner instead of System Settings to remove one manual step
@@ -202,6 +201,7 @@ TODO: Write this explanation
 - Explore zsh's vi mode
 - Try out the [DeskPad utility app](https://github.com/Stengo/DeskPad) for better screen sharing on video calls
   - Here's a good [video demo](https://www.youtube.com/watch?v=O-as2_bud9s) of what it does
+- Maybe try out [Folke's desktop wallpaper](https://github.com/folke/dot/blob/master/config/wall.png)?
 
 ### Neovim
 
@@ -210,23 +210,15 @@ TODO: Write this explanation
   - [AI in Neovim (NeovimConf 2024)](https://www.joshmedeski.com/posts/ai-in-neovim-neovimconf-2024/)
   - [Get the Cursor AI experience in Neovim with avante nvim](https://www.youtube.com/watch?v=4kzSV2xctjc)
   - [avante.nvim](https://github.com/yetone/avante.nvim)
+- Similarly, properly set up [CopilotChat](https://github.com/CopilotC-Nvim/CopilotChat.nvim)
+  - [This](https://github.com/newtoallofthis123/nvim-config/blob/main/lua/noobscience/plugins/copilotchat.lua) could be a good setup to reference that I found by searching GitHub
 - New Neovim config has a bunch of quirks that are not fun. Try to figure those out...
-  - I don't love how the folkse todo plugin highlights things. I keep hitting my keymap to disable highlighting, but I otherwise like the plugin
-- Try out vim-test for running tests. Using vimux as the runner, it can use an adjacent tmux pane or create a new one
-  - [Here is how typecraft configures this](https://github.com/typecraft-dev/dotfiles/blob/master/nvim/.config/nvim/lua/plugins/vim-test.lua)
-  - [Here is the vim-test page](https://github.com/vim-test/vim-test)
-  - [Here is the vimux page](https://github.com/preservim/vimux)
-    - In the vimux [docs](https://raw.githubusercontent.com/preservim/vimux/master/doc/vimux.txt), look at VimuxOpenRunner since it mentioned using the nearest tmux pane
-- Explore all the things mini.nvim has to offer
-  - [This post](https://evantravers.com/articles/2024/09/17/making-my-nvim-act-more-like-helix-with-mini-nvim/), for example, talked about replacing tons of older plugins with mini ones
-- Try out [snipe.nvim](https://github.com/leath-dub/snipe.nvim) for navigating open buffers
-- If [trouble.nvim](https://github.com/folke/trouble.nvim) can show me diagnostics for the entire working directory instead of just open buffers like my current `<leader>lD` keymap, then I'm interested
-  - I got a taste of this functionality from folke's todo-comment.nvim plugin and I've been really enjoying that
 - Revisit [this omerxx video](https://www.youtube.com/watch?v=x__SZUuLOxw) for references to debugging and also obsidian
 
 ### Terminal Emulators
 
 - Do try to recreate your iTerm2 config in WezTerm. I really like that it's in lua
+  - Here's [Folke's WezTerm config](https://github.com/folke/dot/blob/master/config/wezterm/wezterm.lua) as a reference
 
 ### Hammerspoon
 
