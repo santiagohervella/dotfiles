@@ -14,7 +14,7 @@ return {
 			-- load the colorscheme here
 			vim.cmd([[colorscheme gruvbox-material]])
 			-- vim.cmd([[colorscheme gruvbox-baby]])
-			--
+
 			local original_highlight = vim.api.nvim_get_hl(0, { name = "Normal" })
 
 			vim.keymap.set("n", "<leader>bga", '<cmd>lua vim.api.nvim_set_hl(0, "Normal", { bg = "#000000" })<CR>')

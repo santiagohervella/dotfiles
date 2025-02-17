@@ -3,48 +3,38 @@ return {
 	dependencies = {
 		"nvim-tree/nvim-web-devicons",
 	},
+	keys = {
+		{ "<leader>E", "<cmd>NvimTreeToggle<CR>", desc = "Show nvim-tree" },
+		{
+			"<leader>e",
+			function()
+				local api = require("nvim-tree.api")
+				if api.tree.is_visible() then
+					api.tree.close()
+				else
+					api.tree.find_file({
+						open = true,
+						focus = true,
+					})
+				end
+			end,
+			desc = "Show current file in nvim-tree",
+		},
+	},
 	config = function()
 		local nvim_tree = require("nvim-tree")
 
-		-- TODO: Many symbol settings in old lunarvim setup to look at
 		nvim_tree.setup({
 			update_focused_file = {
-				enable = true,
-				update_root = true,
+				enable = false,
+				-- Still feeling this setting out
+				-- enable = true,
+
+				-- Always keep the root of the tree to the cwd
+				-- So if, for example, I open up the help file for a plugin,
+				-- the tree won't change to show the directory of the help file
+				update_root = false,
 			},
-			renderer = {
-				icons = {
-					glyphs = {
-						folder = {
-							arrow_closed = "", -- arrow when folder is closed
-							arrow_open = "", -- arrow when folder is open
-						},
-					},
-				},
-			},
-			-- Stolen from: https://github.com/Zeddnyx/Znvim/blob/master/lua/zedd/plugins/nvimtree/setup.lua#L24
-			-- Trying out a floating tree. If I don't like it, just go back to the commented out view below this
-			-- view = {
-			-- 	float = {
-			-- 		enable = true,
-			-- 		open_win_config = function()
-			-- 			local screen_w = vim.opt.columns:get()
-			-- 			local w_h = 70
-			-- 			local s_h = 42
-			-- 			local center_x = (screen_w - w_h) / 2
-			-- 			local center_y = ((vim.opt.lines:get() - s_h) / 5) - vim.opt.cmdheight:get()
-			-- 			return {
-			-- 				border = "rounded",
-			-- 				relative = "editor",
-			-- 				row = center_y,
-			-- 				col = center_x,
-			-- 				width = w_h,
-			-- 				height = s_h,
-			-- 			}
-			-- 		end,
-			-- 	},
-			-- 	width = 50,
-			-- },
 
 			actions = {
 				open_file = {
@@ -64,11 +54,14 @@ return {
 			},
 		})
 
-		-- Shorten function name
-		local keymap = vim.keymap.set
-		-- Silent keymap option
-		local opts = { silent = true, desc = "Show nvim-tree" }
-
-		keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
+		-- autocommand to make the all the nvim-tree backgrounds the same color as a regular file buffer
+		vim.api.nvim_create_autocmd("BufEnter", {
+			pattern = "NvimTree_*", -- NvimTree buffers typically start with this prefix
+			callback = function()
+				vim.api.nvim_set_hl(0, "NvimTreeNormal", { bg = "NONE" })
+				vim.api.nvim_set_hl(0, "NvimTreeEndOfBuffer", { bg = "NONE" })
+				vim.api.nvim_set_hl(0, "NvimTreeVertSplit", { bg = "NONE" })
+			end,
+		})
 	end,
 }

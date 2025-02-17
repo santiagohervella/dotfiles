@@ -20,11 +20,20 @@ return {
 				liquid = { "prettier" },
 				lua = { "stylua" },
 				python = { "isort", "black" },
+				hcl = { "terraform_fmt" },
+				tf = { "terraform_fmt" },
+				terraform = { "terraform_fmt" },
+				["terraform-vars"] = { "terraform_fmt" },
 			},
 			format_on_save = {
 				lsp_fallback = true,
 				async = false,
 				timeout_ms = 1000,
+			},
+			formatters = {
+				prettier = {
+					prepend_args = { "--single-quote" },
+				},
 			},
 		})
 

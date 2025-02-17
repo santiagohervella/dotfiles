@@ -98,11 +98,14 @@ keymap("n", "<leader>yb", ":lua yank_modified_path()<CR>")
 -- Trying these out...
 keymap("n", "<leader>+", "<C-a>", opts) -- increment shortcut
 keymap("n", "<leader>-", "<C-x>", opts) -- decrement shortcut
--- Commenting these out as they will conflict with the new harpoon keymaps
--- keymap("n", "<leader>to", ":tabnew<CR>", opts) -- open new tab
--- keymap("n", "<leader>tx", ":tabclose<CR>", opts) -- close current tab
--- keymap("n", "<leader>tn", ":tabn<CR>", opts) -- go to next tab
--- keymap("n", "<leader>tp", ":tabp<CR>", opts) -- go to previous tab
+keymap("n", "<leader>D", function()
+	if vim.wo.diff then
+		vim.cmd("windo diffoff")
+	else
+		vim.cmd("windo diffthis")
+		vim.cmd("windo set wrap")
+	end
+end)
 
 -- Here is another way of doing transparency if you don't want to use the transparency plugin
 -- This doesn't work for all backgrounds and there's no way to toggle back without restarting nvim, but it's something

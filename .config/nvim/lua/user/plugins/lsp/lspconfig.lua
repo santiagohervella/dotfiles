@@ -4,7 +4,7 @@ return {
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
-		{ "folke/neodev.nvim", opts = {} },
+		{ "folke/lazydev.nvim", opts = {} },
 	},
 	config = function()
 		local lspconfig = require("lspconfig")
@@ -33,7 +33,7 @@ return {
 				opts.desc = "Show LSP implementations"
 				keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
 
-				-- TODO: What exactly does this do?
+				-- NOTE: I never use this one because it feels like lsp_definitions can do the same thing
 				opts.desc = "Show LSP type definitions"
 				keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
 
@@ -63,8 +63,6 @@ return {
 
 				opts.desc = "Restart LSP"
 				keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
-
-				-- TODO: What about those old typescript specific keymaps in the ./lspconfig.lua.bak?
 			end,
 		})
 
@@ -85,7 +83,6 @@ return {
 					capabilities = capabilities,
 				})
 			end,
-			-- TODO: Do we need any other custom setups? The old one had typescript and pyright
 			["lua_ls"] = function()
 				-- configure lua server (with special settings)
 				lspconfig["lua_ls"].setup({
@@ -98,6 +95,20 @@ return {
 							},
 							completion = {
 								callSnippet = "Replace",
+							},
+						},
+					},
+				})
+			end,
+			-- Found out that pyright has missing stub type setting in this config
+			-- https://github.com/mrjones2014/dotfiles/blob/master/nvim/lua/my/lsp/python.lua
+			["pyright"] = function()
+				lspconfig["pyright"].setup({
+					capabilities = capabilities,
+					settings = {
+						python = {
+							analysis = {
+								reportMissingTypeStubs = false,
 							},
 						},
 					},

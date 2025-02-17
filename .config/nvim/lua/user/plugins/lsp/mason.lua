@@ -5,6 +5,15 @@ return {
 		"williamboman/mason-lspconfig.nvim", -- bridges gap between mason & lspconfig
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 	},
+	cmd = {
+		"Mason",
+		"MasonInstall",
+		"MasonUninstall",
+		"MasonUninstallAll",
+		"MasonLog",
+		"MasonUpdate",
+	},
+	event = "VeryLazy", -- This ensures Mason runs its setup during startup, but after other urgent plugins
 	config = function()
 		local mason = require("mason")
 		local mason_lspconfig = require("mason-lspconfig")
@@ -31,10 +40,11 @@ return {
 				"tailwindcss",
 				"terraformls",
 				-- "tsserver", -- this is deprecated, use ts_ls instead
-				"ts_ls",
+				-- "ts_ls", -- Trying out ./typescript-tools.lua tools instead of this
 				"yamlls",
 				"astro",
 			},
+			automatic_installation = true,
 		})
 
 		mason_tool_installer.setup({
@@ -46,6 +56,7 @@ return {
 				"pylint",
 				"eslint_d",
 			},
+			automatic_installation = true,
 		})
 	end,
 }

@@ -4,8 +4,11 @@ local opt = vim.opt
 opt.number = true -- set numbered lines
 opt.relativenumber = true -- set relative numbers
 
--- No vertical lines in splits
-vim.opt.fillchars = "vert:⠀"
+-- vert - No vertical lines in splits
+-- eob - hide the EOB (end of buffer) character
+--   By default, this is the ~ that gets shown on every line once a buffer ends
+--   vim.o.fillchars = vim.o.fillchars .. "eob: "
+vim.opt.fillchars = "vert:⠀,eob: "
 
 -- tabs & indentation
 opt.tabstop = 2 -- insert 2 spaces for a tab

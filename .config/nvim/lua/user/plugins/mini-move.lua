@@ -1,6 +1,7 @@
 return {
 	"echasnovski/mini.move",
 	version = false,
+	event = { "BufReadPre", "BufNewFile" },
 	config = function()
 		local minimove = require("mini.move")
 
