@@ -90,6 +90,10 @@ defaults write com.apple.LaunchServices LSQuarantine -bool false
 # Set the default app for .mp3 files to QuickTime Player instead of Music
 duti -s com.apple.QuickTimePlayerX mp3 all
 
+# Set the lock screen message
+MESSAGE="Please do the right thing and return to Santiago at +1 (203) 615-3485"
+sudo defaults write /Library/Preferences/com.apple.loginwindow LoginwindowText "$MESSAGE"
+
 ###############################################################################
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
 ###############################################################################

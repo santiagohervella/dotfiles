@@ -24,6 +24,14 @@ fi
 # Set background to dark-grey color
 osascript -e 'tell application "Finder" to set desktop picture to POSIX file "/System/Library/Desktop Pictures/Solid Colors/Black.png"'
 
+# Found this here:
+# https://github.com/philiprein/macos-settings/blob/main/system_settings/lock_screen.sh#L30-L35
+# show large clock (default: on lock screen)
+# on screen saver and lock screen = true, true
+# on lock screen = true, false
+# never = false, false
+sudo defaults write /Library/Preferences/com.apple.loginwindow UsesLargeDateTime -bool false
+defaults -currentHost write com.apple.screensaver showClock -bool false
 
 ###############################################################################
 # Bartender
