@@ -484,6 +484,25 @@ fi
 ln -s $HOME/.config/kdiff3/kdiff3rc $HOME/Library/Preferences/kdiff3rc
 
 ###############################################################################
+# AltTab
+###############################################################################
+
+defaults write com.lwouis.alt-tab-macos alignThumbnails -int 0
+defaults write com.lwouis.alt-tab-macos appsToShow -int 1
+defaults write com.lwouis.alt-tab-macos cancelShortcut -string '`'
+defaults write com.lwouis.alt-tab-macos holdShortcut '"\U2303\U2325\U2318"'
+defaults write com.lwouis.alt-tab-macos holdShortcut2 '"\U2325"'
+defaults write com.lwouis.alt-tab-macos menubarIcon -int 0
+defaults write com.lwouis.alt-tab-macos nextWindowShortcut2 -string ""
+defaults write com.lwouis.alt-tab-macos previousWindowShortcut '"\U2303\U2325\U21e7\U2318\U21e5"'
+defaults write com.lwouis.alt-tab-macos shortcutStyle -int 0
+defaults write com.lwouis.alt-tab-macos shortcutStyle2 -int 1
+defaults write com.lwouis.alt-tab-macos shortcutStyle3 -int 1
+defaults write com.lwouis.alt-tab-macos theme -int 0
+defaults write com.lwouis.alt-tab-macos updatePolicy -int 1
+defaults write com.lwouis.alt-tab-macos windowMaxWidthInRow -int 30
+
+###############################################################################
 # tmux
 ###############################################################################
 
@@ -493,7 +512,6 @@ $HOME/.config/tmux/plugins/tpm/tpm --install
 ###############################################################################
 # Login Items
 ###############################################################################
-
 
 # Found this nice shorthand loop here:
 # https://github.com/megalithic/dotfiles/blob/106a574767ec5dab29ac86e754396df5726d1085/macos#L598C1-L616C5

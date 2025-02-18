@@ -167,6 +167,7 @@ ansible-playbook main.yml --ask-become-pass
 - PyCharm
   - Log into work Jetbrains account to get the license
   - Install IdeaVim plugin
+- Install the [Elgato Thunderbolt Dock Utility](https://update.elgato.com/mac/thunderbolt-dock-update/download.php)
 
 # In case you completely forget how any of this works
 
@@ -193,6 +194,8 @@ TODO: Write this explanation
 
 ## Improvements
 
+- Obsidian config
+  - Apparently all of this lives in the `.obsidian` directory at the root of your Obsidian vault
 - Cargo + bob for managing nvim versions
 - Maybe make the kdiff3 config symlinking an ansible task rather than doing it in the `.macos.sh` script
 - Caps Lock -> Control could be done through Karabiner instead of System Settings to remove one manual step
@@ -201,6 +204,10 @@ TODO: Write this explanation
 - Explore zsh's vi mode
 - Try out the [DeskPad utility app](https://github.com/Stengo/DeskPad) for better screen sharing on video calls
   - Here's a good [video demo](https://www.youtube.com/watch?v=O-as2_bud9s) of what it does
+- LLM chat in the terminal
+  - [LLM by Simon Wilson](https://github.com/simonw/llm) - 6.1k stars
+  - [sigoden/aichat](https://github.com/sigoden/aichat) - 5.6k stars
+  - [kharvd/gpt-cli](https://github.com/kharvd/gpt-cli) - 655 stars
 - Maybe try out [Folke's desktop wallpaper](https://github.com/folke/dot/blob/master/config/wall.png)?
 
 ### Neovim
@@ -210,6 +217,7 @@ TODO: Write this explanation
 - Breakpoints, DAP
   - Omerxx video, [DEBUG in Neovim. Like a BOSS.](https://www.youtube.com/watch?v=RziPWdTzSV8)
 - LLMs?
+  - After looking into these, I don't think I'm interested. My general feeling is "stay out of my buffer". I think what I prefer is a way to chat with LLMs in the terminal
   - Avante for nvim? Check out these links:
     - [AI in Neovim (NeovimConf 2024)](https://www.joshmedeski.com/posts/ai-in-neovim-neovimconf-2024/)
     - [Get the Cursor AI experience in Neovim with avante nvim](https://www.youtube.com/watch?v=4kzSV2xctjc)

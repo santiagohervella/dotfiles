@@ -64,7 +64,7 @@ local hotkeys = {
 	{ key = "S", apps = { "Slack" } },
 	{ key = "T", apps = { "TextEdit", "Transmission" } },
 	{ key = "V", apps = { "AWS VPN Client" } },
-	{ key = "Z", apps = { "zoom.us", "Zed" } },
+	{ key = "Z", apps = { "zoom.us", "Zed", "Zen Browser" } },
 	{ key = "W", apps = { "WezTerm" } },
 }
 
