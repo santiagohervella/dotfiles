@@ -46,7 +46,7 @@ local function bindHotkeys(hotkeys)
 end
 
 local hotkeys = {
-	{ key = "1", apps = { "1Password 7" } },
+	{ key = "1", apps = { "1Password 7", "1Password" } },
 	{ key = "A", apps = { "Arc" } },
 	{ key = "B", apps = { "Beekeeper Studio" } },
 	{ key = "E", apps = { "Microsoft Edge" } },

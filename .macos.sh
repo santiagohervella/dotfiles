@@ -521,6 +521,7 @@ $HOME/.config/tmux/plugins/tpm/tpm --install
 # https://github.com/megalithic/dotfiles/blob/106a574767ec5dab29ac86e754396df5726d1085/macos#L598C1-L616C5
 # This way I don't have to duplicate the applescript line for each app
 apps_to_startup=(
+  "AltTab"
   "Bartender 5"
   "Hammerspoon"
   # "iStat Menus" # TODO: Does this need to be here?
@@ -543,7 +544,7 @@ done
 
 # Restart affected applications if `--no-restart` flag is not present.
 if [[ ! ($* == *--no-restart*) ]]; then
-  for app in "cfprefsd" "Dock" "Finder" "SystemUIServer" "Terminal" "Activity Monitor" "TextEdit" "iTerm2" "Hammerspoon" "Keyboard Maestro"; do
+  for app in "cfprefsd" "Dock" "Finder" "SystemUIServer" "Terminal" "Activity Monitor" "TextEdit" "iTerm2" "Hammerspoon" "Keyboard Maestro" "AltTab"; do
     killall "${app}" > /dev/null 2>&1
   done
 fi
