@@ -83,8 +83,11 @@ return {
 					capabilities = capabilities,
 				})
 			end,
+			["ts_ls"] = function()
+				-- Skip typescript-language-server because it's handled by ./typescript-tools.lua
+				-- do nothing
+			end,
 			["lua_ls"] = function()
-				-- configure lua server (with special settings)
 				lspconfig["lua_ls"].setup({
 					capabilities = capabilities,
 					settings = {

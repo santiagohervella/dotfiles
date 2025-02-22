@@ -39,10 +39,10 @@ return {
 
 				-- the following ar required based on the types,
 				-- but eh, I'm going to comment them out
-				-- auto_install = true,
-				-- sync_install = false,
-				-- ignore_install = {},
-				-- modules = {},
+				auto_install = true,
+				sync_install = false,
+				ignore_install = {},
+				modules = {},
 
 				incremental_selection = {
 					enable = true,

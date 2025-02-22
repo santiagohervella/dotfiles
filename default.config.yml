@@ -24,8 +24,10 @@ homebrew_installed_packages:
   - stow
   - tmux
   - tmuxinator
+  - hashicorp/tap/terraform
 
-homebrew_taps: []
+homebrew_taps:
+  - hashicorp/tap
 
 homebrew_cask_appdir: /Applications
 
@@ -35,6 +37,7 @@ common_homebrew_cask_apps:
   - alt-tab
   - arc
   - bartender
+  - displaylink
   - font-meslo-lg-nerd-font # Not sure why a font is a cask, but ok
   - grandperspective
   - hammerspoon
@@ -107,8 +110,8 @@ gem_packages: []
 # - name: bundler
 #   state: present # present/absent/latest, default: present
 #   version: "~> 1.15.1" # default: N/A
-npm_packages: []
-# - name: webpack
+npm_packages:
+  - typescript # Need this because it installs tsserver, which is used by the typescript LSP
 #   state: present # present/absent/latest, default: present
 #   version: "^2.6" # default: N/A
 pip_packages: []

@@ -51,6 +51,19 @@ if [ -f "$bartender_plist" ]; then
     /usr/libexec/PlistBuddy -c "Merge ${bartender_arrangement_path} :ProfileSettings" "$bartender_plist"
 fi
 
+# Found this nice shorthand loop here:
+# https://github.com/megalithic/dotfiles/blob/106a574767ec5dab29ac86e754396df5726d1085/macos#L598C1-L616C5
+# This way I don't have to duplicate the applescript line for each app
+apps_to_startup=(
+  "DisplayLink Manager"
+)
+for app in "${apps_to_startup[@]}"; do
+  log "setting to \"${app}\" to launch at startup."
+
+  # Enable apps at startup
+  osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/${app}.app", hidden:true}' >/dev/null && log_ok "DONE"
+done
+
 ###############################################################################
 # Login Items
 ###############################################################################

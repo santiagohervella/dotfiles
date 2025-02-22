@@ -44,13 +44,11 @@ return {
 			"<cmd>Telescope oldfiles<CR>",
 			desc = "Show recent files",
 		},
-		-- Trying out snip.nvim instead of Telescope for finding open buffers
-		-- Check out ./snipe.lua
-		-- {
-		-- 	"<leader>fb",
-		-- 	"<cmd>Telescope buffers<CR>",
-		-- 	desc = "Show open buffers",
-		-- },
+		{
+			"<leader>fb",
+			"<cmd>Telescope buffers<CR>",
+			desc = "Show open buffers",
+		},
 		-- Experimental keymaps (TODO: Try these out!)
 		{
 			"<leader>fs",
