@@ -12,6 +12,7 @@ roles*
 !.config/tmuxinator/scratch.yml
 # Any overrides should be machine specific and not checked in
 config.yml
+.gitconfig-overrides
 
 # Work related
 .config/AWS VPN Client

@@ -1,4 +1,3 @@
-# Of course, update [user] if on a work machine
 [user]
 	name = santiagohervella
 	email = 57931354+santiagohervella@users.noreply.github.com
@@ -8,6 +7,9 @@
   autocrlf = input
 [push]
   autoSetupRemote = true
+[include]
+  # Any overrides to this config go in this .gitconfig-overrides file
+  path = ~/.gitconfig-overrides
 
 
 # Basically everything from here to the end is experimental and is mostly taken from here:
