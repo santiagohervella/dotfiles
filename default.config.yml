@@ -3,6 +3,7 @@ configure_dotfiles: true
 configure_terminal: true
 configure_osx: true
 # work or personal
+# If work, override in ./config.yml
 machine_type: 'personal'
 
 homebrew_installed_packages:
