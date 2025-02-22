@@ -4,7 +4,10 @@ return {
 	dependencies = {
 		"williamboman/mason-lspconfig.nvim", -- bridges gap between mason & lspconfig
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		"neovim/nvim-lspconfig",
 	},
+	priority = 100, -- Add this to ensure it loads early
+	event = { "BufReadPre", "BufNewFile" }, -- Match the lspconfig event
 	cmd = {
 		"Mason",
 		"MasonInstall",
@@ -13,7 +16,6 @@ return {
 		"MasonLog",
 		"MasonUpdate",
 	},
-	event = "VeryLazy", -- This ensures Mason runs its setup during startup, but after other urgent plugins
 	config = function()
 		local mason = require("mason")
 		local mason_lspconfig = require("mason-lspconfig")
