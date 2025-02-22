@@ -22,7 +22,6 @@ return {
 			preset = {
 				---@type snacks.dashboard.Item[]
 				keys = {
-					-- keymap
 					{
 						desc = "Find File",
 						action = "<leader>ff",

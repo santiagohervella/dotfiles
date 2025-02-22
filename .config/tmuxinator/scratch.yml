@@ -1,0 +1,23 @@
+# ~/.config/tmuxinator/scratch.yml
+
+name: scratch
+root: ~/Documents/projects/
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+pre_window: clear
+
+# Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
+startup_window: git
+
+# Specifies (by index) which pane of the specified window will be selected on project startup. If not set, the first pane is used.
+# startup_pane: 1
+
+# Controls whether the tmux session should be attached to automatically. Defaults to true.
+# attach: false
+
+windows:
+  - playground:
+      layout: even-vertical
+      panes:
+        - pane1:
+        - pane2:

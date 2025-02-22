@@ -8,6 +8,9 @@ roles*
 .config/iterm2/AppSupport
 .config/tmux/plugins/
 .config/gh
+.config/tmuxinator/*
+!.config/tmuxinator/scratch.yml
+
 
 # TODO: Clean up. Not sure if I need these
 *.vagrant

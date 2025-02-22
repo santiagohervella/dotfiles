@@ -204,10 +204,6 @@ TODO: Write this explanation
 - Explore zsh's vi mode
 - Try out the [DeskPad utility app](https://github.com/Stengo/DeskPad) for better screen sharing on video calls
   - Here's a good [video demo](https://www.youtube.com/watch?v=O-as2_bud9s) of what it does
-- LLM chat in the terminal
-  - [LLM by Simon Wilson](https://github.com/simonw/llm) - 6.1k stars
-  - [sigoden/aichat](https://github.com/sigoden/aichat) - 5.6k stars
-  - [kharvd/gpt-cli](https://github.com/kharvd/gpt-cli) - 655 stars
 - Maybe try out [Folke's desktop wallpaper](https://github.com/folke/dot/blob/master/config/wall.png)?
 
 ### Neovim
@@ -216,15 +212,7 @@ TODO: Write this explanation
 
 - Breakpoints, DAP
   - Omerxx video, [DEBUG in Neovim. Like a BOSS.](https://www.youtube.com/watch?v=RziPWdTzSV8)
-- LLMs?
-  - After looking into these, I don't think I'm interested. My general feeling is "stay out of my buffer". I think what I prefer is a way to chat with LLMs in the terminal
-  - Avante for nvim? Check out these links:
-    - [AI in Neovim (NeovimConf 2024)](https://www.joshmedeski.com/posts/ai-in-neovim-neovimconf-2024/)
-    - [Get the Cursor AI experience in Neovim with avante nvim](https://www.youtube.com/watch?v=4kzSV2xctjc)
-    - [avante.nvim](https://github.com/yetone/avante.nvim)
-  - Similarly, properly set up [CopilotChat](https://github.com/CopilotC-Nvim/CopilotChat.nvim)
-    - [This](https://github.com/newtoallofthis123/nvim-config/blob/main/lua/noobscience/plugins/copilotchat.lua) could be a good setup to reference that I found by searching GitHub
-- New Neovim config has a bunch of quirks that are not fun. Try to figure those out...
+- New Neovim config has quirks that are not fun. Try to figure those out...
   - The LSP diagnostics don't always refresh upon exiting insert mode. Hard to reproduce so I'll just have to be on the lookout for this
 - Maybe set look into Obsidian plugins or general note taking improvements
   - Omerxx's video [The Holy Grail of Neovim Note Taking](https://www.youtube.com/watch?v=5ht8NYkU9wQ)
@@ -233,7 +221,7 @@ TODO: Write this explanation
     - [My complete Neovim markdown setup and workflow in 2025](https://www.youtube.com/watch?v=1YEbKDlxfss)
   - [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) to preview markdown in the browser and have the position of the page synced to the editor
 - Maybe check out [lsp-timeout.nvim](https://github.com/hinell/lsp-timeout.nvim/tree/main) to kill LSP servers after a certain amount of time
-- I don't really think I need this one, but before deciding on that, I should do a bit of research while I'm working to see if there are tons of leftover language servers all the time
+  - I don't really think I need this one, but before deciding on that, I should do a bit of research while I'm working to see if there are tons of leftover language servers all the time
 
 #### To read or watch
 
@@ -249,3 +237,4 @@ TODO: Write this explanation
 
 - Maybe set up Omerxx's [GoMaCal Hammerspoon thing](https://github.com/omerxx/GoMaCal) to get calendar messages in your face?
   - Here is how he uses it in his [`init.lua`](https://github.com/omerxx/dotfiles/blob/master/hammerspoon/init.lua#L21)
+- It might be simpler to make the right option key the hyper key using karabiner. It could still act as option when combined with any other modifier key or with the arrow keys. But otherwise, boom now everything is hyper-letter to switch, rather than needing to carefully keep track of the right option key's state in hammerspoon
