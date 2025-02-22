@@ -31,6 +31,10 @@ This purpose of this section is so I don't continue to see these plugins as shin
 - [folke/snacks.nvim - scroll](https://github.com/folke/snacks.nvim/blob/main/docs/scroll.md)
   - These smooth scrolling plugins always seem nice but after trying them out, they end up making things feel a bit less instant due to the animation. Oh well!
   - I tried all 3 of these plugins and they all felt exactly the same. Slow. But pretty!
+- [declancm/cinnamon.nvim](https://github.com/declancm/cinnamon.nvim)
+  - Now this one I found commented out in [Mitchell Hashimoto's config](https://github.com/mitchellh/nixos-config/blob/main/users/mitchellh/vim-config.nix#L103)
+  - This is absolutely the best smooth scrolling plugin I've found because you can adjust the delay in the scrolling so you can go from stock behavior to very slow smooth scrolling
+  - I still don't think I want to use it because I like the instant snappiness, but I'm going to keep it checked in, just disabled in case I want to come back to it
 - [pocco81/true-zen.nvim](https://github.com/pocco81/true-zen.nvim)
   - The video demo on the true-zen github page is awesome and is exactly what I'd like to achieve:
   - Zen mode in the middle but with the ability to open the file explorer if I'd like

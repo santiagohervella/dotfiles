@@ -234,6 +234,7 @@ defaults write com.apple.finder SidebarShowingSignedIntoiCloud -bool true
 defaults write com.apple.finder SidebarShowingiCloudDesktop -bool false
 defaults write com.apple.finder SidebarTagsSctionDisclosedState -bool true
 defaults write com.apple.finder SidebariCloudDriveSectionDisclosedState -bool true
+defaults write com.apple.finder ShowRecentTags -bool false
 
 # Finder: show hidden files by default
 # defaults write com.apple.finder AppleShowAllFiles -bool true
@@ -254,7 +255,7 @@ defaults write com.apple.finder QLEnableTextSelection -bool true
 defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 
 # Disable the warning when changing a file extension
-# defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
 # Avoid creating .DS_Store files on network or USB volumes
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true

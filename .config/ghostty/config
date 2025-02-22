@@ -10,7 +10,12 @@ font-feature = -dlig
 window-padding-y = 0
 adjust-cell-height = 9
 
-theme = iTerm2 Default
+# theme = iTerm2 Default
+theme = gruvbox-material
+# I found this these in Mitchell Hashimoto's config:
+# https://github.com/mitchellh/vim-misc/blob/master/colors/onehalfdark.vim
+# It's pretty nice and I like it as a backup to gruvbox-material
+# theme = OneHalfDark 
 
 macos-icon = custom-style
 macos-icon-ghost-color = purple
