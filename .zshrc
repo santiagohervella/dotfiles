@@ -3,6 +3,10 @@ export VISUAL="$EDITOR"
 
 bindkey -s ^f "~/.config/tmux/tmux-sessionizer\n"
 
+if [ -f "$HOME/.zsh_env_vars" ]; then
+  source $HOME/.zsh_env_vars
+fi
+
 # This is so programs don't look for config files in application support
 export XDG_CONFIG_HOME="$HOME/.config"
 

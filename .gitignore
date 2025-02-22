@@ -10,14 +10,14 @@ roles*
 .config/gh
 .config/tmuxinator/*
 !.config/tmuxinator/scratch.yml
+./config.yml
 
+# Work related
+.config/AWS VPN Client
+.config/AWSVPNClient
 
 # TODO: Clean up. Not sure if I need these
 *.vagrant
 *.retry
 coast-files/
 default-diffs/
-
-# Work related
-.config/AWS VPN Client
-.config/AWSVPNClient
