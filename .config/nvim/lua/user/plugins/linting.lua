@@ -13,6 +13,11 @@ return {
 			python = { "pylint" },
 		}
 
+		-- Extend Pylint's default args
+		lint.linters.pylint.args = vim.list_extend(lint.linters.pylint.args or {}, {
+			"--disable C0114,C0115,C0116", -- Disable docstring warnings
+		})
+
 		local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
 		vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {

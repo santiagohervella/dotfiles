@@ -212,6 +212,7 @@ TODO: Write this explanation
 
 - Breakpoints, DAP
   - Omerxx video, [DEBUG in Neovim. Like a BOSS.](https://www.youtube.com/watch?v=RziPWdTzSV8)
+  - This new plugin [nvim-dap-view](https://github.com/igorlfs/nvim-dap-view) could be a great alternative to the very busy nvmi-dap-ui that everyone uses
 - New Neovim config has quirks that are not fun. Try to figure those out...
   - The LSP diagnostics don't always refresh upon exiting insert mode. Hard to reproduce so I'll just have to be on the lookout for this
 - Maybe set look into Obsidian plugins or general note taking improvements

@@ -110,6 +110,9 @@ return {
 				lspconfig["pyright"].setup({
 					capabilities = capabilities,
 					settings = {
+						pyright = {
+							autoImportCompletion = true,
+						},
 						python = {
 							analysis = {
 								reportMissingTypeStubs = false,
@@ -118,6 +121,19 @@ return {
 					},
 				})
 			end,
+		})
+
+		-- sourcekit is part of the Swift toolchain and so Mason doesn't offer it standalone
+		-- Thus, we must set it up outside of the mason-lspconfig setup_handlers()
+		-- https://www.swift.org/documentation/articles/zero-to-swift-nvim.html#language-server-support
+		lspconfig.sourcekit.setup({
+			capabilities = {
+				workspace = {
+					didChangeWatchedFiles = {
+						dynamicRegistration = true,
+					},
+				},
+			},
 		})
 	end,
 }

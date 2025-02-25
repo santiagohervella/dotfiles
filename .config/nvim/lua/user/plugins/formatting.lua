@@ -18,6 +18,7 @@ return {
 				markdown = { "prettier" },
 				graphql = { "prettier" },
 				liquid = { "prettier" },
+				go = { "gofmt" },
 				lua = { "stylua" },
 				python = { "isort", "black" },
 				hcl = { "terraform_fmt" },
