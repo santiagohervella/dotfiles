@@ -3,6 +3,11 @@ export VISUAL="$EDITOR"
 
 bindkey -s ^f "~/.config/tmux/tmux-sessionizer\n"
 
+# Until I find out why these broke, hardcoding them back in
+bindkey '^R' history-incremental-search-backward
+bindkey '^P' history-beginning-search-backward
+bindkey '^N' history-beginning-search-forward
+
 if [ -f "$HOME/.zsh_env_vars" ]; then
   source $HOME/.zsh_env_vars
 fi
