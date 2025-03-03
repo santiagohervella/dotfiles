@@ -4,7 +4,6 @@ return {
 		"nvim-tree/nvim-web-devicons",
 	},
 	keys = {
-		{ "<leader>E", "<cmd>NvimTreeToggle<CR>", desc = "Show nvim-tree" },
 		{
 			"<leader>e",
 			function()
@@ -17,6 +16,17 @@ return {
 						focus = true,
 					})
 				end
+			end,
+			desc = "Show nvim-tree",
+		},
+		{
+			"<leader>E",
+			function()
+				local api = require("nvim-tree.api")
+				api.tree.find_file({
+					open = true,
+					focus = true,
+				})
 			end,
 			desc = "Show current file in nvim-tree",
 		},

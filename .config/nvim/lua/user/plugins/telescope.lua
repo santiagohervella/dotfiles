@@ -18,6 +18,9 @@ return {
 		"nvim-telescope/telescope-ui-select.nvim",
 		"nvim-tree/nvim-web-devicons",
 	},
+	-- I don't want to move the lsp keymaps that use telescope into the telescope file
+	-- So instead, I'm going to keep telescope as a dependency here to make sure it's loaded
+	event = { "BufReadPre", "BufNewFile" },
 	keys = {
 		{
 			"<leader>ff",

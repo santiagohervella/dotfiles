@@ -48,8 +48,6 @@ keymap("n", "N", "Nzzzv")
 -- Easy search and replace setup for the word the cursor is on
 keymap("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
-keymap("n", "Q", "<nop>") -- disables Q
-
 -- Prevent accidentally hitting q all the time in normal mode and starting a recording...
 keymap("n", "<leader>q", "q", opts)
 keymap("n", "q", "<Nop>", opts)
@@ -69,10 +67,14 @@ keymap("i", "<C-c>", "<ESC>")
 
 -- Command --
 -- Handling common typos
-keymap("c", "Wa", "wa")
-keymap("c", "W", "w")
-keymap("c", "Qa", "qa")
-keymap("c", "Q", "q")
+vim.cmd([[
+  command! Q q
+  command! W w
+  command! Wq wq
+  command! WQ wq
+  command! Qa qa
+  command! QA qa
+]])
 
 -- Tmux sessionizer
 keymap("n", "<C-f>", ":silent !tmux neww ~/.config/tmux/tmux-sessionizer<CR>")
@@ -91,8 +93,6 @@ end
 _G.yank_modified_path = yank_modified_path
 
 keymap("n", "<leader>yb", ":lua yank_modified_path()<CR>")
-
--- Plugins keymaps --
 
 -- EXPERIMENTAL
 -- Trying these out...
