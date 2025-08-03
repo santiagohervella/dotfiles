@@ -80,8 +80,8 @@ vim.cmd([[
 keymap("n", "<C-f>", ":silent !tmux neww ~/.config/tmux/tmux-sessionizer<CR>")
 
 -- Merge conflict resolution
-keymap("n", "<leader>gdh", ":diffget //2<CR>")
-keymap("n", "<leader>gdl", ":diffget //3<CR>")
+keymap("n", "<leader>gdh", ":diffget //2<CR>", { desc = "Merge conflict resolution: Take left side" })
+keymap("n", "<leader>gdl", ":diffget //3<CR>", { desc = "Merge conflict resolution: Take right side" })
 
 -- Yank current buffer path to clipboard in a TypeScript project
 local function yank_modified_path()
@@ -105,7 +105,7 @@ keymap("n", "<leader>D", function()
 		vim.cmd("windo diffthis")
 		vim.cmd("windo set wrap")
 	end
-end)
+end, { desc = "Toggle diffing two open split buffers" })
 
 -- Here is another way of doing transparency if you don't want to use the transparency plugin
 -- This doesn't work for all backgrounds and there's no way to toggle back without restarting nvim, but it's something

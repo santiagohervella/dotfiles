@@ -29,7 +29,7 @@ return {
 				keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
 
 				opts.desc = "Go to definition in vertical split"
-				keymap.set("n", "gD", ":vsplit | lua vim.lsp.buf.definition()<CR>")
+				keymap.set("n", "gD", ":vsplit | lua vim.lsp.buf.definition()<CR>", opts)
 
 				opts.desc = "Show LSP implementations"
 				keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
