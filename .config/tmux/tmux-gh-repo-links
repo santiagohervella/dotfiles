@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+repos=$(gh repo ls)
+repos_to_display=$(echo "$repos" | cut -d'/' -f2 | cut -d$'\t' -f1)
+
+selected_line=$(echo "$repos_to_display" | dynamic-fzf | head -n1)
+
+if [[ -z $selected_line ]]; then
+  exit 0
+fi
+
+line_number=$(echo "$repos_to_display" | grep -n "^$selected_line$" | cut -d: -f1)
+full_repo=$(echo "$repos" | sed -n "${line_number}p" | cut -d$'\t' -f1)
+
+link_options=("Actions" "PRs" "Releases" "Code")
+selected_link=$(printf "%s\n" "${link_options[@]}" | dynamic-fzf)
+
+if [[ -z $selected_link ]]; then
+  exit 0
+fi
+
+gh_browse_section() {
+    local repo="$1"
+    local section="$2"
+
+    gh browse --repo "$repo" --no-browser | sed "s|\$|/$section|" | xargs open
+}
+
+case $selected_link in
+  Actions)
+    gh_browse_section "$full_repo" "actions"
+    ;;
+
+  PRs)
+    gh_browse_section "$full_repo" "pulls"
+    ;;
+
+  Releases)
+    gh_browse_section "$full_repo" "releases"
+    ;;
+
+  Code)
+    gh_browse_section "$full_repo" ""
+    ;;
+
+  *)
+    echo -n "unknown"
+    ;;
+esac

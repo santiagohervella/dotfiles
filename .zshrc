@@ -12,6 +12,10 @@ if [ -f "$HOME/.zsh_env_vars" ]; then
   source $HOME/.zsh_env_vars
 fi
 
+# Source all custom zsh functions
+# I prefer this to putting them in /bin
+for file in ~/.config/zsh/*; do source "$file"; done
+
 # This is so programs don't look for config files in application support
 export XDG_CONFIG_HOME="$HOME/.config"
 
