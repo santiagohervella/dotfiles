@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+
+set -e
+
+BASE_GIT_COMMAND="git checkout -b"
+BASE_BRANCH_NAME="santiago/"
+
+
+get_recent_local_git_branch_names() {
+    git for-each-ref --count=5 --sort=-committerdate refs/heads/ | \
+    sed 's/^.*refs\/heads\///'
+}
+
+get_ticket() {
+    local clipboard_content
+    clipboard_content=$(pbpaste)
+    clipboard_content=$(echo "$clipboard_content" | xargs)
+
+    local found_ticket
+    found_ticket=$(echo "$clipboard_content" | grep -o 'FPM-[0-9]\+$' || true)
+
+    if [[ -n "$found_ticket" ]]; then
+        echo "$found_ticket"
+        return 0
+    fi
+
+    local branch_names
+    branch_names=$(get_recent_local_git_branch_names)
+
+    if [[ -z "$branch_names" ]]; then
+        echo "No recent branches found" >&2
+        return 1
+    fi
+
+    local selected_branch
+    selected_branch=$(echo "$branch_names" | gum choose --header "Select a branch with the ticket you want:")
+
+    if [[ -z "$selected_branch" ]]; then
+        echo "No branch selected" >&2
+        return 1
+    fi
+
+    found_ticket=$(echo "$selected_branch" | grep -o 'FPM-[0-9]\+' || true)
+
+    if [[ -z "$found_ticket" ]]; then
+        echo "Selected branch does not contain FPM ticket" >&2
+        return 1
+    fi
+
+    echo "$found_ticket"
+}
+
+prompt_for_description() {
+    local command_so_far="$1"
+    local description
+
+    description=$(gum input --placeholder "Enter branch description" --prompt "$command_so_far")
+
+    if [[ -z "$description" ]]; then
+        echo "No description provided" >&2
+        return 1
+    fi
+
+    description=$(echo "$description" | sed 's/[[:space:]]\+/-/g' | sed 's/^-\|-$//g')
+
+    echo "$description"
+}
+
+main() {
+    local git_command="$BASE_GIT_COMMAND $BASE_BRANCH_NAME"
+
+    local ticket
+    if ! ticket=$(get_ticket); then
+        echo "Failed to get ticket" >&2
+        exit 1
+    fi
+
+    git_command="${git_command}${ticket}-"
+
+    local description
+    if ! description=$(prompt_for_description "$git_command"); then
+        echo "Failed to get description" >&2
+        exit 1
+    fi
+
+    git_command="${git_command}${description}"
+
+    $git_command
+}
+
+if ! command -v gum &> /dev/null; then
+    echo "Error: gum is not installed. Please install it first:" >&2
+    echo "  brew install gum" >&2
+    echo "  or visit: https://github.com/charmbracelet/gum" >&2
+    exit 1
+fi
+
+main "$@"

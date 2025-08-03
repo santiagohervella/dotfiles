@@ -14,7 +14,7 @@ fi
 
 # Source all custom zsh functions
 # I prefer this to putting them in /bin
-for file in ~/.config/zsh/*; do source "$file"; done
+for file in "$HOME/.config/zsh/source/*"; do source "$file"; done
 
 # This is so programs don't look for config files in application support
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -44,6 +44,9 @@ alias gcm="git checkout main"
 # Used to undo a commit that has not yet been pushed. It takes the files in the commit and puts them back into local staged files.
 # Can't remember what happens to existing local changes when you do this, so maybe just stash them or do a non-committal test?
 alias gitundo='git reset HEAD~1'
+
+# Aliases for custom scripts
+alias ggit="$HOME/.config/zsh/alias/new-git-branch"
 
 eval "$(starship init zsh)"
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
