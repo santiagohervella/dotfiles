@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-smart-fzf() {
+dynamic-fzf() {
     local term_height
     if [ -n "$TMUX" ]; then
         term_height=$(tmux display-message -p '#{client_height}')
