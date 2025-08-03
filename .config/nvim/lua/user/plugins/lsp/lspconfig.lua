@@ -116,9 +116,21 @@ return {
 						python = {
 							analysis = {
 								reportMissingTypeStubs = false,
+								useLibraryCodeForTypes = true,
+								autoSearchPaths = true,
 							},
 						},
 					},
+					on_new_config = function(config, root_dir)
+						vim.notify("Running on new config")
+						if vim.fn.filereadable(root_dir .. "/pyproject.toml") == 1 then
+							local poetry_env =
+								vim.fn.trim(vim.fn.system("cd " .. root_dir .. " && poetry env info -p 2>/dev/null"))
+							if poetry_env ~= "" then
+								config.settings.python.pythonPath = poetry_env .. "/bin/python"
+							end
+						end
+					end,
 				})
 			end,
 		})

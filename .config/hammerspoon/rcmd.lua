@@ -54,7 +54,7 @@ local hotkeys = {
 	{ key = "G", apps = { "Ghostty" } },
 	{ key = "H", apps = { "Horse" } },
 	{ key = "I", apps = { "iTerm2" } },
-	{ key = "K", apps = { "Keyboard Maestro" } },
+	{ key = "K", apps = { "Keyboard Maestro", "kitty" } },
 	{ key = "M", apps = { "Messages", "Music" } },
 	{ key = "N", apps = { "Notes" } },
 	{ key = "O", apps = { "Omnifocus", "Obsidian" } },
@@ -64,7 +64,7 @@ local hotkeys = {
 	{ key = "S", apps = { "Slack" } },
 	{ key = "T", apps = { "TextEdit", "Transmission" } },
 	{ key = "V", apps = { "AWS VPN Client" } },
-	{ key = "Z", apps = { "zoom.us", "Zed", "Zen Browser" } },
+	{ key = "Z", apps = { "zoom.us", "Zed", "Zen" } },
 	{ key = "W", apps = { "WezTerm" } },
 }
 

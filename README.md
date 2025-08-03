@@ -43,6 +43,20 @@ Change the `machine_type` variable in `./default.config.yml` to be 'personal' or
 ansible-playbook main.yml --ask-become-pass
 ```
 
+## Run part of the playbook using tags
+
+```sh
+ansible-playbook main.yml --ask-become-pass --tags homebrew
+```
+
+## Update homebrew cask apps
+
+```sh
+brew upgrade --cask --greedy
+```
+
+Without the `greedy` flag, apps that are set to autoupdate will not update via the normal `brew update` command
+
 # Remaining manual steps
 
 ## On all Macs
@@ -168,6 +182,9 @@ ansible-playbook main.yml --ask-become-pass
   - Log into work Jetbrains account to get the license
   - Install IdeaVim plugin
 - Install the [Elgato Thunderbolt Dock Utility](https://update.elgato.com/mac/thunderbolt-dock-update/download.php)
+- Create and populate `~/.zsh_env_vars`
+  - YARN_NPM_AUTH_TOKEN
+  - GEMINI_API_KEY
 
 # In case you completely forget how any of this works
 

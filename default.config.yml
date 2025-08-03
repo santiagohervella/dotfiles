@@ -7,29 +7,35 @@ configure_osx: true
 machine_type: 'personal'
 
 homebrew_installed_packages:
+  - atuin
+  - awscli
   - bat
   - csvlens
   - dockutil
   - duti
   - ffmpeg
   - fzf # Used by tmux-sessionizer script
-  - go
+  - gemini-cli
   - gh
   - git
+  - go
+  - hashicorp/tap/terraform
   - jq
   - lazygit
   - neovim
   - nodenv
+  - ohueter/tap/autokbisw
   - pyenv
   - ripgrep # Used by Telescope nvim plugin
   - starship
   - stow
   - tmux
   - tmuxinator
-  - hashicorp/tap/terraform
+  - xcodesorg/made/xcodes
 
 homebrew_taps:
   - hashicorp/tap
+  - ohueter/tap
 
 homebrew_cask_appdir: /Applications
 
@@ -37,7 +43,6 @@ homebrew_cask_appdir: /Applications
 common_homebrew_cask_apps:
   - 1password
   - alt-tab
-  - arc
   - bartender
   - boop
   - displaylink
@@ -48,7 +53,6 @@ common_homebrew_cask_apps:
   - karabiner-elements
   - kdiff3 # Diffing tool I'm trying out
   - keyboard-maestro
-  - microsoft-edge
   - obsidian
   - omnifocus
   - postman
@@ -57,7 +61,12 @@ common_homebrew_cask_apps:
   - uhk-agent
   - vlc
   - zed
-  - zen-browser
+
+  # Browsers
+  - arc
+  - min
+  - vivaldi
+  - zen
 
   # Terminals, gotta catch 'em all!
   - alacritty
@@ -77,12 +86,16 @@ personal_homebrew_cask_apps:
   - zoom
 
 work_homebrew_cask_apps:
+  - ankerwork # For the Anker webcam
   - beekeeper-studio
   - displaylink
   - docker
+  - figma
   - intellij-idea-ce
+  - obs
+  - postico # Beekeeper competitor, let's see if I like it
   - pycharm
-  - sequel-ace # Beekeeper competitor, let's see if I like it
+  - xcodes
 
 homebrew_cask_apps: >-
   {{
@@ -95,6 +108,7 @@ homebrew_cask_apps: >-
 mas_installed_apps:
   - { id: 1558360383, name: 'Menu Bar Calendar (1.4.1)' }
   - { id: 6498891868, name: 'Persona Webcam (1.3.1)' }
+  - { id: 497799835, name: 'Xcode (16.2)' }
   # - { id: 1596506190, name: "Play (2.4.0)" }
   # - { id: 1614730313, name: "MusicBox (1.4.7)" }
   # - { id: 1289583905, name: "Pixelmator Pro (3.6.14)" }
@@ -115,6 +129,7 @@ gem_packages: []
 #   version: "~> 1.15.1" # default: N/A
 npm_packages:
   - typescript # Need this because it installs tsserver, which is used by the typescript LSP
+  - npm-quick-run # https://github.com/bahmutov/npm-quick-run
 #   state: present # present/absent/latest, default: present
 #   version: "^2.6" # default: N/A
 pip_packages: []

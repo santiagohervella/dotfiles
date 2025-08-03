@@ -38,7 +38,6 @@ return {
 	-- 	"bluz71/vim-nightfly-guicolors",
 	-- 	priority = 1000, -- make sure to load this before all the other start plugins
 	-- 	config = function()
-	-- 		-- load the colorscheme here
 	-- 		vim.cmd([[colorscheme nightfly]])
 	-- 	end,
 	-- },
@@ -48,7 +47,6 @@ return {
 	-- 	lazy = false, -- make sure we load this during startup if it is your main colorscheme
 	-- 	priority = 1000, -- make sure to load this before all the other start plugins
 	-- 	config = function()
-	-- 		-- load the colorscheme here
 	-- 		vim.cmd([[colorscheme tokyonight]])
 	-- 	end,
 	-- },
@@ -95,7 +93,6 @@ return {
 	-- 	lazy = false, -- make sure we load this during startup if it is your main colorscheme
 	-- 	priority = 1000, -- make sure to load this before all the other start plugins
 	-- 	config = function()
-	-- 		-- load the colorscheme here
 	-- 		-- vim.cmd([[colorscheme kanagawa-dragon]]) -- The darker version, but I find it a bit too dull and too low contrast
 	-- 		vim.cmd([[colorscheme kanagawa-wave]]) -- Bluer, definitely easier to read. This is where the too much yellow really comes into play
 	-- 	end,
@@ -186,5 +183,30 @@ return {
 	-- 	"scottmckendry/cyberdream.nvim",
 	-- 	lazy = false,
 	-- 	priority = 1000,
+	-- },
+	-- {
+	--    -- This one is waaaaay too bright, feels like you're tripping on pink
+	-- 	"samharju/synthweave.nvim",
+	-- 	priority = 1000, -- make sure to load this before all the other start plugins
+	-- 	config = function()
+	-- 		vim.cmd([[colorscheme synthweave]])
+	-- 	end,
+	-- },
+	-- {
+	-- 	-- Not too shabby, I think this is largely usable. The only thing I don't like is the underlining to show occurrances of what's under the cursor.
+	-- 	-- It makes me feel like it's a diagnostic
+	-- 	"mhartington/oceanic-next",
+	-- 	priority = 1000, -- make sure to load this before all the other start plugins
+	-- 	config = function()
+	-- 		vim.cmd([[colorscheme OceanicNext]])
+	-- 	end,
+	-- },
+	-- {
+	-- -- Not bad, but I don't love how the highlighting looks, sadly. It's too similar and I struggle to tell the difference
+	-- 	"rose-pine/neovim",
+	-- 	priority = 1000, -- make sure to load this before all the other start plugins
+	-- 	config = function()
+	-- 		vim.cmd([[colorscheme rose-pine]])
+	-- 	end,
 	-- },
 }

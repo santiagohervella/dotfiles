@@ -30,6 +30,10 @@
                       {
                         "product_id": 24866,
                         "vendor_id": 7504
+                      },
+                      {
+                        "product_id": 1,
+                        "vendor_id": 14248
                       }
                     ],
                     "type": "device_unless"
@@ -37,20 +41,10 @@
                 ],
                 "from": {
                   "key_code": "spacebar",
-                  "modifiers": {
-                    "optional": ["any"]
-                  }
+                  "modifiers": { "optional": ["any"] }
                 },
-                "to": [
-                  {
-                    "key_code": "left_control"
-                  }
-                ],
-                "to_if_alone": [
-                  {
-                    "key_code": "spacebar"
-                  }
-                ],
+                "to": [{ "key_code": "left_control" }],
+                "to_if_alone": [{ "key_code": "spacebar" }],
                 "type": "basic"
               }
             ]
@@ -66,3 +60,4 @@
     }
   ]
 }
+

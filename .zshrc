@@ -12,10 +12,6 @@ if [ -f "$HOME/.zsh_env_vars" ]; then
   source $HOME/.zsh_env_vars
 fi
 
-# Source all custom zsh functions
-# I prefer this to putting them in /bin
-for file in "$HOME/.config/zsh/source/*"; do source "$file"; done
-
 # This is so programs don't look for config files in application support
 export XDG_CONFIG_HOME="$HOME/.config"
 
@@ -24,6 +20,9 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export PATH="$HOME/Library/Python/3.9/bin:$PATH"
 # homebrew installed tools should be in the PATH
 export PATH="/opt/homebrew/bin:$PATH"
+
+# Custom scripts stored in ./.local/bin/ should be in the PATH
+export PATH="$HOME/.local/bin:$PATH"
 
 alias n="nvim"
 alias "n."="nvim ."
@@ -41,12 +40,14 @@ alias gco="git checkout"
 alias gl="git pull"
 alias gcm="git checkout main"
 
+alias nrt="npm run test"
+
 # Used to undo a commit that has not yet been pushed. It takes the files in the commit and puts them back into local staged files.
 # Can't remember what happens to existing local changes when you do this, so maybe just stash them or do a non-committal test?
 alias gitundo='git reset HEAD~1'
 
 # Aliases for custom scripts
-alias ggit="$HOME/.config/zsh/alias/new-git-branch"
+alias ggit="$HOME/.config/zsh/new-git-branch"
 
 eval "$(starship init zsh)"
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
@@ -61,3 +62,9 @@ eval "$(nodenv init -)"
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+
+# autin for better terminal command history
+# https://docs.atuin.sh/guide/installation/#installing-the-shell-plugin
+eval "$(atuin init zsh)"
+
+. "$HOME/.local/bin/env"

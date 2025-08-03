@@ -81,8 +81,8 @@ defaults write com.apple.menuextra.clock ShowSeconds -bool true
 # Don't show the now playing item in the menu bar
 defaults write com.apple.controlcenter 'NSStatusItem Visible NowPlaying' -bool false
 
-# Show the sound item in the menu bar
-defaults write com.apple.controlcenter 'NSStatusItem Visible Sound' -bool true
+# Always show the sound item in the menu bar
+defaults -currentHost write com.apple.controlcenter Sound -int 18
 
 # Disable the “Are you sure you want to open this application?” dialog
 defaults write com.apple.LaunchServices LSQuarantine -bool false
@@ -515,6 +515,12 @@ defaults write com.lwouis.alt-tab-macos windowMaxWidthInRow -int 30
 # Install plugins
 $HOME/.config/tmux/plugins/tpm/tpm --install
 
+
+###############################################################################
+# uv - Python package manager
+###############################################################################
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
 ###############################################################################
 # Login Items
 ###############################################################################
@@ -534,7 +540,8 @@ apps_to_startup=(
   "Menu Bar Calendar"
 )
 for app in "${apps_to_startup[@]}"; do
-  log "setting to \"${app}\" to launch at startup."
+  echo "setting to \"${app}\" to launch at startup."
+  # log "setting to \"${app}\" to launch at startup."
 
   # Enable apps at startup
   osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/${app}.app", hidden:true}' >/dev/null && log_ok "DONE"
