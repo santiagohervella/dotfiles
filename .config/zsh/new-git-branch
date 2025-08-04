@@ -67,6 +67,13 @@ prompt_for_description() {
 }
 
 main() {
+	if ! command -v gum &> /dev/null; then
+	    echo "Error: gum is not installed. Please install it first:" >&2
+	    echo "  brew install gum" >&2
+	    echo "  or visit: https://github.com/charmbracelet/gum" >&2
+	    exit 1
+	fi
+
     local git_command="$BASE_GIT_COMMAND $BASE_BRANCH_NAME"
 
     local ticket
@@ -88,11 +95,5 @@ main() {
     $git_command
 }
 
-if ! command -v gum &> /dev/null; then
-    echo "Error: gum is not installed. Please install it first:" >&2
-    echo "  brew install gum" >&2
-    echo "  or visit: https://github.com/charmbracelet/gum" >&2
-    exit 1
-fi
 
 main "$@"
