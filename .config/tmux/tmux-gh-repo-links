@@ -1,16 +1,14 @@
 #!/usr/bin/env bash
 
-repos=$(gh repo ls)
-repos_to_display=$(echo "$repos" | cut -d'/' -f2 | cut -d$'\t' -f1)
+repos=$(gh repo ls --limit 1000; gh api user/orgs --paginate -q '.[].login' | xargs -I {} gh repo ls {} --limit 1000)
+repos_to_display=$(printf '%s\n' "$repos" | cut -d'/' -f2 | cut -d$'\t' -f1)
+selected_basename=$(printf '%s\n' "$repos_to_display" | dynamic-fzf)
 
-selected_line=$(echo "$repos_to_display" | dynamic-fzf | head -n1)
-
-if [[ -z $selected_line ]]; then
+if [[ -z $selected_basename ]]; then
   exit 0
 fi
 
-line_number=$(echo "$repos_to_display" | grep -n "^$selected_line$" | cut -d: -f1)
-full_repo=$(echo "$repos" | sed -n "${line_number}p" | cut -d$'\t' -f1)
+full_repo=$(printf '%s\n' "$repos" | grep "/$selected_basename[[:space:]]" | cut -d$'\t' -f1)
 
 link_options=("Actions" "PRs" "Releases" "Code")
 selected_link=$(printf "%s\n" "${link_options[@]}" | dynamic-fzf)

@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 
-selected=$(find ~/.config ~/Documents/projects -mindepth 1 -maxdepth 1 -type d | dynamic-fzf)
+repos=$(find ~/Documents/projects -mindepth 1 -maxdepth 1 -type d)
+selected_basename=$(printf '%s\n' "$repos" | xargs -n1 basename | dynamic-fzf)
 
-if [[ -z $selected ]]; then
+if [[ -z $selected_basename ]]; then
   exit 0
 fi
+
+selected=$(printf '%s\n' "$repos" | grep "/$selected_basename$")
 
 selected_name=$(basename "$selected" | tr . _)
 
