@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 
-repos=$(gh repo ls --limit 1000; gh api user/orgs --paginate -q '.[].login' | xargs -I {} gh repo ls {} --limit 1000)
+cache_file="$HOME/.config/tmux/gh-repos-cache"
+cache_duration=1209600  # 2 weeks in seconds
+
+if [[ -f "$cache_file" && $(($(date +%s) - $(stat -f %m "$cache_file"))) -lt $cache_duration ]]; then
+  repos=$(cat "$cache_file")
+else
+  repos=$(gh repo ls --limit 1000; gh api user/orgs --paginate -q '.[].login' | xargs -I {} gh repo ls {} --limit 1000)
+  printf '%s\n' "$repos" > "$cache_file"
+fi
 repos_to_display=$(printf '%s\n' "$repos" | cut -d'/' -f2 | cut -d$'\t' -f1)
 selected_basename=$(printf '%s\n' "$repos_to_display" | dynamic-fzf)
 
