@@ -18,6 +18,7 @@ roles*
 .config/configstore/
 .config/github-copilot/
 .config/uv/
+.config/fish/
 
 # Any overrides should be machine specific and not checked in
 config.yml
