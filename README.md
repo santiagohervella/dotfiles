@@ -201,6 +201,28 @@ I'll try to roughly walk you through the flow.
 
 TODO: Write this explanation
 
+# Handy commands
+
+## If making changes on a work laptop that you actually want to commit from your personal
+
+On the work machine, run:
+
+```sh
+git diff > my-cool-changes.patch
+```
+
+And if you have untracked files, stage them `git add .` and then run:
+
+```sh
+git diff --staged > my-cool-changes.patch
+```
+
+The get that file onto a personal machine and run:
+
+```sh
+git apply my-cool-changes.patch
+```
+
 # TODOs
 
 ## Done but needs to be tested
