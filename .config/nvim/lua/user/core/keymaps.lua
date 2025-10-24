@@ -120,9 +120,9 @@ end, { desc = "Toggle relative line numbers" })
 -- Here is another way of doing transparency if you don't want to use the transparency plugin
 -- This doesn't work for all backgrounds and there's no way to toggle back without restarting nvim, but it's something
 -- Stolen from here: https://github.com/Aylur/dotfiles/blob/4b66557333bd7199fa858e3275405d831287be37/nvim/lua/config/keymaps.lua#L49C1-L55C5
--- keymap("n", "<leader>o", function()
--- 	vim.cmd("highlight Normal guibg=NONE")
--- 	vim.cmd("highlight NonText guibg=NONE")
--- 	vim.cmd("highlight NonText ctermbg=NONE")
--- 	vim.cmd("highlight NonText ctermbg=NONE")
--- end)
+keymap("n", "<leader>bt", function()
+	vim.cmd("highlight Normal guibg=NONE")
+	vim.cmd("highlight NonText guibg=NONE")
+	vim.cmd("highlight NonText ctermbg=NONE")
+	vim.cmd("highlight NonText ctermbg=NONE")
+end, { desc = "Set transparent background" })

@@ -58,6 +58,7 @@ common_homebrew_cask_apps:
   - postman
   - raycast
   - tailscale
+  - transnomino
   - uhk-agent
   - vlc
   - zed

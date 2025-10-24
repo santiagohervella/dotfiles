@@ -61,3 +61,8 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
 		end
 	end,
 })
+
+-- There was an annoying timeout I had to wait for when hitting <C-c> in a .sql file. I couldn't solve it so I asked Claude.
+--From Claude: "The SQL ftplugin is intercepting your <C-c> keypress for SQL completion before your keymap can process it."
+-- "To fix the <C-c> timeout, disable the SQL omni completion"
+vim.g.omni_sql_no_default_maps = 1

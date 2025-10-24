@@ -33,9 +33,14 @@ return {
 			desc = "Find string in cwd",
 		},
 		{
-			"<leader>fc",
+			"<leader>fw",
 			"<cmd>Telescope grep_string<CR>",
 			desc = "Find string under cursor in cwd",
+		},
+		{
+			"<leader>fc",
+			"<cmd>Telescope colorscheme<CR>",
+			desc = "Show colorschemes",
 		},
 		{
 			"<leader>km",
