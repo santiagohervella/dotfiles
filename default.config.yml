@@ -10,6 +10,7 @@ homebrew_installed_packages:
   - atuin
   - awscli
   - bat
+  - cloudflared
   - csvlens
   - dockutil
   - duti
@@ -24,7 +25,7 @@ homebrew_installed_packages:
   - lazygit
   - neovim
   - nodenv
-  - ohueter/tap/autokbisw
+  - ohueter/tap/autokbisw # Used for Charachorder keyboard input switching
   - pyenv
   - ripgrep # Used by Telescope nvim plugin
   - starship
@@ -137,6 +138,10 @@ pip_packages: []
 # - name: mkdocs
 #   state: present # present/absent/latest, default: present
 #   version: "0.16.3" # default: N/A
+go_packages:
+  - name: github.com/golang-migrate/migrate/v4/cmd/migrate #Needed for db migrations in various personal projects
+    version: latest
+    tags: sqlite3
 
 # Glob pattern to ansible task files to run after all other tasks are finished.
 post_provision_tasks: []
