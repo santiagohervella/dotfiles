@@ -49,10 +49,18 @@ ansible-playbook main.yml --ask-become-pass
 ansible-playbook main.yml --ask-become-pass --tags homebrew
 ```
 
-## Update homebrew cask apps
+## Useful homebrew commands
+
+### Update homebrew cask apps
 
 ```sh
 brew upgrade --cask --greedy
+```
+
+### Update one specific hombrew cask app
+
+```sh
+brew upgrade --cask <cask_name>
 ```
 
 Without the `greedy` flag, apps that are set to autoupdate will not update via the normal `brew update` command
@@ -70,6 +78,7 @@ Without the `greedy` flag, apps that are set to autoupdate will not update via t
   - Go to Script Commands under Extensions in preferences and manually set the aliases for any scripts
     - rr -> Rather reasonable size
     - ps -> Presentation size
+    - rz -> Zoom size
 - Manually sign into the Mac App Store
   - Programatic installation of apps from the Mac App Store will fail if you don't manually sign in beforehand.
   - Only previously purchased apps can be installed

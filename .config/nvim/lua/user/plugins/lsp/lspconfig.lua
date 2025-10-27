@@ -14,6 +14,50 @@ return {
 
 		local keymap = vim.keymap -- for conciseness
 
+		-------------------------------------------------------
+		-------------------------------------------------------
+		local function flash_cursor_line_green()
+			local current_win = vim.api.nvim_get_current_win()
+			local current_buf = vim.api.nvim_get_current_buf()
+			local cursor_pos = vim.api.nvim_win_get_cursor(current_win)
+			local line = cursor_pos[1] - 1 -- Convert to 0-indexed
+
+			-- Create a temporary highlight group
+			vim.api.nvim_set_hl(0, "TempGreenLine", { bg = "#004400" })
+
+			-- Add virtual text that spans the entire line
+			local line_content = vim.api.nvim_buf_get_lines(current_buf, line, line + 1, false)[1] or ""
+			local line_length = #line_content
+
+			-- Create virtual text to highlight the line
+			local ns_id = vim.api.nvim_create_namespace("cursor_flash")
+			vim.api.nvim_buf_set_extmark(current_buf, ns_id, line, 0, {
+				virt_text_pos = "overlay",
+				hl_group = "TempGreenLine",
+				end_col = line_length > 0 and line_length or 1,
+				hl_eol = true,
+			})
+
+			-- Clear after delay
+			vim.defer_fn(function()
+				vim.api.nvim_buf_clear_namespace(current_buf, ns_id, 0, -1)
+			end, 250)
+		end
+		-- Custom diagnostics function
+		local function show_diagnostics_or_flash()
+			local diagnostics = vim.diagnostic.get(0) -- Get diagnostics for current buffer (bufnr=0)
+
+			if #diagnostics == 0 then
+				-- No diagnostics found, flash cursor line green
+				flash_cursor_line_green()
+			else
+				-- Diagnostics exist, show them with Telescope
+				require("telescope.builtin").diagnostics({ bufnr = 0 })
+			end
+		end
+		-------------------------------------------------------
+		-------------------------------------------------------
+
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 			callback = function(ev)
@@ -45,7 +89,7 @@ return {
 				keymap.set("n", "<leader>lr", vim.lsp.buf.rename, opts)
 
 				opts.desc = "Show buffer diagnostics"
-				keymap.set("n", "<leader>ld", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
+				keymap.set("n", "<leader>ld", show_diagnostics_or_flash, opts)
 
 				opts.desc = "Show workspace diagnostics"
 				keymap.set("n", "<leader>lD", "<cmd>Telescope diagnostics<CR>", opts)

@@ -155,6 +155,9 @@ defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 65
 defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 160 "<dict><key>enabled</key><false/></dict>"
 defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 52 "<dict><key>enabled</key><false/></dict>"
 
+# Disable Keyboard Shortcuts -> Accessibility -> Invert colors shortcut
+defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 21 "<dict><key>enabled</key><false/></dict>"
+
 # Disable all "Mission Control" shortcuts except "Application Windows"
 defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 118 "<dict><key>enabled</key><false/></dict>"
 defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 163 "<dict><key>enabled</key><false/></dict>"
@@ -414,7 +417,7 @@ defaults write com.googlecode.iterm2 PrefsCustomFolder -string "~/.config/iterm2
 defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
 
 ###############################################################################
-# OmniFocuse 4
+# OmniFocus 4
 ###############################################################################
 
 # Setup shortcut to Search Everything using the menu bar command to shift+command+e
@@ -508,6 +511,16 @@ defaults write com.lwouis.alt-tab-macos theme -int 0
 defaults write com.lwouis.alt-tab-macos updatePolicy -int 1
 defaults write com.lwouis.alt-tab-macos windowMaxWidthInRow -int 30
 
+
+###############################################################################
+# Zoom
+###############################################################################
+
+# Set the hotkey for toggling mute
+defaults write us.zoom.xos.Hotkey "[HK@combo]-HotkeyOnOffAudio" -dict "hot key code" -int 46 "hot key modifier" -int 1835008
+# Making the hotkey for toggling mute a global hotkey
+defaults write us.zoom.xos.Hotkey "[gHK@state]-HotkeyOnOffAudio" -int 1
+
 ###############################################################################
 # tmux
 ###############################################################################
@@ -520,6 +533,13 @@ $HOME/.config/tmux/plugins/tpm/tpm --install
 # uv - Python package manager
 ###############################################################################
 curl -LsSf https://astral.sh/uv/install.sh | sh
+
+###############################################################################
+# Posting (Postman replacement TUI)
+###############################################################################
+# The docs say to install using uv: https://posting.sh/guide/#uv
+uv tool install --python 3.12 posting
+
 
 ###############################################################################
 # Login Items

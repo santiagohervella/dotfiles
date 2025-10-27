@@ -10,7 +10,7 @@ else
   printf '%s\n' "$repos" > "$cache_file"
 fi
 repos_to_display=$(printf '%s\n' "$repos" | cut -d'/' -f2 | cut -d$'\t' -f1)
-selected_basename=$(printf '%s\n' "$repos_to_display" | dynamic-fzf)
+selected_basename=$(printf '%s\n' "$repos_to_display" | sort | dynamic-fzf --border-label="gh" --border-label-pos=bottom)
 
 if [[ -z $selected_basename ]]; then
   exit 0

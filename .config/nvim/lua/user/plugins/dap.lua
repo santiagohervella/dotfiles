@@ -354,11 +354,11 @@ return {
 				"<CMD>lua require('dap').continue()<CR>",
 				desc = "Continue",
 			},
-			{
-				"<Leader>dh",
-				"<CMD>lua require('dapui').eval()<CR>",
-				desc = "Evaluate",
-			},
+			-- {
+			-- 	"<Leader>dh",
+			-- 	"<CMD>lua require('dapui').eval()<CR>",
+			-- 	desc = "Evaluate",
+			-- },
 			{
 				"<Leader>di",
 				"<CMD>lua require('dap').step_into()<CR>",
@@ -384,11 +384,11 @@ return {
 				"<CMD>lua require('dapui').open()<CR>",
 				desc = "Open UI",
 			},
-			{
-				"<Leader>dc",
-				"<CMD>lua require('dapui').close()<CR>",
-				desc = "Close UI",
-			},
+			-- {
+			-- 	"<Leader>dc",
+			-- 	"<CMD>lua require('dapui').close()<CR>",
+			-- 	desc = "Close UI",
+			-- },
 			{
 				"<Leader>dw",
 				"<CMD>lua require('dapui').float_element('watches', { enter = true })<CR>",

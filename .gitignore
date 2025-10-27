@@ -7,9 +7,11 @@ roles*
 .config/raycast/extensions/
 .config/iterm2/AppSupport
 .config/tmux/plugins/
+.config/tmux/gh-repos-cache
 .config/gh
 .config/tmuxinator/*
 !.config/tmuxinator/scratch.yml
+!.config/tmuxinator/dotfiles.yml
 .config/zed/
 !.config/zed/keymap.json
 !.config/zed/settings.json

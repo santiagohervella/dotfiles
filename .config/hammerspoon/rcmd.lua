@@ -52,7 +52,7 @@ local hotkeys = {
 	{ key = "E", apps = { "Microsoft Edge" } },
 	{ key = "F", apps = { "Finder", "Figma" } },
 	{ key = "G", apps = { "Ghostty" } },
-	{ key = "H", apps = { "Horse" } },
+	{ key = "H", apps = { "Horse", "Hoppscotch" } },
 	{ key = "I", apps = { "iTerm2" } },
 	{ key = "K", apps = { "Keyboard Maestro", "kitty" } },
 	{ key = "M", apps = { "Messages", "Music" } },
@@ -63,7 +63,7 @@ local hotkeys = {
 	{ key = "R", apps = { "Reeder" } },
 	{ key = "S", apps = { "Slack" } },
 	{ key = "T", apps = { "TextEdit", "Transmission" } },
-	{ key = "V", apps = { "AWS VPN Client" } },
+	{ key = "V", apps = { "AWS VPN Client", "Vivaldi" } },
 	{ key = "Z", apps = { "zoom.us", "Zed", "Zen" } },
 	{ key = "W", apps = { "WezTerm" } },
 }

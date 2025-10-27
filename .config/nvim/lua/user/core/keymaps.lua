@@ -101,6 +101,7 @@ keymap("n", "<leader>-", "<C-x>", opts) -- decrement shortcut
 keymap("n", "<leader>D", function()
 	if vim.wo.diff then
 		vim.cmd("windo diffoff")
+		vim.cmd("windo set nowrap")
 	else
 		vim.cmd("windo diffthis")
 		vim.cmd("windo set wrap")
@@ -115,7 +116,11 @@ keymap("n", "<leader>ln", function()
 		vim.wo.relativenumber = true
 		vim.wo.number = true
 	end
-end, { desc = "Toggle relative line numbers" })
+end, { desc = "Toggle relative line numbers vs standard line numbers" })
+
+keymap("n", "<leader>nl", function()
+	vim.cmd("windo set relativenumber! number!")
+end, { desc = "Toggle showing line numbers at all" })
 
 -- Here is another way of doing transparency if you don't want to use the transparency plugin
 -- This doesn't work for all backgrounds and there's no way to toggle back without restarting nvim, but it's something

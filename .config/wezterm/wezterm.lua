@@ -20,4 +20,13 @@ config.window_padding = {
 }
 -- config.use_resize_increments = true
 
+config.keys = {
+	-- By default, ctrl + shift + p will open some WezTerm command palette. This is how you disable it
+	{
+		key = "P",
+		mods = "CTRL|SHIFT",
+		action = wezterm.action.DisableDefaultAssignment,
+	},
+}
+
 return config

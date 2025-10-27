@@ -42,6 +42,8 @@ alias gcm="git checkout main"
 
 alias nrt="npm run test"
 
+alias nr="npx npm-quick-run"
+
 # Used to undo a commit that has not yet been pushed. It takes the files in the commit and puts them back into local staged files.
 # Can't remember what happens to existing local changes when you do this, so maybe just stash them or do a non-committal test?
 alias gitundo='git reset HEAD~1'

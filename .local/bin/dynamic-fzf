@@ -7,8 +7,16 @@ else
     term_height=$(tput lines)
 fi
 
+input_data=$(cat)
+input_lines=$(echo "$input_data" | wc -l)
+
 min_lines=15
-height_percent=$((min_lines * 100 / term_height))
+effective_min_lines=$min_lines
+if [ $input_lines -lt $min_lines ]; then
+    effective_min_lines=$input_lines
+fi
+
+height_percent=$((effective_min_lines * 100 / term_height))
 
 final_height=""
 if [ $height_percent -gt 10 ]; then
@@ -17,7 +25,6 @@ else
     final_height="10%"
 fi
 
-input_data=$(cat)
 max_width=$(echo "$input_data" | wc -L)
 term_width=""
 if [ -n "$TMUX" ]; then
