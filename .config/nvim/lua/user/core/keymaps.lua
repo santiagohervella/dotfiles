@@ -122,12 +122,20 @@ keymap("n", "<leader>nl", function()
 	vim.cmd("windo set relativenumber! number!")
 end, { desc = "Toggle showing line numbers at all" })
 
--- Here is another way of doing transparency if you don't want to use the transparency plugin
--- This doesn't work for all backgrounds and there's no way to toggle back without restarting nvim, but it's something
--- Stolen from here: https://github.com/Aylur/dotfiles/blob/4b66557333bd7199fa858e3275405d831287be37/nvim/lua/config/keymaps.lua#L49C1-L55C5
 keymap("n", "<leader>bt", function()
-	vim.cmd("highlight Normal guibg=NONE")
-	vim.cmd("highlight NonText guibg=NONE")
-	vim.cmd("highlight NonText ctermbg=NONE")
-	vim.cmd("highlight NonText ctermbg=NONE")
-end, { desc = "Set transparent background" })
+	local normal_bg = vim.api.nvim_get_hl(0, { name = "Normal" }).bg
+
+	if normal_bg == nil then
+		vim.cmd("colorscheme " .. vim.g.colors_name)
+		print("Transparency disabled")
+	else
+		vim.cmd("highlight Normal guibg=NONE")
+		vim.cmd("highlight NormalNC guibg=NONE")
+		vim.cmd("highlight NonText guibg=NONE")
+		vim.cmd("highlight NonText ctermbg=NONE")
+		vim.cmd("highlight NormalFloat guibg=NONE")
+		vim.cmd("highlight FloatBorder guibg=NONE")
+		vim.cmd("highlight SignColumn guibg=NONE")
+		print("Transparency enabled")
+	end
+end, { desc = "Toggle transparent background" })
