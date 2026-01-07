@@ -48,7 +48,7 @@ opt.splitright = true -- force all vertical splits to go to the right of current
 vim.cmd([[
   augroup highlight_yank
   autocmd!
-  au TextYankPost * silent! lua vim.highlight.on_yank({higroup="Visual", timeout=150})
+  au TextYankPost * silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=150})
   augroup END
 ]])
 

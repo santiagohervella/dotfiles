@@ -294,7 +294,6 @@ return {
 	{
 		-- Daniel Cañas showed me this one. Looks like a mid 2000s theme in a good way
 		"jnurmine/Zenburn",
-		lazy = false,
 		priority = 1000,
 		-- config = function()
 		-- 	vim.cmd.colorscheme("zenburn")
@@ -308,4 +307,10 @@ return {
 		-- 	vim.cmd([[colorscheme reddish]])
 		-- end,
 	},
+	-- {
+	--    -- Totally fine, but it's too soft for my preference
+	-- 	"thesimonho/kanagawa-paper.nvim",
+	-- 	priority = 1000,
+	-- 	opts = {},
+	-- },
 }
