@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
+repos=$(find ~/Documents/projects -mindepth 1 -maxdepth 1 -type d)
 selected_basename=$(printf '%s\n' "$repos" | xargs -n1 basename | sort | dynamic-fzf --border-label="tmux" --border-label-pos=bottom)
 
 if [[ -z $selected_basename ]]; then
   exit 0
 fi
 
-selected=$(find ~/Documents/projects -mindepth 1 -maxdepth 1 -type d -name "$selected_basename")
+selected=$(printf '%s\n' "$repos" | grep "/$selected_basename$")
 
 selected_name=$(basename "$selected" | tr . _)
 
@@ -14,6 +15,13 @@ tmuxinator_path="$HOME/.config/tmuxinator"
 
 if [[ -f "$tmuxinator_path/$selected_name.yml" ]]; then
   tmuxinator $selected_name
+  exit 0
+fi
+
+# Use default template if no specific template exists
+if [[ -f "$tmuxinator_path/default.yml" ]]; then
+  # Pass the session name and root path as arguments to the template
+  tmuxinator start default "$selected_name" "$selected" -n "$selected_name"
   exit 0
 fi
 

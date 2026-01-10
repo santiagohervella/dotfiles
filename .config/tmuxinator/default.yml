@@ -1,0 +1,19 @@
+# ~/.config/tmuxinator/default.yml
+# Default template for projects without a specific tmuxinator config
+
+name: <%= @args[0] %>
+root: <%= @args[1] %>
+
+pre_window: clear
+
+startup_window: git
+
+windows:
+  - git:
+      layout: even-vertical
+      panes:
+        - lazygit:
+            - lg
+        - git cli:
+            - gst
+  - root:

@@ -1,0 +1,19 @@
+# ~/.config/tmuxinator/dotfiles.yml
+
+name: dotfiles
+root: ~/Documents/projects/dotfiles/
+
+pre_window: clear
+
+startup_window: git
+
+windows:
+  - git:
+      layout: even-vertical
+      panes:
+        - lazygit:
+            - lg
+        - git cli:
+            - gst
+  - root:
+      - n .
