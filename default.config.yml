@@ -26,9 +26,12 @@ homebrew_installed_packages:
   - neovim
   - nodenv
   - ohueter/tap/autokbisw # Used for Charachorder keyboard input switching
+  - anomalyco/tap/opencode # OpenCode from the official tap for latest releases
+  - potrace
   - gromgit/brewtils/taproom
   - pyenv
   - ripgrep # Used by Telescope nvim plugin
+  - sc-im
   - starship
   - stow
   - terragrunt
@@ -38,6 +41,8 @@ homebrew_installed_packages:
   - yt-dlp
 
 homebrew_taps:
+  - anomalyco/tap
+  - buo/cask-upgrade
   - hashicorp/tap
   - ohueter/tap
 
@@ -55,12 +60,14 @@ common_homebrew_cask_apps:
   - font-meslo-lg-nerd-font # Not sure why a font is a cask, but ok
   - grandperspective
   - hammerspoon
+  - helium-browser
   - hoppscotch
   - istat-menus # I'd need to buy a license?
   - karabiner-elements
   - kdiff3 # Diffing tool I'm trying out
   - keyboard-maestro
   - localsend
+  - mouseless
   - obsidian
   - omnifocus
   - postman
@@ -96,9 +103,11 @@ personal_homebrew_cask_apps:
 work_homebrew_cask_apps:
   - ankerwork # For the Anker webcam
   - beekeeper-studio
+  - dbeaver-community
   - displaylink
   - docker
   - figma
+  - inkscape
   - intellij-idea-ce
   - obs
   - postico # Beekeeper competitor, let's see if I like it

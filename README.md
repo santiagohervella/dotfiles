@@ -51,10 +51,16 @@ ansible-playbook main.yml --ask-become-pass --tags homebrew
 
 ## Useful homebrew commands
 
-### Update homebrew cask apps
+### Update all homebrew cask apps
 
 ```sh
 brew upgrade --cask --greedy
+```
+
+### Update homebrew cask apps interactively
+
+```
+brew cu --all --interactive
 ```
 
 ### Update one specific hombrew cask app
@@ -122,6 +128,7 @@ Without the `greedy` flag, apps that are set to autoupdate will not update via t
     - zoom.us
   - Full Disk Access
     - Alacritty
+    - EasyFind
     - Ghostty
     - Kitty
     - Terminal
