@@ -186,11 +186,6 @@ local themes = {
 		-- I think this is a totally usable theme, but I vastly prefer the less in your face colors of gruvbox
 		"catppuccin/nvim",
 		name = "catppuccin",
-		-- 	lazy = false,
-		-- 	priority = 1000,
-		-- 	config = function()
-		-- 		vim.cmd.colorscheme("catppuccin-mocha")
-		-- 	end,
 	},
 	-- {
 	--    -- This one is waaaaay too bright, feels like you're tripping on pink
@@ -247,7 +242,6 @@ local themes = {
 		-- Update: I've been this one at home for Golang for a few weeks and I dig it!
 		"julien/vim-colors-green",
 		config = function()
-			-- vim.cmd([[colorscheme green]])
 			vim.cmd([[set nocursorline]])
 		end,
 	},
@@ -255,12 +249,6 @@ local themes = {
 		-- This is the theme that Shruti Ray uses is her setup. I like it as a contender to use with the AVP
 		-- But I don't think I like it more than the above flouromachine theme for this purpose
 		"baliestri/aura-theme",
-		-- lazy = false,
-		-- priority = 1000,
-		-- config = function(plugin)
-		-- 	vim.opt.rtp:append(plugin.dir .. "/packages/neovim")
-		-- 	vim.cmd([[colorscheme aura-dark]])
-		-- end,
 	},
 	-- {
 	-- 	-- Also quite good, but the shades make some of the text a bit too dark for my liking
@@ -281,7 +269,6 @@ local themes = {
 	{
 		-- Totally fine, but it's too soft for my preference
 		"thesimonho/kanagawa-paper.nvim",
-		-- 	opts = {},
 	},
 	{
 		-- This theme is quite nice. The screenshot in the git repo made it an easy sell.
@@ -301,11 +288,20 @@ local themes = {
 		-- There are even multiple green versions in here that I'm enjoying!
 		"kungfusheep/mfd.nvim",
 	},
+	-- {
+	--  -- Too muted, my eyes struggle to differentiate
+	-- 	"vague-theme/vague.nvim",
+	-- },
 	{
 		-- Found out about this one from this interview: https://people.zsa.io/jackson-hayes
 		-- A bit too dull for my taste. Thing is that this theme still differentiates certain syntax with multiple colors.
 		-- But the colors are so close to each other that it becomes solely an aesthetic choice rather than actually practical
+		-- Not bad but still propably a bit too muted for my taste
 		"webhooked/kanso.nvim",
+	},
+	{
+		-- Ooo, this one is legitimately quite nice, I like the red. It's tasteful! Might take this one for a spin!
+		"ficcdaf/ashen.nvim",
 	},
 }
 
