@@ -16,8 +16,9 @@ local OVERRIDES = {
 -- State
 --------------------------------------------------------------------------------
 
-local dockAppsCache = {} -- Running apps with Dock presence: { appName = appObject }
-local mruByKey = {} -- MRU lists per key: { a = {"Arc", "Activity Monitor"}, ... }
+local dockAppsCache = {}
+local mruByKey = {}
+local debugLogging = false
 
 --------------------------------------------------------------------------------
 -- List Helpers
@@ -71,9 +72,27 @@ end
 
 -- Refresh the Dock apps cache and sync MRU lists
 local function refreshDockAppsCache()
+	local oldCache = dockAppsCache
 	dockAppsCache = getDockApps()
 
-	-- Remove closed apps from MRU lists
+	if debugLogging then
+		local added = {}
+		local removed = {}
+		for appName in pairs(dockAppsCache) do
+			if not oldCache[appName] then
+				table.insert(added, appName)
+			end
+		end
+		for appName in pairs(oldCache) do
+			if not dockAppsCache[appName] then
+				table.insert(removed, appName)
+			end
+		end
+		if #added > 0 or #removed > 0 then
+			print("[rcmd] REFRESH: added=[" .. table.concat(added, ", ") .. "] removed=[" .. table.concat(removed, ", ") .. "]")
+		end
+	end
+
 	for _, mruList in pairs(mruByKey) do
 		for i = #mruList, 1, -1 do
 			if not dockAppsCache[mruList[i]] then
@@ -82,7 +101,6 @@ local function refreshDockAppsCache()
 		end
 	end
 
-	-- Add new apps to MRU lists
 	for appName in pairs(dockAppsCache) do
 		local key = getAppKey(appName)
 		if key then
@@ -167,7 +185,37 @@ end
 -- Event Handling
 --------------------------------------------------------------------------------
 
-local appWatcher = hs.application.watcher.new(function(appName, eventType)
+local eventNames = {
+	[hs.application.watcher.activated] = "activated",
+	[hs.application.watcher.deactivated] = "deactivated",
+	[hs.application.watcher.hidden] = "hidden",
+	[hs.application.watcher.launched] = "launched",
+	[hs.application.watcher.launching] = "launching",
+	[hs.application.watcher.terminated] = "terminated",
+	[hs.application.watcher.unhidden] = "unhidden",
+}
+
+local function logEvent(appName, eventType, app)
+	if not debugLogging then
+		return
+	end
+
+	local eventName = eventNames[eventType] or ("unknown:" .. tostring(eventType))
+	local inCache = dockAppsCache[appName] and "yes" or "no"
+	local kind = app and app:kind() or "n/a"
+	local pid = app and app:pid() or "n/a"
+
+	local freshApps = getDockApps()
+	local inFresh = freshApps[appName] and "yes" or "no"
+	local freshKind = freshApps[appName] and freshApps[appName]:kind() or "n/a"
+
+	print(string.format("[rcmd] EVENT: %-12s | app=%-20s | inCache=%-3s | inFresh=%-3s | kind=%s | freshKind=%s | pid=%s",
+		eventName, appName or "nil", inCache, inFresh, kind, freshKind, pid))
+end
+
+local appWatcher = hs.application.watcher.new(function(appName, eventType, app)
+	logEvent(appName, eventType, app)
+
 	if eventType == hs.application.watcher.activated then
 		if appName and not dockAppsCache[appName] then
 			refreshDockAppsCache()
@@ -179,6 +227,43 @@ local appWatcher = hs.application.watcher.new(function(appName, eventType)
 		refreshDockAppsCache()
 	end
 end)
+
+--------------------------------------------------------------------------------
+-- Periodic Audit (catches apps that launch without triggering events)
+--------------------------------------------------------------------------------
+
+local auditTimer = nil
+local AUDIT_INTERVAL = 3
+
+local function auditForMissingApps()
+	local freshApps = getDockApps()
+	local missing = {}
+
+	for appName in pairs(freshApps) do
+		if not dockAppsCache[appName] then
+			table.insert(missing, appName)
+		end
+	end
+
+	if #missing > 0 then
+		print("[rcmd] AUDIT: Found apps missing from cache (no events fired!): " .. table.concat(missing, ", "))
+		refreshDockAppsCache()
+	end
+end
+
+local function startAuditTimer()
+	if auditTimer then
+		auditTimer:stop()
+	end
+	auditTimer = hs.timer.doEvery(AUDIT_INTERVAL, auditForMissingApps)
+end
+
+local function stopAuditTimer()
+	if auditTimer then
+		auditTimer:stop()
+		auditTimer = nil
+	end
+end
 
 --------------------------------------------------------------------------------
 -- Hotkey Setup
@@ -212,13 +297,13 @@ local function init()
 
 	refreshDockAppsCache()
 
-	-- Put frontmost app at front of its MRU list
 	local frontmost = hs.application.frontmostApplication()
 	if frontmost then
 		updateMRU(frontmost:name())
 	end
 
 	appWatcher:start()
+	startAuditTimer()
 	setupHotkeys()
 	spoon.LeftRightHotkey:start()
 end
@@ -339,8 +424,27 @@ end
 -- Module API
 --------------------------------------------------------------------------------
 
+local function setDebugLogging(enabled)
+	debugLogging = enabled
+	print("[rcmd] Debug logging " .. (enabled and "ENABLED" or "DISABLED"))
+end
+
+local function setAuditInterval(seconds)
+	if seconds <= 0 then
+		stopAuditTimer()
+		print("[rcmd] Audit timer DISABLED")
+	else
+		AUDIT_INTERVAL = seconds
+		startAuditTimer()
+		print("[rcmd] Audit interval set to " .. seconds .. " seconds")
+	end
+end
+
 return {
 	refresh = refreshDockAppsCache,
 	debug = debugKey,
+	setDebugLogging = setDebugLogging,
+	setAuditInterval = setAuditInterval,
+	audit = auditForMissingApps,
 	overrides = OVERRIDES,
 }
