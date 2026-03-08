@@ -254,6 +254,9 @@ return {
 				},
 			},
 			pickers = {
+				colorscheme = {
+					enable_preview = true,
+				},
 				oldfiles = {
 					only_cwd = true,
 				},

@@ -33,6 +33,7 @@ keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<S-h>", ":bprevious<CR>", opts)
 keymap("n", "<leader>bd", ":bp|bd #<CR>", opts)
+keymap("n", "<leader>bs", ":vsplit scratch.md<CR>", { desc = "Create vertical split with scratch.md" })
 
 -- Clear highlights
 keymap("n", "<leader>c", "<cmd>nohlsearch<CR>", opts)

@@ -260,6 +260,7 @@ git apply my-cool-changes.patch
 - Try out the [DeskPad utility app](https://github.com/Stengo/DeskPad) for better screen sharing on video calls
   - Here's a good [video demo](https://www.youtube.com/watch?v=O-as2_bud9s) of what it does
 - Maybe try out [Folke's desktop wallpaper](https://github.com/folke/dot/blob/master/config/wall.png)?
+- Evaluate if you want to keep atuin or use just fzf. [This toot](https://hachyderm.io/@mitchellh/115967643749932536) reminded me of this
 
 ### Neovim
 
