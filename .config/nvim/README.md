@@ -51,6 +51,10 @@ This purpose of this section is so I don't continue to see these plugins as shin
   - I knew that I probably wouldn't like this plugin for coding, but I wanted to try it out for use with markdown. I tried it briefly and didn't really love it. It felt like the section I want visible is totally different depending on the page, paragraph, line, or word that I'm editing.
   - It also, sadly, doesn't play super well with the markdown.nvim plugin and that plugin is way way more valuable
   - Perhaps I'll revisit this plugin in the future. I like that zen-mode has an option to enable twilight when you start zen-mode. Ideally it should only turn on twilight for markdown files in zen-mode, but I didn't think it productive to spend time on that since I could already tell I didn't like it
+- [tpope/vim-obsession](https://github.com/tpope/vim-obsession)
+  - My idea was to use it to dynamically suspend nvim whenever I navigated away from the tmux session it was running in, but due to the startup time of LSPs, this was not a viable idea
+- [axsaucedo/neovim-power-mode](https://github.com/axsaucedo/neovim-power-mode)
+  - Combo counter for typing code. Fun but too crazy
 - [leath-dub/snipe.nvim](https://github.com/leath-dub/snipe.nvim)
   - I loved the idea of using this plugin to switch between open buffers, but in pratice it was too much work. I would end up with files that had very long paths and so I'd have to visually hunt down the file first, then dart my eyes back to the start of the line to find the key I needed to hit to open the file.
   - Going back to Telescope for open buffers was better right away because I could start typing a keyword of the file I want and usually it's the only one so I just have to hit enter

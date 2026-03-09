@@ -44,6 +44,10 @@ opt.clipboard = "unnamedplus"
 opt.splitbelow = true -- force all horizontal splits to go below current window
 opt.splitright = true -- force all vertical splits to go to the right of current window
 
+-- Disabling swap: Neovim still warns on write if the file changed on disk,
+-- which covers the duplicate-editing scenario without the annoying swap prompt
+opt.swapfile = false
+
 -- highlight yanked text for 150ms using the "Visual" highlight group
 vim.cmd([[
   augroup highlight_yank
