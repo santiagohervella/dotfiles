@@ -92,6 +92,7 @@ common_homebrew_cask_apps:
   - wezterm
 
 personal_homebrew_cask_apps:
+  - backblaze
   - handbrake
   - little-snitch@5
   - mullvadvpn
