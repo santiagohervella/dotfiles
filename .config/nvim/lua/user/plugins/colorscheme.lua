@@ -7,6 +7,7 @@ local colorscheme_names = {
 	["baliestri/aura-theme"] = "aura-dark",
 	["catppuccin/nvim"] = "catppuccin-mocha",
 	["jnurmine/Zenburn"] = "zenburn",
+	["miikanissi/modus-themes.nvim"] = "modus_vivendi",
 	-- Most themes derive automatically: "foo/bar.nvim" → "bar", "foo/vim-colors-bar" → "bar"
 }
 
@@ -302,6 +303,16 @@ local themes = {
 	{
 		-- Ooo, this one is legitimately quite nice, I like the red. It's tasteful! Might take this one for a spin!
 		"ficcdaf/ashen.nvim",
+	},
+	{
+		-- Found out about this one from a comment on this video: https://www.youtube.com/watch?v=lljs_7xB7Ps
+		-- Not too shappy but not gorgeous. Feels like a theme a Microsoft dev would use in the mid 2000s
+		"miikanissi/modus-themes.nvim",
+	},
+	{
+		-- This theme bills itself as low contrast and it certainly is. Low contrast themes are not really for me
+		-- But as far as low contrast themes go, this one is well done
+		"aikhe/fleur.nvim",
 	},
 }
 

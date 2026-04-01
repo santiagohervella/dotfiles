@@ -38,13 +38,29 @@ return {
 			},
 		})
 
-		-- NOTE: This used to be in the lspconfig.lua file, but is now here
 		vim.keymap.set({ "n", "v" }, "<leader>lf", function()
-			conform.format({
-				lsp_fallback = true,
-				async = false,
-				timeout_ms = 1000,
-			})
+			local ft = vim.bo.filetype
+
+			-- Include removing unused imports in this keymap is something I saw in this config: https://github.com/smnatale/nvim
+			if ft == "typescript" or ft == "typescriptreact" then
+				vim.lsp.buf.code_action({
+					apply = true,
+					context = { only = { "source.removeUnused.ts" }, diagnostics = {} },
+				})
+				vim.defer_fn(function()
+					conform.format({
+						lsp_fallback = true,
+						async = false,
+						timeout_ms = 1000,
+					})
+				end, 100)
+			else
+				conform.format({
+					lsp_fallback = true,
+					async = false,
+					timeout_ms = 1000,
+				})
+			end
 		end, { desc = "Format file or range (in visual mode)" })
 	end,
 }

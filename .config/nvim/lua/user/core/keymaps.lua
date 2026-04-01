@@ -33,7 +33,7 @@ keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<S-h>", ":bprevious<CR>", opts)
 keymap("n", "<leader>bd", ":bp|bd #<CR>", opts)
-keymap("n", "<leader>bs", ":vsplit scratch.md<CR>", { desc = "Create vertical split with scratch.md" })
+keymap("n", "<leader>bs", ":vsplit .scratch.md<CR>", { desc = "Create vertical split with .scratch.md" })
 
 -- Clear highlights
 keymap("n", "<leader>c", "<cmd>nohlsearch<CR>", opts)
@@ -52,6 +52,9 @@ keymap("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 -- Prevent accidentally hitting q all the time in normal mode and starting a recording...
 keymap("n", "<leader>q", "q", opts)
 keymap("n", "q", "<Nop>", opts)
+
+-- Prevent accidentally hitting ctrl-a in insert mode, which inserts the text you typed last time you were in insert mode...
+keymap("i", "<C-a>", "<Nop>", opts)
 
 -- Visual --
 -- Stay in indent mode

@@ -70,3 +70,31 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
 --From Claude: "The SQL ftplugin is intercepting your <C-c> keypress for SQL completion before your keymap can process it."
 -- "To fix the <C-c> timeout, disable the SQL omni completion"
 vim.g.omni_sql_no_default_maps = 1
+-- Open help pages in a vertical split instead of horizontal
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "help",
+  command = "wincmd L",
+})
+
+-- Prevent filetype plugins from auto-continuing comments on new lines
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("no_auto_comment", {}),
+  callback = function()
+    vim.opt_local.formatoptions:remove({ "c", "r", "o" })
+  end,
+})
+
+-- Only show cursorline in the active window
+local cursorline_group = vim.api.nvim_create_augroup("active_cursorline", { clear = true })
+vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
+  group = cursorline_group,
+  callback = function()
+    vim.opt_local.cursorline = true
+  end,
+})
+vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
+  group = cursorline_group,
+  callback = function()
+    vim.opt_local.cursorline = false
+  end,
+})
