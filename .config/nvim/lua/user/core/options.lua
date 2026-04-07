@@ -47,6 +47,8 @@ opt.splitright = true -- force all vertical splits to go to the right of current
 -- Disabling swap: Neovim still warns on write if the file changed on disk,
 -- which covers the duplicate-editing scenario without the annoying swap prompt
 opt.swapfile = false
+opt.undofile = true -- persist undo history across sessions
+opt.updatetime = 300 -- faster CursorHold events (default 4000ms) for snappier gitsigns/LSP
 
 -- highlight yanked text for 150ms using the "Visual" highlight group
 vim.cmd([[
