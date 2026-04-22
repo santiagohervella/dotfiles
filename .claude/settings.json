@@ -1,0 +1,172 @@
+{
+  "permissions": {
+    "allow": [
+      "Agent",
+      "Bash(ansible-doc*)",
+      "Bash(ansible-galaxy collection list*)",
+      "Bash(aws cloudwatch get-metric-statistics*)",
+      "Bash(aws dynamodb describe-table*)",
+      "Bash(aws dynamodb get-item*)",
+      "Bash(aws dynamodb list-tables*)",
+      "Bash(aws lambda get-function-configuration*)",
+      "Bash(aws lambda list-functions*)",
+      "Bash(aws logs describe-log-streams*)",
+      "Bash(aws logs filter-log-events*)",
+      "Bash(aws logs get-log-events*)",
+      "Basc(aws sqs get-queue-url*)",
+      "Bash(aws opensearch describe-domain*)",
+      "Bash(aws opensearch list-domain-names*)",
+      "Bash(aws sqs get-queue-attributes*)",
+      "Bash(aws sso login*)",
+      "Bash(aws sts get-caller-identity*)",
+      "Bash(cat*)",
+      "Bash(cd*)",
+      "Bash(date*)",
+      "Bash(find*)",
+      "Bash(gh api repos/*)",
+      "Bash(gh pr checks*)",
+      "Bash(gh pr diff*)",
+      "Bash(gh pr list*)",
+      "Bash(gh pr view*)",
+      "Bash(gh repo view*)",
+      "Bash(gh run view*)",
+      "Bash(gh search code*)",
+      "Bash(gh search issues*)",
+      "Bash(gh search prs*)",
+      "Bash(git add*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git show*)",
+      "Bash(git status*)",
+      "Bash(grep*)",
+      "Bash(head*)",
+      "Bash(ls*)",
+      "Bash(mason search*)",
+      "Bash(npm ls*)",
+      "Bash(npm run*)",
+      "Bash(npm test*)",
+      "Bash(npm view*)",
+      "Bash(npx generate*)",
+      "Bash(npx tsc*)",
+      "Bash(npx vitest*)",
+      "Bash(nr*)",
+      "Basc(poetry run black*)",
+      "Basc(poetry run flake8*)",
+      "Bash(poetry run pytest*)",
+      "Bash(poetry run python -m pytest*)",
+      "Bash(readlink*)",
+      "Bash(sketchybar --reload)",
+      "Bash(sort*)",
+      "Bash(swift build*)",
+      "Bash(tail*)",
+      "Bash(tmux capture-pane*)",
+      "Bash(tmux has-session*)",
+      "Bash(tmux list-keys*)",
+      "Bash(tmux list-panes*)",
+      "Bash(tmux list-sessions*)",
+      "Bash(tmux list-windows*)",
+      "Bash(tree*)",
+      "Bash(uniq*)",
+      "Bash(wc*)",
+      "Bash(xargs grep*)",
+      "Bash(~/.claude/skills/catch-me-up/scripts/*)",
+      "Glob",
+      "Grep",
+      "Read",
+      "WebFetch(domain:code.claude.com)",
+      "WebFetch(domain:mason-registry.dev)",
+      "WebFetch(domain:opencode.ai)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebSearch",
+      "mcp__claude_ai_Figma__get_design_context",
+      "mcp__claude_ai_Slack__slack_read_thread",
+      "mcp__claude_ai_Slack__slack_search_public_and_private",
+      "mcp__claude_ai_Slack__slack_read_channel",
+      "mcp__mcp-atlassian__*",
+      "mcp__mcp-server-datadog__get*",
+      "mcp__mcp-server-datadog__get_logs*",
+      "mcp__mcp-server-datadog__list*",
+      "mcp__mcp-server-datadog__list_dashboards*",
+      "mcp__mcp-server-datadog__list_traces*",
+      "mcp__mcp-server-datadog__query_metrics*",
+      "mcp__pagerduty__get_incident*",
+      "mcp__pagerduty__list_alerts_from_incident*",
+      "mcp__pagerduty__list_incident_notes*"
+    ],
+    "deny": []
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/dashboard-status.sh"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/dashboard-status.sh"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/dashboard-status.sh"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/dashboard-status.sh"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/dashboard-status.sh"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/dashboard-status.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash \"$HOME/.claude/statusline.sh\""
+  },
+  "alwaysThinkingEnabled": true,
+  "voiceEnabled": true
+}
