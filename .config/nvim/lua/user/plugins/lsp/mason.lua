@@ -44,7 +44,9 @@ return {
 					"ts_ls",
 					"yamlls",
 				},
-				automatic_installation = true,
+				automatic_enable = {
+					exclude = { "ts_ls" },
+				},
 			})
 		end,
 	},

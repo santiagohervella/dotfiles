@@ -8,8 +8,6 @@ return {
 		{ "folke/lazydev.nvim", opts = {} },
 	},
 	config = function()
-		local lspconfig = require("lspconfig")
-		local mason_lspconfig = require("mason-lspconfig")
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
 		local keymap = vim.keymap -- for conciseness
@@ -98,10 +96,10 @@ return {
 				keymap.set("n", "gl", vim.diagnostic.open_float, opts)
 
 				opts.desc = "Go to previous diagnostic"
-				keymap.set("n", "<leader>dk", vim.diagnostic.goto_prev, opts)
+				keymap.set("n", "<leader>dk", function() vim.diagnostic.jump({ count = -1, float = true }) end, opts)
 
 				opts.desc = "Go to next diagnostic"
-				keymap.set("n", "<leader>dj", vim.diagnostic.goto_next, opts)
+				keymap.set("n", "<leader>dj", function() vim.diagnostic.jump({ count = 1, float = true }) end, opts)
 
 				opts.desc = "Show documentation for what is under cursor"
 				keymap.set("n", "K", vim.lsp.buf.hover, opts)
@@ -114,75 +112,64 @@ return {
 		-- used to enable autocompletion (assign to every lsp server config)
 		local capabilities = cmp_nvim_lsp.default_capabilities()
 
-		-- Change the Diagnostic symbols in the sign column (gutter)
-		local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-		for type, icon in pairs(signs) do
-			local hl = "DiagnosticSign" .. type
-			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-		end
+		vim.diagnostic.config({
+			signs = {
+				text = {
+					[vim.diagnostic.severity.ERROR] = " ",
+					[vim.diagnostic.severity.WARN] = " ",
+					[vim.diagnostic.severity.HINT] = "󰠠 ",
+					[vim.diagnostic.severity.INFO] = " ",
+				},
+			},
+		})
 
-		mason_lspconfig.setup_handlers({
-			-- default handler for installed servers
-			function(server_name)
-				lspconfig[server_name].setup({
-					capabilities = capabilities,
-				})
-			end,
-			["ts_ls"] = function()
-				-- Skip typescript-language-server because it's handled by ./typescript-tools.lua
-				-- do nothing
-			end,
-			["lua_ls"] = function()
-				lspconfig["lua_ls"].setup({
-					capabilities = capabilities,
-					settings = {
-						Lua = {
-							-- make the language server recognize "vim" global
-							diagnostics = {
-								globals = { "vim" },
-							},
-							completion = {
-								callSnippet = "Replace",
-							},
-						},
+		vim.lsp.config("*", {
+			capabilities = capabilities,
+		})
+
+		vim.lsp.config("lua_ls", {
+			settings = {
+				Lua = {
+					-- make the language server recognize "vim" global
+					diagnostics = {
+						globals = { "vim" },
 					},
-				})
-			end,
-			-- Found out that pyright has missing stub type setting in this config
-			-- https://github.com/mrjones2014/dotfiles/blob/master/nvim/lua/my/lsp/python.lua
-			["pyright"] = function()
-				lspconfig["pyright"].setup({
-					capabilities = capabilities,
-					settings = {
-						pyright = {
-							autoImportCompletion = true,
-						},
-						python = {
-							analysis = {
-								reportMissingTypeStubs = false,
-								useLibraryCodeForTypes = true,
-								autoSearchPaths = true,
-							},
-						},
+					completion = {
+						callSnippet = "Replace",
 					},
-					on_new_config = function(config, root_dir)
-						vim.notify("Running on new config")
-						if vim.fn.filereadable(root_dir .. "/pyproject.toml") == 1 then
-							local poetry_env =
-								vim.fn.trim(vim.fn.system("cd " .. root_dir .. " && poetry env info -p 2>/dev/null"))
-							if poetry_env ~= "" then
-								config.settings.python.pythonPath = poetry_env .. "/bin/python"
-							end
-						end
-					end,
-				})
+				},
+			},
+		})
+
+		-- Found out that pyright has missing stub type setting in this config
+		-- https://github.com/mrjones2014/dotfiles/blob/master/nvim/lua/my/lsp/python.lua
+		vim.lsp.config("pyright", {
+			settings = {
+				pyright = {
+					autoImportCompletion = true,
+				},
+				python = {
+					analysis = {
+						reportMissingTypeStubs = false,
+						useLibraryCodeForTypes = true,
+						autoSearchPaths = true,
+					},
+				},
+			},
+			before_init = function(_, config)
+				if config.root_dir and vim.fn.filereadable(config.root_dir .. "/pyproject.toml") == 1 then
+					local poetry_env =
+						vim.fn.trim(vim.fn.system("cd " .. config.root_dir .. " && poetry env info -p 2>/dev/null"))
+					if poetry_env ~= "" then
+						config.settings.python.pythonPath = poetry_env .. "/bin/python"
+					end
+				end
 			end,
 		})
 
 		-- sourcekit is part of the Swift toolchain and so Mason doesn't offer it standalone
-		-- Thus, we must set it up outside of the mason-lspconfig setup_handlers()
 		-- https://www.swift.org/documentation/articles/zero-to-swift-nvim.html#language-server-support
-		lspconfig.sourcekit.setup({
+		vim.lsp.config("sourcekit", {
 			capabilities = {
 				workspace = {
 					didChangeWatchedFiles = {
@@ -191,5 +178,6 @@ return {
 				},
 			},
 		})
+		vim.lsp.enable("sourcekit")
 	end,
 }

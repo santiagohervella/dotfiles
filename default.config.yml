@@ -35,6 +35,7 @@ homebrew_installed_packages:
   - starship
   - stow
   - terragrunt
+  - tree-sitter-cli # Required by nvim 0.12+ according to this: https://www.qu8n.com/posts/treesitter-migration-guide-for-nvim-0-12
   - tmux
   - tmuxinator
   - xcodesorg/made/xcodes

@@ -1,6 +1,6 @@
 return {
 	"nvim-telescope/telescope.nvim",
-	branch = "0.1.x",
+	branch = "master",
 	-- TODO: Confirm these dependencies with existing setup
 	dependencies = {
 		"nvim-lua/plenary.nvim",
