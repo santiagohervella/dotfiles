@@ -16,6 +16,7 @@ homebrew_installed_packages:
   - duti
   - ffmpeg
   - fzf # Used by tmux-sessionizer script
+  - koekeishiya/formulae/yabai
   - gemini-cli
   - gh
   - git
@@ -45,6 +46,7 @@ homebrew_taps:
   - anomalyco/tap
   - buo/cask-upgrade
   - hashicorp/tap
+  - koekeishiya/formulae
   - ohueter/tap
 
 homebrew_cask_appdir: /Applications

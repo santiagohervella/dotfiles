@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+yabai -m config layout float
+yabai -m config external_bar off:0:0
+
+echo "yabai configuration loaded"

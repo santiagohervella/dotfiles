@@ -1,0 +1,10 @@
+---
+- name: Check if yabai is running
+  command: pgrep -x yabai
+  register: yabai_running
+  changed_when: false
+  failed_when: false
+
+- name: Start yabai service
+  command: yabai --start-service
+  when: yabai_running.rc != 0
