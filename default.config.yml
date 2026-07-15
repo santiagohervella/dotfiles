@@ -15,6 +15,7 @@ homebrew_installed_packages:
   - dockutil
   - duti
   - ffmpeg
+  # - FelixKratz/formulae/sketchybar # Not currently using. Loved it, but macOS notifications cover it
   - fzf # Used by tmux-sessionizer script
   - koekeishiya/formulae/yabai
   - gemini-cli
@@ -45,6 +46,7 @@ homebrew_installed_packages:
 homebrew_taps:
   - anomalyco/tap
   - buo/cask-upgrade
+  # - FelixKratz/formulae # Dormant: only needed for sketchybar
   - hashicorp/tap
   - koekeishiya/formulae
   - ohueter/tap

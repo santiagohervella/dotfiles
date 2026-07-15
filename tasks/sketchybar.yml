@@ -1,0 +1,10 @@
+---
+# Not imported from main.yml on purpose. Sketchybar works great but macOS
+# notifications constantly cover it, so I'm not using it for now. The config
+# I put together is preserved in .config/sketchybar. To revive: uncomment the
+# sketchybar package + FelixKratz tap in default.config.yml and import this
+# task from main.yml.
+- name: Start sketchybar service
+  community.general.homebrew_services:
+    name: sketchybar
+    state: present

@@ -1,0 +1,66 @@
+#!/usr/bin/env sh
+
+WHITE=0xffffffff
+PILL_COLOR=0xff000000
+PILL_BORDER=0x30ffffff
+PILL_BORDER_WIDTH=2
+PILL_HEIGHT=30
+PILL_RADIUS=20
+
+sketchybar --bar \
+  height=40 \
+  position=top \
+  color=0x00000000 \
+  y_offset=4 \
+  blur_radius=20
+
+sketchybar --default \
+  drawing=on \
+  updates=on \
+  label.font="SF Pro:Semibold:13" \
+  icon.font="SF Pro:Bold:15" \
+  padding_left=0 \
+  padding_right=0
+
+sketchybar --add item front_app left \
+           --set front_app \
+                 label.font="SF Pro:Semibold:14" \
+                 label.color=$WHITE \
+                 label.padding_left=12 \
+                 label.padding_right=12 \
+                 icon.drawing=off \
+                 script="$CONFIG_DIR/plugins/front_app.sh" \
+           --subscribe front_app front_app_switched
+
+sketchybar --add alias "Control Center,Clock" right \
+           --set "Control Center,Clock" \
+                 padding_right=-8
+
+sketchybar --add alias "Control Center,WiFi" right
+
+sketchybar --add alias "Control Center,Battery" right
+
+sketchybar --add alias "Control Center,Sound" right
+
+sketchybar --add bracket right_group \
+             "Control Center,Clock" \
+             "Control Center,Sound" \
+           --set right_group \
+                 background.color=$PILL_COLOR \
+                 background.height=$PILL_HEIGHT \
+                 background.corner_radius=$PILL_RADIUS \
+                 background.border_width=$PILL_BORDER_WIDTH \
+                 background.border_color=$PILL_BORDER \
+                 blur_radius=4
+
+sketchybar --add bracket left_app \
+             front_app \
+           --set left_app \
+                 background.color=$PILL_COLOR \
+                 background.height=$PILL_HEIGHT \
+                 background.corner_radius=$PILL_RADIUS \
+                 background.border_width=$PILL_BORDER_WIDTH \
+                 background.border_color=$PILL_BORDER \
+                 blur_radius=4
+
+sketchybar --update

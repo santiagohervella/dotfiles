@@ -5,4 +5,5 @@ roles:
 
 collections:
   - name: community.general
+    version: ">=9.3.0"
   - name: geerlingguy.mac
