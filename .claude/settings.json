@@ -103,6 +103,10 @@
           {
             "type": "command",
             "command": "~/.claude/hooks/dashboard-status.sh"
+          },
+          {
+            "type": "command",
+            "command": "bash '/Users/santiago/.config/tmux/plugins/tmux-assistant-resurrect/hooks/claude-session-track.sh'"
           }
         ]
       }
@@ -158,6 +162,10 @@
           {
             "type": "command",
             "command": "~/.claude/hooks/dashboard-status.sh"
+          },
+          {
+            "type": "command",
+            "command": "bash '/Users/santiago/.config/tmux/plugins/tmux-assistant-resurrect/hooks/claude-session-cleanup.sh'"
           }
         ]
       }

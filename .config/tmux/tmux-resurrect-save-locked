@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+real_save="$HOME/.config/tmux/plugins/tmux-resurrect/scripts/save.sh"
+server_pid="$(tmux display-message -p '#{pid}' 2>/dev/null || printf 'default')"
+lock_dir="${TMPDIR:-/tmp}/tmux-resurrect-save-${server_pid}.lock"
+pid_file="$lock_dir/pid"
+
+run_save() {
+	printf '%s\n' "$$" > "$pid_file"
+	trap 'rm -rf "$lock_dir"' EXIT INT TERM
+	"$real_save" "$@"
+}
+
+pid_is_wrapper() {
+	local pid="$1"
+	local command_line
+
+	command_line="$(ps -p "$pid" -o command= 2>/dev/null || true)"
+	[ -n "$command_line" ] && [ "${command_line#*tmux-resurrect-save-locked}" != "$command_line" ]
+}
+
+if mkdir "$lock_dir" 2>/dev/null; then
+	run_save "$@"
+	exit $?
+fi
+
+lock_pid="$(cat "$pid_file" 2>/dev/null || true)"
+
+if [ -n "$lock_pid" ] && kill -0 "$lock_pid" 2>/dev/null && pid_is_wrapper "$lock_pid"; then
+	exit 0
+fi
+
+rm -rf "$lock_dir"
+
+if mkdir "$lock_dir" 2>/dev/null; then
+	run_save "$@"
+fi
