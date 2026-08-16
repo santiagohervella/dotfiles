@@ -1,10 +1,36 @@
 {
+  "alwaysThinkingEnabled": true,
+  "enableAllProjectMcpServers": true,
+  "hooks": {
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "command": "bash \"$HOME/.config/tmux/plugins/tmux-assistant-resurrect/hooks/claude-session-cleanup.sh\"",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "bash \"$HOME/.config/tmux/plugins/tmux-assistant-resurrect/hooks/claude-session-track.sh\"",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      }
+    ]
+  },
+  "model": "claude-fable-5[1m]",
   "permissions": {
     "allow": [
       "Agent",
       "Bash(ansible-doc*)",
       "Bash(ansible-galaxy collection list*)",
-      "Bash(aws cloudwatch get-metric-statistics*)",
       "Bash(aws dynamodb describe-table*)",
       "Bash(aws dynamodb get-item*)",
       "Bash(aws dynamodb list-tables*)",
@@ -13,17 +39,13 @@
       "Bash(aws logs describe-log-streams*)",
       "Bash(aws logs filter-log-events*)",
       "Bash(aws logs get-log-events*)",
-      "Basc(aws sqs get-queue-url*)",
       "Bash(aws opensearch describe-domain*)",
       "Bash(aws opensearch list-domain-names*)",
-      "Bash(aws sqs get-queue-attributes*)",
       "Bash(aws sso login*)",
-      "Bash(aws sts get-caller-identity*)",
       "Bash(cat*)",
       "Bash(cd*)",
       "Bash(date*)",
       "Bash(find*)",
-      "Bash(gh api repos/*)",
       "Bash(gh pr checks*)",
       "Bash(gh pr diff*)",
       "Bash(gh pr list*)",
@@ -50,14 +72,17 @@
       "Bash(npx tsc*)",
       "Bash(npx vitest*)",
       "Bash(nr*)",
-      "Basc(poetry run black*)",
-      "Basc(poetry run flake8*)",
+      "Bash(pbcopy*)",
+      "Bash(pbpaste*)",
+      "Bash(poetry run black*)",
       "Bash(poetry run pytest*)",
       "Bash(poetry run python -m pytest*)",
+      "Bash(poetryinstall)",
       "Bash(readlink*)",
       "Bash(sketchybar --reload)",
       "Bash(sort*)",
       "Bash(swift build*)",
+      "Bash(swift test:*)",
       "Bash(tail*)",
       "Bash(tmux capture-pane*)",
       "Bash(tmux has-session*)",
@@ -79,102 +104,33 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebSearch",
       "mcp__claude_ai_Figma__get_design_context",
-      "mcp__claude_ai_Slack__slack_read_thread",
-      "mcp__claude_ai_Slack__slack_search_public_and_private",
+      "mcp__claude_ai_Linear__list_issue_statuses",
+      "mcp__claude_ai_Linear__list_teams",
+      "mcp__claude_ai_Linear__list_users",
+      "mcp__claude_ai_Linear__list_issue_labels",
       "mcp__claude_ai_Slack__slack_read_channel",
-      "mcp__mcp-atlassian__*",
-      "mcp__mcp-server-datadog__get*",
-      "mcp__mcp-server-datadog__get_logs*",
-      "mcp__mcp-server-datadog__list*",
-      "mcp__mcp-server-datadog__list_dashboards*",
-      "mcp__mcp-server-datadog__list_traces*",
-      "mcp__mcp-server-datadog__query_metrics*",
-      "mcp__pagerduty__get_incident*",
-      "mcp__pagerduty__list_alerts_from_incident*",
-      "mcp__pagerduty__list_incident_notes*"
+      "mcp__claude_ai_Slack__slack_read_thread",
+      "mcp__claude_ai_Slack__slack_search_public",
+      "mcp__claude_ai_Slack__slack_search_public_and_private",
+      "mcp__linear__get_issue",
+      "mcp__linear__list_teams",
+      "mcp__linear__list_users",
+      "mcp__linear__list_issue_statuses",
+      "mcp__mcp-server-datadog__get_*",
+      "mcp__mcp-server-datadog__list_*",
+      "mcp__mcp-server-datadog__query_*"
     ],
+    "defaultMode": "auto",
     "deny": []
   },
-  "hooks": {
-    "SessionStart": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/dashboard-status.sh"
-          },
-          {
-            "type": "command",
-            "command": "bash '/Users/santiago/.config/tmux/plugins/tmux-assistant-resurrect/hooks/claude-session-track.sh'"
-          }
-        ]
-      }
-    ],
-    "UserPromptSubmit": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/dashboard-status.sh"
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/dashboard-status.sh"
-          }
-        ]
-      }
-    ],
-    "Notification": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/dashboard-status.sh"
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/dashboard-status.sh"
-          }
-        ]
-      }
-    ],
-    "SessionEnd": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/dashboard-status.sh"
-          },
-          {
-            "type": "command",
-            "command": "bash '/Users/santiago/.config/tmux/plugins/tmux-assistant-resurrect/hooks/claude-session-cleanup.sh'"
-          }
-        ]
-      }
-    ]
-  },
+  "skipAutoPermissionPrompt": true,
   "statusLine": {
-    "type": "command",
-    "command": "bash \"$HOME/.claude/statusline.sh\""
+    "command": "bash \"$HOME/.claude/statusline.sh\"",
+    "type": "command"
   },
-  "alwaysThinkingEnabled": true,
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
+  },
   "voiceEnabled": true
 }

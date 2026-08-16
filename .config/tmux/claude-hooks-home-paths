@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+settings="$HOME/.claude/settings.json"
+
+[ -f "$settings" ] || exit 0
+command -v python3 >/dev/null 2>&1 || exit 0
+
+python3 - "$settings" <<'PYTHON'
+import json
+import os
+import sys
+
+settings_path = sys.argv[1]
+home = os.path.expanduser("~")
+prefix = f"bash '{home}/"
+
+try:
+    with open(settings_path) as handle:
+        settings = json.load(handle)
+except (OSError, ValueError):
+    sys.exit(0)
+
+changed = False
+
+for groups in settings.get("hooks", {}).values():
+    for group in groups:
+        for hook in group.get("hooks", []):
+            command = hook.get("command", "")
+            if command.startswith(prefix) and command.endswith("'"):
+                hook["command"] = 'bash "$HOME/' + command[len(prefix):-1] + '"'
+                changed = True
+
+if not changed:
+    sys.exit(0)
+
+with open(settings_path, "w") as handle:
+    json.dump(settings, handle, indent=2, sort_keys=True)
+    handle.write("\n")
+PYTHON
