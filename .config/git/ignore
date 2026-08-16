@@ -1,0 +1,5 @@
+# Global gitignore - applies to all local repos
+
+**/.claude/settings.local.json
+
+**/.scratch*.md

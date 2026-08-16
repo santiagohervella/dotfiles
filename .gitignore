@@ -32,6 +32,7 @@ config.yml
 # Work related
 .config/AWS VPN Client
 .config/AWSVPNClient
+.config/zsh/local.zsh
 
 # TODO: Clean up. Not sure if I need these
 *.vagrant

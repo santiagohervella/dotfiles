@@ -13,6 +13,8 @@ if [ -f "$HOME/.zsh_env_vars" ]; then
   source $HOME/.zsh_env_vars
 fi
 
+[ -f "$HOME/.config/zsh/local.zsh" ] && source "$HOME/.config/zsh/local.zsh"
+
 # This is so programs don't look for config files in application support
 export XDG_CONFIG_HOME="$HOME/.config"
 
