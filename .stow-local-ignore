@@ -1,24 +1,9 @@
 .DS_Store
 venv
-
 \.git
 \.gitignore
 
-^/roles
-^/tasks
-^/hosts
-^/deps
-
-^/default.config.yml
-
-^/README.md
-^/bootstrap-.*.yml
-^/main.yml
-^/\.macos.*.sh
-^/requirements.yml
-^/ansible.cfg
-^/install
-^/inventory
-
-^/\.stowrc
-
+# Root-level allowlist: stow ONLY these entries into $HOME.
+# Everything else at the dotfiles repo root is ignored.
+# To stow a new file/dir, add its name (regex-escaped) to the allowed list below.
+^/(?!(\.claude|\.config|\.gitconfig|\.ideavimrc|\.inputrc|\.local|\.mcp\.json|\.vimrc|\.zshrc)(/|$)).+
