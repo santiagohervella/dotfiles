@@ -1,5 +1,6 @@
 export EDITOR=nvim
 export VISUAL="$EDITOR"
+export TMUX_INACTIVE_PANE_BG="#0a0a0a"
 
 bindkey -s ^f "~/.config/tmux/tmux-sessionizer\n"
 

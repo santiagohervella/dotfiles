@@ -72,6 +72,41 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
 --From Claude: "The SQL ftplugin is intercepting your <C-c> keypress for SQL completion before your keymap can process it."
 -- "To fix the <C-c> timeout, disable the SQL omni completion"
 vim.g.omni_sql_no_default_maps = 1
+
+local focus_augroup = vim.api.nvim_create_augroup("focus_background", { clear = true })
+local original_normal = nil
+
+-- nvim_set_hl replaces a highlight definition rather than merging into it, so
+-- these callbacks always pass the whole captured Normal table. Passing only
+-- `bg` would drop Normal's foreground colour for the rest of the session.
+local function remember_normal()
+  original_normal = vim.api.nvim_get_hl(0, { name = "Normal" })
+end
+
+vim.api.nvim_create_autocmd({ "VimEnter", "ColorScheme" }, {
+  group = focus_augroup,
+  callback = remember_normal,
+})
+
+vim.api.nvim_create_autocmd("FocusLost", {
+  group = focus_augroup,
+  callback = function()
+    local inactive_bg = vim.env.TMUX_INACTIVE_PANE_BG
+    if original_normal and inactive_bg then
+      vim.api.nvim_set_hl(0, "Normal", vim.tbl_extend("force", original_normal, { bg = inactive_bg }))
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd("FocusGained", {
+  group = focus_augroup,
+  callback = function()
+    if original_normal then
+      vim.api.nvim_set_hl(0, "Normal", original_normal)
+    end
+  end,
+})
+
 -- Open help pages in a vertical split instead of horizontal
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "help",
