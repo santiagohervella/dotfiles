@@ -87,16 +87,30 @@ keymap("n", "<C-f>", ":silent !tmux neww ~/.config/tmux/tmux-sessionizer<CR>")
 keymap("n", "<leader>gdh", ":diffget //2<CR>", { desc = "Merge conflict resolution: Take left side" })
 keymap("n", "<leader>gdl", ":diffget //3<CR>", { desc = "Merge conflict resolution: Take right side" })
 
--- Yank current buffer path to clipboard in a TypeScript project
-local function yank_modified_path()
+local function yank_src_relative_path()
 	local path = vim.fn.expand("%")
 	local modified_path = path:gsub(".*(/src.*)", ".%1")
 	vim.fn.setreg("+", modified_path)
+	vim.notify("Yanked path: " .. modified_path)
 end
 
-_G.yank_modified_path = yank_modified_path
+local function yank_home_relative_buffer_path()
+	local path = vim.fn.expand("%:p")
+	local home = vim.fn.expand("~")
+	local home_path = path
 
-keymap("n", "<leader>yb", ":lua yank_modified_path()<CR>")
+	if path == home then
+		home_path = "~"
+	elseif vim.startswith(path, home .. "/") then
+		home_path = "~" .. path:sub(#home + 1)
+	end
+
+	vim.fn.setreg("+", home_path)
+	vim.notify("Yanked path: " .. home_path)
+end
+
+keymap("n", "<leader>yb", yank_src_relative_path, { desc = "Yank src-relative buffer path" })
+keymap("n", "<leader>yB", yank_home_relative_buffer_path, { desc = "Yank home-relative buffer path" })
 
 -- EXPERIMENTAL
 -- Trying these out...

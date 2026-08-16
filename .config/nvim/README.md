@@ -59,6 +59,8 @@ This purpose of this section is so I don't continue to see these plugins as shin
   - I loved the idea of using this plugin to switch between open buffers, but in pratice it was too much work. I would end up with files that had very long paths and so I'd have to visually hunt down the file first, then dart my eyes back to the start of the line to find the key I needed to hit to open the file.
   - Going back to Telescope for open buffers was better right away because I could start typing a keyword of the file I want and usually it's the only one so I just have to hit enter
   - I'd still like to try this plugin by shortening the paths, but even then I'm not it'll work out for me. For now, I've left it in the config just disabled
+- [tamton-aquib/duck.nvim](https://github.com/tamton-aquib/duck.nvim)
+  - I had this in my config for like 2 years haha. I love that this exists, but I no longer need it living in my config
 
 # Old README
 
