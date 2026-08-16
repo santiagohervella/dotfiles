@@ -94,7 +94,6 @@
       "Bash(uniq*)",
       "Bash(wc*)",
       "Bash(xargs grep*)",
-      "Bash(~/.claude/skills/catch-me-up/scripts/*)",
       "Glob",
       "Grep",
       "Read",
