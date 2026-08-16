@@ -22,7 +22,6 @@ homebrew_installed_packages:
   - gh
   - git
   - go
-  - hashicorp/tap/terraform
   - jq
   - lazygit
   - neovim
@@ -37,6 +36,7 @@ homebrew_installed_packages:
   - starship
   - stow
   - terragrunt
+  - tfenv # Manages terraform versions. Replaces installing terraform directly since I need to switch versions
   - tree-sitter-cli # Required by nvim 0.12+ according to this: https://www.qu8n.com/posts/treesitter-migration-guide-for-nvim-0-12
   - tmux
   - tmuxinator
@@ -47,7 +47,6 @@ homebrew_taps:
   - anomalyco/tap
   - buo/cask-upgrade
   # - FelixKratz/formulae # Dormant: only needed for sketchybar
-  - hashicorp/tap
   - koekeishiya/formulae
   - ohueter/tap
 

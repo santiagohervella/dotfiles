@@ -22,6 +22,8 @@ roles*
 .config/github-copilot/
 .config/uv/
 .config/fish/
+# tfenv downloads terraform binaries in here, ~150MB of them
+.config/tfenv/
 
 # Any overrides should be machine specific and not checked in
 config.yml
