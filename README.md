@@ -201,6 +201,9 @@ Without the `greedy` flag, apps that are set to autoupdate will not update via t
 - Create and populate `~/.zsh_env_vars`
   - YARN_NPM_AUTH_TOKEN
   - GEMINI_API_KEY
+  - DATADOG_API_KEY, DATADOG_APP_KEY
+  - PAGERDUTY_API_TOKEN
+  - OPENAI_API_KEY
 
 # In case you completely forget how any of this works
 
