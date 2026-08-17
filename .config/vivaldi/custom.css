@@ -5,3 +5,9 @@ div#panels-container {
 div#panels-container.overlay.minimized {
   position: absolute;
 }
+
+#browser #header {
+  /* This works, just have to decide if I like it or not  */
+  /* display: none !important; */
+  visibility: hidden !important;
+}
