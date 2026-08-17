@@ -1,0 +1,5 @@
+---
+- name: Generate the default AGENTS.md if it doesn't exist yet
+  command: '{{ ansible_env.HOME }}/.config/zsh/agent-persona {{ default_agent_personality }}'
+  args:
+    creates: '{{ ansible_env.HOME }}/.config/opencode/AGENTS.md'

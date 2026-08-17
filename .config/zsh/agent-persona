@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+base="$HOME/.config/opencode/AGENTS-base.md"
+persona_dir="$HOME/.config/opencode/personalities"
+output="$HOME/.config/opencode/AGENTS.md"
+
+choice="$1"
+
+if [[ -z "$choice" ]]; then
+  choice=$(ls "$persona_dir" | sed 's/\.md$//' | fzf --prompt="Pick a personality: ")
+fi
+
+if [[ -z "$choice" ]]; then
+  exit 0
+fi
+
+if [[ ! -f "$persona_dir/${choice}.md" ]]; then
+  echo "No personality called '$choice'. Available:" >&2
+  ls "$persona_dir" | sed 's/\.md$//' >&2
+  exit 1
+fi
+
+{ cat "$base"; echo ""; cat "$persona_dir/${choice}.md"; } > "$output"
+echo "Switched to '$choice' personality"

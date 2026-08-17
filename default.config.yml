@@ -137,6 +137,8 @@ mas_installed_apps:
   # - { id: 937984704, name: "Amphetamine (5.3.2)" }
   # - { id: 6449708232, name: "Linkeeper (2.0.1)" }
 
+default_agent_personality: jarvis
+
 osx_script: './.macos.sh --no-restart'
 osx_personal_script: './.macos-personal-only.sh --no-restart'
 osx_work_script: './.macos-work-only.sh --no-restart'
