@@ -24,6 +24,8 @@ roles*
 .config/fish/
 # tfenv downloads terraform binaries in here, ~150MB of them
 .config/tfenv/
+# The swift toolchain creates this for its own caches
+.config/swiftpm/
 
 # Any overrides should be machine specific and not checked in
 config.yml
