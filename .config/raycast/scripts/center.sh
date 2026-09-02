@@ -8,8 +8,7 @@
 # Documentation:
 # @raycast.description Center window on screen without resizing
 
-display=$(yabai -m query --displays --display)
-window=$(yabai -m query --windows --window)
+source "$(dirname "$0")/helpers/target.sh"
 
 dx=$(echo "$display" | jq '.frame.x')
 dy=$(echo "$display" | jq '.frame.y')
@@ -21,4 +20,4 @@ wh=$(echo "$window" | jq '.frame.h')
 nx=$(echo "$dx + ($dw - $ww) / 2" | bc)
 ny=$(echo "$dy + ($dh - $wh) / 2" | bc)
 
-yabai -m window --move abs:${nx}:${ny}
+yabai -m window "$id" --move abs:${nx}:${ny}

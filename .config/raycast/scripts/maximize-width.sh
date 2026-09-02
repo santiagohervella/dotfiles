@@ -8,13 +8,12 @@
 # Documentation:
 # @raycast.description Maximize window width, keep current height and y position
 
-display=$(yabai -m query --displays --display)
-window=$(yabai -m query --windows --window)
+source "$(dirname "$0")/helpers/target.sh"
 
 dx=$(echo "$display" | jq '.frame.x')
 dw=$(echo "$display" | jq '.frame.w')
 wh=$(echo "$window" | jq '.frame.h')
 wy=$(echo "$window" | jq '.frame.y')
 
-yabai -m window --resize abs:${dw%.*}:${wh%.*}
-yabai -m window --move abs:${dx%.*}:${wy%.*}
+yabai -m window "$id" --resize abs:${dw%.*}:${wh%.*}
+yabai -m window "$id" --move abs:${dx%.*}:${wy%.*}

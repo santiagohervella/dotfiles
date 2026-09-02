@@ -8,10 +8,9 @@
 # Documentation:
 # @raycast.description Move window to left edge without resizing
 
-display=$(yabai -m query --displays --display)
-window=$(yabai -m query --windows --window)
+source "$(dirname "$0")/helpers/target.sh"
 
 dx=$(echo "$display" | jq '.frame.x | round')
 wy=$(echo "$window" | jq '.frame.y | round')
 
-yabai -m window --move abs:$dx:$wy
+yabai -m window "$id" --move abs:$dx:$wy

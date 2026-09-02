@@ -8,10 +8,9 @@
 # Documentation:
 # @raycast.description Move window to top edge without resizing
 
-display=$(yabai -m query --displays --display)
-window=$(yabai -m query --windows --window)
+source "$(dirname "$0")/helpers/target.sh"
 
 dy=$(echo "$display" | jq '.frame.y | round')
 wx=$(echo "$window" | jq '.frame.x | round')
 
-yabai -m window --move abs:$wx:$dy
+yabai -m window "$id" --move abs:$wx:$dy

@@ -8,8 +8,7 @@
 # Documentation:
 # @raycast.description Move window to bottom edge without resizing
 
-display=$(yabai -m query --displays --display)
-window=$(yabai -m query --windows --window)
+source "$(dirname "$0")/helpers/target.sh"
 
 dy=$(echo "$display" | jq '.frame.y')
 dh=$(echo "$display" | jq '.frame.h')
@@ -18,4 +17,4 @@ wx=$(echo "$window" | jq '.frame.x | round')
 
 ny=$(echo "$dy + $dh - $wh" | bc | xargs printf '%.0f')
 
-yabai -m window --move abs:$wx:$ny
+yabai -m window "$id" --move abs:$wx:$ny

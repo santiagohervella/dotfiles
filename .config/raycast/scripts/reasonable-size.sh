@@ -8,7 +8,7 @@
 # Documentation:
 # @raycast.description Resize to 60% of screen (max 1024x900) and center
 
-display=$(yabai -m query --displays --display)
+source "$(dirname "$0")/helpers/target.sh"
 
 dx=$(echo "$display" | jq '.frame.x')
 dy=$(echo "$display" | jq '.frame.y')
@@ -24,5 +24,5 @@ th=$(echo "($dh * 0.6) / 1" | bc)
 nx=$(echo "$dx + ($dw - $tw) / 2" | bc)
 ny=$(echo "$dy + ($dh - $th) / 2" | bc)
 
-yabai -m window --resize abs:${tw}:${th}
-yabai -m window --move abs:${nx}:${ny}
+yabai -m window "$id" --resize abs:${tw}:${th}
+yabai -m window "$id" --move abs:${nx}:${ny}
