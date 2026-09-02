@@ -7,7 +7,6 @@ return {
 		dependencies = {
 			"kevinhwang91/promise-async",
 		},
-		enabled = false,
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			require("ufo").setup({

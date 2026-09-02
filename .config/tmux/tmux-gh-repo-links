@@ -2,6 +2,7 @@
 
 cache_file="$HOME/.config/tmux/gh-repos-cache"
 cache_duration=1209600  # 2 weeks in seconds
+projects_dir="$HOME/Documents/projects"
 
 if [[ -f "$cache_file" && $(($(date +%s) - $(stat -f %m "$cache_file"))) -lt $cache_duration ]]; then
   repos=$(cat "$cache_file")
@@ -18,12 +19,26 @@ fi
 
 full_repo=$(printf '%s\n' "$repos" | grep "/$selected_basename[[:space:]]" | cut -d$'\t' -f1)
 
-link_options=("Actions" "PRs" "Releases" "Code")
+link_options=("Actions" "PRs" "Releases" "Code" "Clone")
 selected_link=$(printf "%s\n" "${link_options[@]}" | dynamic-fzf)
 
 if [[ -z $selected_link ]]; then
   exit 0
 fi
+
+clone_repo() {
+    local repo="$1"
+    local dest="$projects_dir/${repo##*/}"
+
+    if [[ -d $dest ]]; then
+        echo "Already cloned: $dest"
+    else
+        gh repo clone "$repo" "$dest"
+    fi
+
+    echo
+    read -n 1 -s -r -p "Press any key to close"
+}
 
 gh_browse_section() {
     local repo="$1"
@@ -47,6 +62,10 @@ case $selected_link in
 
   Code)
     gh_browse_section "$full_repo" ""
+    ;;
+
+  Clone)
+    clone_repo "$full_repo"
     ;;
 
   *)

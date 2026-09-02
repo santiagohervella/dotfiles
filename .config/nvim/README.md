@@ -17,10 +17,9 @@ This purpose of this section is so I don't continue to see these plugins as shin
 - [folke/trouble.nvim](https://github.com/folke/trouble.nvim)
   - I hoped that similar to folk's TODO plugin, that this would magically be able to show me all the diagnostics for the project. Alas, that was too much to expect and would probably not be performant
   - However, given the same diagnostics functionality as Telescope, I don't dislike seeing them in a quickfix list vs a Telescope window, but I'm not sure that makes a big enough difference to go with this over Telescope
-  - The symbol browser is way better than the Telescope one and I would totally use this plugin just for this symbol view! Unfortunately, I can get it to a usable state and after reading the source code for the plugin, I don't think it's customizable enough
-  - It looks like the only styling / position options for how to show anything with Trouble are listed [here](https://github.com/folke/trouble.nvim/blob/main/lua/trouble/command.lua#L57), which are quite limited. I tried every combination I can think of and it's all unusable.
-  - I like this symbols viewer enough that I'm keeping the plugin file around and just disabling the plugin in hopes that one day I can achieve what want
-  - TODO: Check to see if this plugin has been update with more customizability
+  - The symbol browser is way better than the Telescope one and I would totally use this plugin just for this symbol view! Unfortunately, I can get it to a usable state and after reading the source code for the plugin, it may not be customizable enough
+  - I like the information that's presented, but not the design. Maybe one day I'll pick it back up and figure out how to get it to look like telescope style. The `float` options got me part of the way there
+  - TODO: Try to get this to look like telescope
 - [kungfusheep/snipe-lsp.nvim](https://github.com/kungfusheep/snipe-lsp.nvim)
   - Seems pretty nice, but the results that show up in the menu are much fewer than appear with Trouble or Telescope
 - [catgoose/telescope-helpgrep.nvim](https://github.com/catgoose/telescope-helpgrep.nvim)
@@ -34,7 +33,7 @@ This purpose of this section is so I don't continue to see these plugins as shin
 - [declancm/cinnamon.nvim](https://github.com/declancm/cinnamon.nvim)
   - Now this one I found commented out in [Mitchell Hashimoto's config](https://github.com/mitchellh/nixos-config/blob/main/users/mitchellh/vim-config.nix#L103)
   - This is absolutely the best smooth scrolling plugin I've found because you can adjust the delay in the scrolling so you can go from stock behavior to very slow smooth scrolling
-  - I still don't think I want to use it because I like the instant snappiness, but I'm going to keep it checked in, just disabled in case I want to come back to it
+  - I still don't think I want to use it because I prefer the instant snappiness, but if I ever change my mind, this is it!
 - [pocco81/true-zen.nvim](https://github.com/pocco81/true-zen.nvim)
   - The video demo on the true-zen github page is awesome and is exactly what I'd like to achieve:
   - Zen mode in the middle but with the ability to open the file explorer if I'd like
@@ -58,9 +57,11 @@ This purpose of this section is so I don't continue to see these plugins as shin
 - [leath-dub/snipe.nvim](https://github.com/leath-dub/snipe.nvim)
   - I loved the idea of using this plugin to switch between open buffers, but in pratice it was too much work. I would end up with files that had very long paths and so I'd have to visually hunt down the file first, then dart my eyes back to the start of the line to find the key I needed to hit to open the file.
   - Going back to Telescope for open buffers was better right away because I could start typing a keyword of the file I want and usually it's the only one so I just have to hit enter
-  - I'd still like to try this plugin by shortening the paths, but even then I'm not it'll work out for me. For now, I've left it in the config just disabled
+  - I might like to try this plugin by shortening the paths, but even then I'm not sure it'll work out for me.
 - [tamton-aquib/duck.nvim](https://github.com/tamton-aquib/duck.nvim)
   - I had this in my config for like 2 years haha. I love that this exists, but I no longer need it living in my config
+- [ThePrimeagen/99](https://github.com/ThePrimeagen/99)
+  - Very cool plugin, but I think the advancements in agents make this no longer the right workflow
 
 # Old README
 
