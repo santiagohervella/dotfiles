@@ -10,13 +10,4 @@
 
 source "$(dirname "$0")/helpers/target.sh"
 
-dx=$(echo "$display" | jq '.frame.x')
-dy=$(echo "$display" | jq '.frame.y')
-dw=$(echo "$display" | jq '.frame.w')
-dh=$(echo "$display" | jq '.frame.h')
-
-nx=$(echo "$dx + ($dw - 1920) / 2" | bc)
-ny=$(echo "$dy + ($dh - 1500) / 2" | bc)
-
-yabai -m window "$id" --resize abs:1920:1500
-yabai -m window "$id" --move abs:${nx}:${ny}
+"$HOME/.config/yabai/scripts/rather-reasonable-size.sh" "$id" --force

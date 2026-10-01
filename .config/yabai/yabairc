@@ -3,4 +3,12 @@
 yabai -m config layout float
 yabai -m config external_bar off:0:0
 
+builtin_display_id=$(system_profiler SPDisplaysDataType -json \
+  | jq -r '.SPDisplaysDataType[].spdisplays_ndrvs[] | select(.spdisplays_connection_type == "spdisplays_internal") | ._spdisplays_displayID')
+builtin_display_id=$([ -n "$builtin_display_id" ] && printf '%d' "0x$builtin_display_id")
+
+yabai -m signal --remove rather-reasonable-size 2>/dev/null
+yabai -m signal --add label=rather-reasonable-size event=window_created \
+  action="BUILTIN_DISPLAY_ID=$builtin_display_id \$HOME/.config/yabai/scripts/rather-reasonable-size.sh \$YABAI_WINDOW_ID"
+
 echo "yabai configuration loaded"
