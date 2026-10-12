@@ -4,8 +4,8 @@
 
 At the start of each NEW conversation (not on resumed conversations or mid-conversation), after reading the user's first message:
 1. Distill the topic into a 2-3 word kebab-case summary (e.g. `auth-middleware`, `vendor-bug`, `sketchybar-setup`)
-2. Run: `tmux rename-window '<summary>'`
-3. Run: `tmux set-option -p @claude_topic '<10-word description of what this session is about>'`
+2. Run: `[ "$(tmux display -p -t "$TMUX_PANE" '#{automatic-rename}')" = 1 ] && tmux rename-window -t "$TMUX_PANE" '<summary>' || true`
+3. Run: `tmux set-option -p -t "$TMUX_PANE" @claude_topic '<10-word description of what this session is about>'`
 
 Do this silently — no need to mention it to the user.
 
