@@ -33,9 +33,11 @@
     </dict>
   </dict>
 
+  <!-- Kept off jellyfin_storage_dir: launchd opens these before the server
+       starts, and macOS blocks launchd from writing to removable volumes -->
   <key>StandardOutPath</key>
-  <string>{{ jellyfin_storage_dir }}/log/launchd.log</string>
+  <string>{{ ansible_env.HOME }}/Library/Logs/jellyfin-launchd.log</string>
   <key>StandardErrorPath</key>
-  <string>{{ jellyfin_storage_dir }}/log/launchd.log</string>
+  <string>{{ ansible_env.HOME }}/Library/Logs/jellyfin-launchd.log</string>
 </dict>
 </plist>

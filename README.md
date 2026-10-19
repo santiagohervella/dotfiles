@@ -193,7 +193,7 @@ Without the `greedy` flag, apps that are set to autoupdate will not update via t
   then run `ansible-playbook main.yml --ask-become-pass --tags jellyfin`
 - Don't open Jellyfin.app. It's only installed for the server binary inside it; the LaunchAgent runs the server with storage on the media drive, while the app's launcher would start a second server using `~/.local/share/jellyfin`, which is stowed from this repo
 - Approve the macOS prompt allowing `jellyfin` to access the removable volume, if one appears
-- Finish setup at `http://<mac-mini>:8096`. Logs are in `<jellyfin_storage_dir>/log`
+- Finish setup at `http://<mac-mini>:8096`. Logs are in `<jellyfin_storage_dir>/log`, plus `~/Library/Logs/jellyfin-launchd.log` if the server fails to start
 
 ## On work Macs
 
