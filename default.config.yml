@@ -139,6 +139,14 @@ mas_installed_apps:
 
 default_agent_personality: jarvis
 
+# Jellyfin media server. Only the media server machine should enable this, via
+# config.yml, along with jellyfin_storage_dir (e.g. a folder on the media drive)
+configure_jellyfin: false
+jellyfin_storage_dir: ''
+jellyfin_app_path: "{{ homebrew_cask_appdir }}/Jellyfin.app"
+jellyfin_launch_agent_label: org.jellyfin.server
+jellyfin_launch_agent_path: "{{ ansible_env.HOME }}/Library/LaunchAgents/{{ jellyfin_launch_agent_label }}.plist"
+
 osx_script: './.macos.sh --no-restart'
 osx_personal_script: './.macos-personal-only.sh --no-restart'
 osx_work_script: './.macos-work-only.sh --no-restart'

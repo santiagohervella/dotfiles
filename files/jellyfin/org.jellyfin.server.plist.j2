@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Managed by Ansible (tasks/jellyfin.yml). Edit the template in the dotfiles repo, not this file. -->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>{{ jellyfin_launch_agent_label }}</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>{{ jellyfin_app_path }}/Contents/MacOS/jellyfin</string>
+    <string>--datadir</string>
+    <string>{{ jellyfin_storage_dir }}/data</string>
+    <string>--configdir</string>
+    <string>{{ jellyfin_storage_dir }}/config</string>
+    <string>--cachedir</string>
+    <string>{{ jellyfin_storage_dir }}/cache</string>
+    <string>--logdir</string>
+    <string>{{ jellyfin_storage_dir }}/log</string>
+    <string>--webdir</string>
+    <string>{{ jellyfin_app_path }}/Contents/Resources/jellyfin-web</string>
+    <string>--ffmpeg</string>
+    <string>{{ jellyfin_app_path }}/Contents/MacOS/ffmpeg</string>
+  </array>
+
+  <!-- Only run (and restart on crash) while the storage drive is mounted -->
+  <key>KeepAlive</key>
+  <dict>
+    <key>PathState</key>
+    <dict>
+      <key>{{ jellyfin_storage_dir }}</key>
+      <true/>
+    </dict>
+  </dict>
+
+  <key>StandardOutPath</key>
+  <string>{{ jellyfin_storage_dir }}/log/launchd.log</string>
+  <key>StandardErrorPath</key>
+  <string>{{ jellyfin_storage_dir }}/log/launchd.log</string>
+</dict>
+</plist>

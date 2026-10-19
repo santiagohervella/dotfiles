@@ -1,0 +1,45 @@
+---
+# Runs the Jellyfin server binary from a LaunchAgent instead of the app's menu
+# bar launcher. The launcher hardcodes ~/.local/share/jellyfin, which is stowed
+# from this repo, so we pass explicit paths under jellyfin_storage_dir instead.
+- name: Ensure jellyfin_storage_dir is set
+  assert:
+    that: jellyfin_storage_dir | length > 0
+    fail_msg: Set jellyfin_storage_dir in config.yml when configure_jellyfin is true
+
+- name: Install Jellyfin
+  community.general.homebrew_cask:
+    name: jellyfin
+    state: present
+
+- name: Create Jellyfin storage directories
+  file:
+    path: "{{ jellyfin_storage_dir }}/{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - data
+    - config
+    - cache
+    - log
+
+- name: Install Jellyfin LaunchAgent
+  template:
+    src: files/jellyfin/org.jellyfin.server.plist.j2
+    dest: "{{ jellyfin_launch_agent_path }}"
+    mode: "0644"
+  register: jellyfin_launch_agent
+
+- name: Check if the Jellyfin LaunchAgent is loaded
+  command: "launchctl print gui/{{ ansible_user_uid }}/{{ jellyfin_launch_agent_label }}"
+  register: jellyfin_loaded
+  changed_when: false
+  failed_when: false
+
+- name: Unload the old Jellyfin LaunchAgent so changes take effect
+  command: "launchctl bootout gui/{{ ansible_user_uid }}/{{ jellyfin_launch_agent_label }}"
+  when: jellyfin_launch_agent.changed and jellyfin_loaded.rc == 0
+
+- name: Load the Jellyfin LaunchAgent
+  command: "launchctl bootstrap gui/{{ ansible_user_uid }} {{ jellyfin_launch_agent_path }}"
+  when: jellyfin_launch_agent.changed or jellyfin_loaded.rc != 0

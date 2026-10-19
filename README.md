@@ -181,6 +181,20 @@ Without the `greedy` flag, apps that are set to autoupdate will not update via t
 - Install [Reeder Classic](https://apps.apple.com/us/app/reeder-classic/id1529448980) from the Mac App Store
 - Add Hyperduck to login items with `osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Hyperduck.app", hidden:true}' > /dev/null`
 
+## On the media server (Mac mini)
+
+- Enable Jellyfin in `./config.yml` (not checked in):
+
+  ```yaml
+  configure_jellyfin: true
+  jellyfin_storage_dir: /Volumes/elisanti-media-drive/jellyfin
+  ```
+
+  then run `ansible-playbook main.yml --ask-become-pass --tags jellyfin`
+- Don't open Jellyfin.app. It's only installed for the server binary inside it; the LaunchAgent runs the server with storage on the media drive, while the app's launcher would start a second server using `~/.local/share/jellyfin`, which is stowed from this repo
+- Approve the macOS prompt allowing `jellyfin` to access the removable volume, if one appears
+- Finish setup at `http://<mac-mini>:8096`. Logs are in `<jellyfin_storage_dir>/log`
+
 ## On work Macs
 
 - Finder

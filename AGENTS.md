@@ -16,7 +16,7 @@ Any system customization must be compatible with this approach - if it can't be 
 
 - Full setup: `ansible-playbook main.yml --ask-become-pass`
 - Single tag: `ansible-playbook main.yml --ask-become-pass --tags <tag>`
-- Available tags: `homebrew`, `mas`, `dotfiles`, `osx`, `extra-packages`, `post`
+- Available tags: `homebrew`, `mas`, `dotfiles`, `osx`, `extra-packages`, `jellyfin`, `post`
 
 ## Key files
 
