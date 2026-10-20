@@ -188,12 +188,17 @@ Without the `greedy` flag, apps that are set to autoupdate will not update via t
   ```yaml
   configure_jellyfin: true
   jellyfin_storage_dir: /Volumes/elisanti-media-drive/jellyfin
+  jellyfin_tailscale_funnel: true # Optional: expose it on the internet
   ```
 
   then run `ansible-playbook main.yml --ask-become-pass --tags jellyfin`
+- If using Funnel:
+  - Approve the link the playbook prints to enable Funnel on the tailnet
+  - Add Tailscale to Login Items in System Settings (its own "Launch at login" setting can't turn itself on)
+  - In Jellyfin, set Dashboard → Networking → Known proxies to `127.0.0.1, ::1` so it sees real client IPs instead of treating every Funnel request as local
 - Don't open Jellyfin.app. It's only installed for the server binary inside it; the LaunchAgent runs the server with storage on the media drive, while the app's launcher would start a second server using `~/.local/share/jellyfin`, which is stowed from this repo
 - Approve the macOS prompt allowing `jellyfin` to access the removable volume, if one appears
-- Finish setup at `http://<mac-mini>:8096`. Logs are in `<jellyfin_storage_dir>/log`, plus `~/Library/Logs/jellyfin-launchd.log` if the server fails to start
+- Finish setup at `http://<mac-mini>:8096`. Logs are in `<jellyfin_storage_dir>/log`, plus `~/Library/Logs/jellyfin-launchd.log` (stderr only) if the server fails to start
 
 ## On work Macs
 

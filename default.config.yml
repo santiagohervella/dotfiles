@@ -146,6 +146,10 @@ jellyfin_storage_dir: ''
 jellyfin_app_path: "{{ homebrew_cask_appdir }}/Jellyfin.app"
 jellyfin_launch_agent_label: org.jellyfin.server
 jellyfin_launch_agent_path: "{{ ansible_env.HOME }}/Library/LaunchAgents/{{ jellyfin_launch_agent_label }}.plist"
+jellyfin_port: 8096
+# Expose Jellyfin on the internet at https://<machine>.<tailnet>.ts.net via Tailscale Funnel
+jellyfin_tailscale_funnel: false
+tailscale_cli: /Applications/Tailscale.app/Contents/MacOS/Tailscale
 
 osx_script: './.macos.sh --no-restart'
 osx_personal_script: './.macos-personal-only.sh --no-restart'

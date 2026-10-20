@@ -33,10 +33,11 @@
     </dict>
   </dict>
 
-  <!-- Kept off jellyfin_storage_dir: launchd opens these before the server
-       starts, and macOS blocks launchd from writing to removable volumes -->
+  <!-- stdout duplicates the logs Jellyfin already writes to jellyfin_storage_dir.
+       stderr is kept off that dir: launchd opens it before the server starts,
+       and macOS blocks launchd from writing to removable volumes -->
   <key>StandardOutPath</key>
-  <string>{{ ansible_env.HOME }}/Library/Logs/jellyfin-launchd.log</string>
+  <string>/dev/null</string>
   <key>StandardErrorPath</key>
   <string>{{ ansible_env.HOME }}/Library/Logs/jellyfin-launchd.log</string>
 </dict>

@@ -43,3 +43,18 @@
 - name: Load the Jellyfin LaunchAgent
   command: "launchctl bootstrap gui/{{ ansible_user_uid }} {{ jellyfin_launch_agent_path }}"
   when: jellyfin_launch_agent.changed or jellyfin_loaded.rc != 0
+
+- name: Check Tailscale Funnel config
+  command: "{{ tailscale_cli }} funnel status --json"
+  register: jellyfin_funnel_status
+  changed_when: false
+  when: jellyfin_tailscale_funnel
+
+# The first run on a tailnet prints a link to enable Funnel and waits until it's approved
+- name: Expose Jellyfin to the internet with Tailscale Funnel
+  command: "{{ tailscale_cli }} funnel --bg {{ jellyfin_port }}"
+  when: >
+    jellyfin_tailscale_funnel and not (
+      '"AllowFunnel"' in jellyfin_funnel_status.stdout and
+      'http://127.0.0.1:' ~ jellyfin_port in jellyfin_funnel_status.stdout
+    )
