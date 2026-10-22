@@ -1,0 +1,79 @@
+---
+# Runs the *arr stack with Docker Compose in OrbStack. Jellyfin stays native (see
+# tasks/jellyfin.yml) so it keeps hardware transcoding, which containers on macOS can't use.
+- name: Ensure arr_media_dir and arr_wireguard_private_key are set
+  assert:
+    that:
+      - arr_media_dir | length > 0
+      - arr_wireguard_private_key | length > 0
+    fail_msg: Set arr_media_dir and arr_wireguard_private_key in config.yml when configure_arr is true
+
+- name: Install OrbStack
+  community.general.homebrew_cask:
+    name: orbstack
+    state: present
+
+- name: Read OrbStack settings
+  command: /opt/homebrew/bin/orb config show
+  register: arr_orb_config
+  changed_when: false
+
+- name: Configure OrbStack to start at login with capped memory
+  command: "/opt/homebrew/bin/orb config set {{ item.key }} {{ item.value }}"
+  loop:
+    - { key: app.start_at_login, value: "true" }
+    - { key: memory_mib, value: "{{ arr_orbstack_memory_mib }}" }
+  when: "(item.key ~ ': ' ~ item.value) not in arr_orb_config.stdout_lines"
+
+- name: Start OrbStack
+  command: /opt/homebrew/bin/orb start
+  changed_when: false
+
+- name: Create the compose directory
+  file:
+    path: "{{ arr_compose_dir }}"
+    state: directory
+    mode: "0700"
+
+- name: Create download directories on the media drive
+  file:
+    path: "{{ arr_media_dir }}/downloads/{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - movies
+    - tv
+
+- name: Install the compose file
+  template:
+    src: files/arr/compose.yml.j2
+    dest: "{{ arr_compose_dir }}/compose.yml"
+    mode: "0644"
+
+- name: Install the compose secrets
+  copy:
+    content: "WIREGUARD_PRIVATE_KEY={{ arr_wireguard_private_key }}\n"
+    dest: "{{ arr_compose_dir }}/.env"
+    mode: "0600"
+
+# Pulls any missing images and (re)creates containers whose config changed
+- name: Start the *arr stack
+  command: "{{ orbstack_bin }}/docker-compose up --detach --remove-orphans --wait"
+  args:
+    chdir: "{{ arr_compose_dir }}"
+  register: arr_compose_up
+  changed_when: arr_compose_up.stderr is search('Created|Recreated|Started|Removed')
+
+- name: Check Tailscale Funnel config
+  command: "{{ tailscale_cli }} funnel status --json"
+  register: arr_funnel_status
+  changed_when: false
+  when: arr_seerr_tailscale_funnel
+
+- name: Expose Seerr to the internet with Tailscale Funnel
+  command: "{{ tailscale_cli }} funnel --bg --https={{ arr_seerr_funnel_port }} {{ arr_seerr_port }}"
+  when: >
+    arr_seerr_tailscale_funnel and not (
+      ':' ~ arr_seerr_funnel_port ~ '"' in arr_funnel_status.stdout and
+      'http://127.0.0.1:' ~ arr_seerr_port in arr_funnel_status.stdout
+    )

@@ -1,0 +1,127 @@
+# Managed by Ansible (tasks/arr.yml). Edit the template in the dotfiles repo, not this file.
+#
+# App config lives in named volumes inside OrbStack's VM (on the internal SSD), which
+# keeps the apps' SQLite databases off the macOS file sharing layer. Media is bind
+# mounted from the drive. Sonarr and Radarr see the whole drive as one /data mount, so
+# moving a finished download from /data/downloads into a library is a hardlink.
+name: arr
+
+x-common: &common
+  restart: unless-stopped
+  environment: &common-env
+    PUID: "1000"
+    PGID: "1000"
+    TZ: {{ arr_timezone }}
+
+services:
+  # Proton VPN tunnel. qBittorrent shares its network, so torrent traffic can only leave
+  # through the VPN, and gluetun's firewall blocks it whenever the tunnel is down
+  gluetun:
+    <<: *common
+    image: qmcgaw/gluetun:latest
+    cap_add: [NET_ADMIN]
+    devices: [/dev/net/tun:/dev/net/tun]
+    environment:
+      TZ: {{ arr_timezone }}
+      VPN_SERVICE_PROVIDER: protonvpn
+      VPN_TYPE: wireguard
+      WIREGUARD_PRIVATE_KEY: ${WIREGUARD_PRIVATE_KEY:?set arr_wireguard_private_key in config.yml}
+      PORT_FORWARD_ONLY: "on"
+{% if arr_vpn_server_countries %}
+      SERVER_COUNTRIES: "{{ arr_vpn_server_countries }}"
+{% endif %}
+      VPN_PORT_FORWARDING: "on"
+      # Tell qBittorrent which port Proton forwarded (needs "Bypass authentication for
+      # clients on localhost" in qBittorrent). From the gluetun wiki
+{% raw %}
+      VPN_PORT_FORWARDING_UP_COMMAND: /bin/sh -c 'wget -O- -nv --retry-connrefused --post-data "json={\"listen_port\":{{PORT}},\"current_network_interface\":\"{{VPN_INTERFACE}}\",\"random_port\":false,\"upnp\":false}" http://127.0.0.1:8080/api/v2/app/setPreferences'
+      VPN_PORT_FORWARDING_DOWN_COMMAND: /bin/sh -c 'wget -O- -nv --retry-connrefused --post-data "json={\"listen_port\":0,\"current_network_interface\":\"lo\"}" http://127.0.0.1:8080/api/v2/app/setPreferences'
+{% endraw %}
+    ports:
+      - 8080:8080 # qBittorrent web UI
+    volumes:
+      - gluetun:/gluetun
+
+  qbittorrent:
+    <<: *common
+    image: lscr.io/linuxserver/qbittorrent:latest
+    network_mode: service:gluetun
+    depends_on:
+      gluetun:
+        condition: service_healthy
+    environment:
+      <<: *common-env
+      WEBUI_PORT: "8080"
+    volumes:
+      - qbittorrent:/config
+      - "{{ arr_media_dir }}/downloads:/data/downloads"
+
+  prowlarr:
+    <<: *common
+    image: lscr.io/linuxserver/prowlarr:latest
+    ports:
+      - 9696:9696
+    volumes:
+      - prowlarr:/config
+
+  # Headless browser Prowlarr sends Cloudflare-protected indexers (1337x, EZTV) through
+  flaresolverr:
+    <<: *common
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    environment:
+      TZ: {{ arr_timezone }}
+
+  sonarr:
+    <<: *common
+    image: lscr.io/linuxserver/sonarr:latest
+    ports:
+      - 8989:8989
+    volumes:
+      - sonarr:/config
+      - "{{ arr_media_dir }}:/data"
+
+  radarr:
+    <<: *common
+    image: lscr.io/linuxserver/radarr:latest
+    ports:
+      - 7878:7878
+    volumes:
+      - radarr:/config
+      - "{{ arr_media_dir }}:/data"
+
+  # Syncs the TRaSH Guides quality profiles into Sonarr and Radarr daily. Its config
+  # (with their API keys) lives in its volume: see README for how it was created
+  recyclarr:
+    <<: *common
+    image: ghcr.io/recyclarr/recyclarr:8
+    user: 1000:1000
+    environment:
+      TZ: {{ arr_timezone }}
+    volumes:
+      - recyclarr:/config
+
+  seerr:
+    <<: *common
+    image: ghcr.io/seerr-team/seerr:latest
+    init: true
+    environment:
+      TZ: {{ arr_timezone }}
+    ports:
+      - {{ arr_seerr_port }}:5055
+    volumes:
+      - seerr:/app/config
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/settings/public || exit 1
+      start_period: 20s
+      timeout: 3s
+      interval: 15s
+      retries: 3
+
+volumes:
+  gluetun:
+  qbittorrent:
+  prowlarr:
+  sonarr:
+  radarr:
+  recyclarr:
+  seerr:

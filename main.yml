@@ -45,6 +45,11 @@
       become: false
       tags: ["jellyfin"]
 
+    - import_tasks: tasks/arr.yml
+      when: configure_arr
+      become: false
+      tags: ["arr"]
+
     - import_tasks: tasks/extra-packages.yml
       tags: ["extra-packages"]
 

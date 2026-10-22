@@ -200,6 +200,32 @@ Without the `greedy` flag, apps that are set to autoupdate will not update via t
 - Approve the macOS prompt allowing `jellyfin` to access the removable volume, if one appears
 - Finish setup at `http://<mac-mini>:8096`. Logs are in `<jellyfin_storage_dir>/log`, plus `~/Library/Logs/jellyfin-launchd.log` (stderr only) if the server fails to start
 
+### *arr stack
+
+Seerr (requests) → Sonarr (TV) / Radarr (movies) → Prowlarr (indexers) → qBittorrent (behind Proton VPN via gluetun) → libraries on the media drive → Jellyfin rescans. Runs with Docker Compose in OrbStack; Jellyfin stays native for hardware transcoding.
+
+- Get a WireGuard key: account.protonvpn.com → Downloads → WireGuard configuration, platform GNU/Linux, **NAT-PMP (Port Forwarding) on**, any P2P server. Only the `PrivateKey` is used
+- Enable it in `./config.yml`:
+
+  ```yaml
+  configure_arr: true
+  arr_media_dir: /Volumes/elisanti-media-drive
+  arr_wireguard_private_key: <PrivateKey from the Proton config>
+  arr_vpn_server_countries: United States # Optional: nearby servers are faster
+  arr_seerr_tailscale_funnel: true # Optional: Seerr at https://<machine>.<tailnet>.ts.net:8443
+  ```
+
+  then run `ansible-playbook main.yml --tags arr`
+- First run only, on the Mini's screen: open OrbStack.app and finish onboarding (choose Docker), and approve its prompt to access removable volumes. Until that's approved, any container touching the drive hangs OrbStack's VM
+- App config is in Docker volumes inside OrbStack, not in this repo. The one-time wiring done through the apps' APIs/UIs:
+  - Sonarr/Radarr: root folders `/data/TV Shows` + `/data/Santi TV Shows`, `/data/Movies` + `/data/Santi Movies`; naming matches the existing library (`Show (Year)/Season 01/Show S01E01`, `Movie (Year)/Movie (Year)`); a Jellyfin connection (`host.docker.internal:8096`, API key `arr-stack`) that refreshes the library on import; qBittorrent download client at `gluetun:8080`
+  - Prowlarr: Sonarr/Radarr apps (`http://sonarr:8989`, `http://radarr:7878`), public indexers, and a FlareSolverr proxy (`http://flaresolverr:8191`) for indexers tagged `flaresolverr` (1337x, EZTV, ...)
+  - Recyclarr: `recyclarr config create -t web-1080p -t hd-bluray-web` inside the container, URLs + API keys filled in; it syncs TRaSH quality profiles daily
+  - qBittorrent: "Bypass authentication for clients on localhost" on, so gluetun can set the port Proton forwards
+  - Seerr: signed in with Jellyfin at `host.docker.internal:8096`, "Enable Proxy Support" on (it's behind Funnel)
+- Admin UIs on the LAN/tailnet: Seerr `:5055`, Sonarr `:8989`, Radarr `:7878`, Prowlarr `:9696`, qBittorrent `:8080`. Login is `santi` with the password in `~/.arr-stack/admin-password`
+- Logs: `docker-compose logs <service>` in `~/.arr-stack` (`docker-compose` is in OrbStack.app/Contents/MacOS/xbin if not on PATH)
+
 ## On work Macs
 
 - Finder

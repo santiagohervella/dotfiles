@@ -151,6 +151,29 @@ jellyfin_port: 8096
 jellyfin_tailscale_funnel: false
 tailscale_cli: /Applications/Tailscale.app/Contents/MacOS/Tailscale
 
+# *arr stack (Seerr, Sonarr, Radarr, Prowlarr, qBittorrent behind a VPN) run with
+# Docker Compose in OrbStack. Only the media server should enable this, via
+# config.yml, along with arr_media_dir and arr_wireguard_private_key
+configure_arr: false
+# Drive root holding Movies/ and TV Shows/. Downloads go to <arr_media_dir>/downloads,
+# on the same drive so finished downloads are hardlinked into the libraries, not copied
+arr_media_dir: ''
+arr_compose_dir: "{{ ansible_env.HOME }}/.arr-stack"
+arr_timezone: America/New_York
+# From a Proton VPN WireGuard config generated with NAT-PMP (port forwarding) on
+arr_wireguard_private_key: ''
+# Comma-separated Proton server countries (e.g. "United States,Canada"); empty = anywhere.
+# Nearby servers are much faster
+arr_vpn_server_countries: ''
+# Cap on the RAM OrbStack's VM can use
+arr_orbstack_memory_mib: 3072
+arr_seerr_port: 5055
+# Expose Seerr on the internet at https://<machine>.<tailnet>.ts.net:8443 via Tailscale
+# Funnel (it only allows ports 443, 8443 and 10000, and 443 is Jellyfin's)
+arr_seerr_tailscale_funnel: false
+arr_seerr_funnel_port: 8443
+orbstack_bin: /Applications/OrbStack.app/Contents/MacOS/xbin
+
 osx_script: './.macos.sh --no-restart'
 osx_personal_script: './.macos-personal-only.sh --no-restart'
 osx_work_script: './.macos-work-only.sh --no-restart'
