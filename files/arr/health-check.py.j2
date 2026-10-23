@@ -28,8 +28,8 @@ ARR_APPS = {"Sonarr": 8989, "Radarr": 7878, "Sonarr (Santi)": 8990, "Radarr (San
 FUNNELS = {{ arr_health_funnels | to_json }}
 
 
-def run(*cmd, timeout=60):
-    return subprocess.run(cmd, capture_output=True, text=True, timeout=timeout, cwd=COMPOSE_DIR)
+def run(*cmd, timeout=60, env=None):
+    return subprocess.run(cmd, capture_output=True, text=True, timeout=timeout, cwd=COMPOSE_DIR, env=env)
 
 
 def http_ok(url, headers=None, timeout=15):
@@ -93,10 +93,20 @@ def check():
             problems[f"arr:{name}"] = f"{name}: " + " / ".join(errors)
 
     if FUNNELS:
-        status = run(TAILSCALE, "funnel", "status", "--json").stdout
-        for name, local_port in FUNNELS.items():
-            if f"http://127.0.0.1:{local_port}" not in status or '"AllowFunnel"' not in status:
-                problems[f"funnel:{name}"] = f"The public {name} address (Tailscale Funnel) is off."
+        # Under launchd the Tailscale app binary tries to start its GUI instead of acting as the CLI
+        # (and exits 0 with an error on stdout); this env var forces CLI mode, like Homebrew's wrapper.
+        out = run(TAILSCALE, "funnel", "status", "--json", env={**os.environ, "TAILSCALE_BE_CLI": "1"}).stdout
+        try:
+            status = json.loads(out)
+        except ValueError:
+            problems["funnel"] = f"Couldn't read the Tailscale Funnel status: {out.strip()[:200]}"
+        else:
+            allowed = [hp for hp, on in status.get("AllowFunnel", {}).items() if on]
+            for name, local_port in FUNNELS.items():
+                proxy = f"http://127.0.0.1:{local_port}"
+                if not any(h.get("Proxy") == proxy for hp in allowed
+                           for h in status.get("Web", {}).get(hp, {}).get("Handlers", {}).values()):
+                    problems[f"funnel:{name}"] = f"The public {name} address (Tailscale Funnel) is off."
 
     # Last night's backup: a folder from the last 26 hours with every app in it
     if os.path.ismount(MEDIA_DIR):
