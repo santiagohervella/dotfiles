@@ -100,6 +100,27 @@ services:
     volumes:
       - recyclarr:/config
 
+  # Separate instances for Santi's private libraries. Seerr's "4K" servers point at
+  # these, so nothing of his ever shows up in the shared libraries' statuses, and the
+  # same title can exist in both
+  radarr-4k:
+    <<: *common
+    image: lscr.io/linuxserver/radarr:latest
+    ports:
+      - 7879:7878
+    volumes:
+      - radarr-4k:/config
+      - "{{ arr_media_dir }}:/data"
+
+  sonarr-4k:
+    <<: *common
+    image: lscr.io/linuxserver/sonarr:latest
+    ports:
+      - 8990:8989
+    volumes:
+      - sonarr-4k:/config
+      - "{{ arr_media_dir }}:/data"
+
   seerr:
     <<: *common
     image: ghcr.io/seerr-team/seerr:latest
@@ -123,5 +144,7 @@ volumes:
   prowlarr:
   sonarr:
   radarr:
+  radarr-4k:
+  sonarr-4k:
   recyclarr:
   seerr:

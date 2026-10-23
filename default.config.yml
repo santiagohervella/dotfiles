@@ -176,7 +176,7 @@ orbstack_bin: /Applications/OrbStack.app/Contents/MacOS/xbin
 # Nightly backups of the apps' settings and databases, which otherwise only exist in
 # OrbStack's VM (excluded from backups)
 arr_backup_dir: "{{ arr_media_dir }}/arr-backups"
-arr_backup_apps: [sonarr, radarr, prowlarr, seerr, qbittorrent, recyclarr]
+arr_backup_apps: [sonarr, radarr, sonarr-4k, radarr-4k, prowlarr, seerr, qbittorrent, recyclarr]
 arr_backup_keep_days: 14
 arr_backup_hour: 4
 arr_backup_launch_agent_label: com.santiagohervella.arr-backup
