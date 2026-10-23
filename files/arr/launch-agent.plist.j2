@@ -4,25 +4,25 @@
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>{{ arr_backup_launch_agent_label }}</string>
+  <string>{{ item.label }}</string>
 
   <key>ProgramArguments</key>
   <array>
-    <string>{{ arr_compose_dir }}/backup.sh</string>
+    <string>{{ item.program }}</string>
   </array>
 
   <key>StartCalendarInterval</key>
   <dict>
     <key>Hour</key>
-    <integer>{{ arr_backup_hour }}</integer>
+    <integer>{{ item.hour }}</integer>
     <key>Minute</key>
     <integer>0</integer>
   </dict>
 
   <!-- launchd can't write to removable volumes, so logs stay on the internal disk -->
   <key>StandardOutPath</key>
-  <string>{{ ansible_env.HOME }}/Library/Logs/arr-backup.log</string>
+  <string>{{ ansible_env.HOME }}/Library/Logs/{{ item.log }}.log</string>
   <key>StandardErrorPath</key>
-  <string>{{ ansible_env.HOME }}/Library/Logs/arr-backup.log</string>
+  <string>{{ ansible_env.HOME }}/Library/Logs/{{ item.log }}.log</string>
 </dict>
 </plist>

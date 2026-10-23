@@ -82,26 +82,55 @@
     dest: "{{ arr_compose_dir }}/backup.sh"
     mode: "0755"
 
-- name: Install the nightly config backup LaunchAgent
+- name: Install the stuck request check
   template:
-    src: files/arr/arr-backup.plist.j2
-    dest: "{{ arr_backup_launch_agent_path }}"
-    mode: "0644"
-  register: arr_backup_launch_agent
+    src: files/arr/stuck-requests.py.j2
+    dest: "{{ arr_compose_dir }}/stuck-requests.py"
+    mode: "0700" # holds the Pushover keys
+  when: arr_stuck_request_alerts
 
-- name: Check if the backup LaunchAgent is loaded
-  command: "launchctl print gui/{{ ansible_user_uid }}/{{ arr_backup_launch_agent_label }}"
-  register: arr_backup_loaded
+- name: Choose the scheduled jobs
+  set_fact:
+    arr_launch_agents: >-
+      {{
+        [{'label': arr_backup_launch_agent_label, 'program': arr_compose_dir ~ '/backup.sh',
+          'hour': arr_backup_hour, 'log': 'arr-backup'}] +
+        ([{'label': arr_stuck_request_launch_agent_label, 'program': arr_compose_dir ~ '/stuck-requests.py',
+           'hour': arr_stuck_request_hour, 'log': 'arr-stuck-requests'}] if arr_stuck_request_alerts else [])
+      }}
+
+- name: Install the scheduled job LaunchAgents
+  template:
+    src: files/arr/launch-agent.plist.j2
+    dest: "{{ ansible_env.HOME }}/Library/LaunchAgents/{{ item.label }}.plist"
+    mode: "0644"
+  loop: "{{ arr_launch_agents }}"
+  loop_control:
+    label: "{{ item.label }}"
+  register: arr_launch_agent_files
+
+- name: Check which scheduled job LaunchAgents are loaded
+  command: "launchctl print gui/{{ ansible_user_uid }}/{{ item.label }}"
+  loop: "{{ arr_launch_agents }}"
+  loop_control:
+    label: "{{ item.label }}"
+  register: arr_launch_agents_loaded
   changed_when: false
   failed_when: false
 
-- name: Unload the old backup LaunchAgent so changes take effect
-  command: "launchctl bootout gui/{{ ansible_user_uid }}/{{ arr_backup_launch_agent_label }}"
-  when: arr_backup_launch_agent.changed and arr_backup_loaded.rc == 0
+- name: Unload changed LaunchAgents so the changes take effect
+  command: "launchctl bootout gui/{{ ansible_user_uid }}/{{ item.0.item.label }}"
+  loop: "{{ arr_launch_agent_files.results | zip(arr_launch_agents_loaded.results) | list }}"
+  loop_control:
+    label: "{{ item.0.item.label }}"
+  when: item.0.changed and item.1.rc == 0
 
-- name: Load the backup LaunchAgent
-  command: "launchctl bootstrap gui/{{ ansible_user_uid }} {{ arr_backup_launch_agent_path }}"
-  when: arr_backup_launch_agent.changed or arr_backup_loaded.rc != 0
+- name: Load the scheduled job LaunchAgents
+  command: "launchctl bootstrap gui/{{ ansible_user_uid }} {{ item.0.dest }}"
+  loop: "{{ arr_launch_agent_files.results | zip(arr_launch_agents_loaded.results) | list }}"
+  loop_control:
+    label: "{{ item.0.item.label }}"
+  when: item.0.changed or item.1.rc != 0
 
 - name: Check Tailscale Funnel config
   command: "{{ tailscale_cli }} funnel status --json"

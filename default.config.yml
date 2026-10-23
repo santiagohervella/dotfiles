@@ -180,7 +180,16 @@ arr_backup_apps: [sonarr, radarr, sonarr-4k, radarr-4k, prowlarr, seerr, qbittor
 arr_backup_keep_days: 14
 arr_backup_hour: 4
 arr_backup_launch_agent_label: com.santiagohervella.arr-backup
-arr_backup_launch_agent_path: "{{ ansible_env.HOME }}/Library/LaunchAgents/{{ arr_backup_launch_agent_label }}.plist"
+# Daily Pushover alert to Santi about requests nothing has been found for. Needs a Pushover
+# application token and user key (pushover.net) in config.yml
+arr_pushover_app_token: ''
+arr_pushover_user_key: ''
+arr_stuck_request_alerts: "{{ arr_pushover_app_token | length > 0 and arr_pushover_user_key | length > 0 }}"
+arr_stuck_request_days: 2
+arr_stuck_request_hour: 10
+# Where the notification links to, e.g. the Mini's tailnet address
+arr_stuck_request_link_base: "http://{{ ansible_hostname }}.local:{{ arr_seerr_port }}"
+arr_stuck_request_launch_agent_label: com.santiagohervella.arr-stuck-requests
 
 osx_script: './.macos.sh --no-restart'
 osx_personal_script: './.macos-personal-only.sh --no-restart'

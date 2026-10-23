@@ -1,0 +1,91 @@
+#!/usr/bin/python3
+# Managed by Ansible (tasks/arr.yml). Edit the template in the dotfiles repo, not this file.
+#
+# Daily check for Seerr requests that Sonarr/Radarr still haven't found anything for after
+# {{ arr_stuck_request_days }} days (Seerr itself never says so; the request just stays "Processing").
+# Sends Santi one Pushover notification per stuck request. The requester isn't notified.
+import json
+import os
+import subprocess
+import sys
+import urllib.parse
+import urllib.request
+from datetime import datetime, timedelta, timezone
+
+DOCKER = "{{ orbstack_bin }}/docker"
+STATE_FILE = os.path.expanduser("{{ arr_compose_dir }}/stuck-requests-notified.json")
+STUCK_AFTER = timedelta(days={{ arr_stuck_request_days }})
+PUSHOVER_TOKEN = "{{ arr_pushover_app_token }}"
+PUSHOVER_USER = "{{ arr_pushover_user_key }}"
+SEERR_URL = "http://127.0.0.1:{{ arr_seerr_port }}"
+# Link in the notification; opens on Santi's devices over the tailnet
+SEERR_LINK = "{{ arr_stuck_request_link_base }}"
+
+REQUEST_APPROVED = 2
+MEDIA_NOT_YET_AVAILABLE = {1, 2, 3}  # unknown, pending, processing
+
+
+def seerr(path):
+    settings = json.loads(subprocess.check_output([DOCKER, "exec", "arr-seerr-1", "cat", "/app/config/settings.json"]))
+    req = urllib.request.Request(SEERR_URL + "/api/v1" + path, headers={"X-Api-Key": settings["main"]["apiKey"]})
+    with urllib.request.urlopen(req, timeout=60) as resp:
+        return json.load(resp)
+
+
+def stuck_requests():
+    now = datetime.now(timezone.utc)
+    for request in seerr("/request?filter=all&take=500")["results"]:
+        media = request["media"]
+        is4k = request["is4k"]
+        status = media["status4k" if is4k else "status"]
+        downloading = media.get("downloadStatus4k" if is4k else "downloadStatus") or []
+        created = datetime.fromisoformat(request["createdAt"].replace("Z", "+00:00"))
+        if (request["status"] == REQUEST_APPROVED and status in MEDIA_NOT_YET_AVAILABLE
+                and not downloading and now - created > STUCK_AFTER):
+            yield request, created
+
+
+def notify(request, created):
+    media = request["media"]
+    kind = media["mediaType"]
+    details = seerr(f"/{kind}/{media['tmdbId']}")
+    title = details.get("title") or details.get("name")
+    year = (details.get("releaseDate") or details.get("firstAirDate") or "")[:4]
+    library = "Santi's library" if request["is4k"] else "shared library"
+    days = (datetime.now(timezone.utc) - created).days
+    message = (f"{title} ({year}) has been searching for {days} days with nothing found.\n"
+               f"Requested by {request['requestedBy']['displayName']} for the {library}.")
+    data = urllib.parse.urlencode({
+        "token": PUSHOVER_TOKEN, "user": PUSHOVER_USER, "title": "Media server: nothing found",
+        "message": message, "url": f"{SEERR_LINK}/{kind}/{media['tmdbId']}", "url_title": "Open in Seerr",
+    }).encode()
+    urllib.request.urlopen("https://api.pushover.net/1/messages.json", data=data, timeout=30)
+    print(f"{datetime.now():%Y-%m-%d %H:%M} notified: {title} ({year}), request {request['id']}")
+
+
+def main():
+    try:
+        with open(STATE_FILE) as f:
+            notified = set(json.load(f))
+    except (FileNotFoundError, ValueError):
+        notified = set()
+
+    stuck = list(stuck_requests())
+    for request, created in stuck:
+        if request["id"] not in notified:
+            notify(request, created)
+            notified.add(request["id"])
+
+    # Forget requests that got found (or were removed), so a later re-request can notify again
+    still_stuck = {request["id"] for request, _ in stuck}
+    with open(STATE_FILE, "w") as f:
+        json.dump(sorted(notified & still_stuck), f)
+    print(f"{datetime.now():%Y-%m-%d %H:%M} checked: {len(stuck)} stuck request(s)")
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:  # leave a trace in the log instead of failing silently
+        print(f"{datetime.now():%Y-%m-%d %H:%M} error: {e}", file=sys.stderr)
+        sys.exit(1)

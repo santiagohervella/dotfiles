@@ -228,6 +228,8 @@ There are two Sonarr/Radarr pairs. `sonarr`/`radarr` manage the shared `TV Shows
 - Admin UIs on the LAN/tailnet: Seerr `:5055`, Sonarr `:8989` (Santi's: `:8990`), Radarr `:7878` (Santi's: `:7879`), Prowlarr `:9696`, qBittorrent `:8080`. Login is `santi` with the password in `~/.arr-stack/admin-password`
 - Updating: the containers don't update themselves. Rerun `--tags arr` every month or so: it pulls new images and recreates whatever changed
 - Backups: a LaunchAgent runs `~/.arr-stack/backup.sh` nightly, which archives each app's config volume to `<arr_media_dir>/arr-backups/<date>/` (14 days kept). To restore an app: `docker-compose stop <app>`, extract its archive into the `arr_<app>` volume, `docker-compose start <app>`. Log: `~/Library/Logs/arr-backup.log`
+- Stuck request alerts: with `arr_pushover_app_token` and `arr_pushover_user_key` in `config.yml`, a LaunchAgent runs `~/.arr-stack/stuck-requests.py` daily at 10:00 and sends Santi a Pushover notification (once per request) for any Seerr request still searching after `arr_stuck_request_days` (2) with nothing downloading. The requester isn't notified. Log: `~/Library/Logs/arr-stuck-requests.log`
+- Indexers: Prowlarr syncs its indexers to all four Sonarr/Radarr. Internet Archive is slow (~90s per search) but good for old/public-domain films. Indexers behind Cloudflare need the `flaresolverr` tag
 - Logs: `docker-compose logs <service>` in `~/.arr-stack` (`docker-compose` is in OrbStack.app/Contents/MacOS/xbin if not on PATH)
 
 ## On work Macs
