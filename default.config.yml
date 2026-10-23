@@ -185,6 +185,15 @@ arr_backup_launch_agent_label: com.santiagohervella.arr-backup
 arr_pushover_app_token: ''
 arr_pushover_user_key: ''
 arr_stuck_request_alerts: "{{ arr_pushover_app_token | length > 0 and arr_pushover_user_key | length > 0 }}"
+# Pushover alert to Santi when something breaks (drive, apps, VPN, Funnel, backups, disk space)
+# and when it recovers. Same Pushover keys
+arr_health_alerts: "{{ arr_stuck_request_alerts }}"
+arr_health_interval_minutes: 15
+arr_health_min_free_gb: 200
+arr_health_funnels: >-
+  {{ ({'Jellyfin': jellyfin_port} if jellyfin_tailscale_funnel else {})
+     | combine({'Seerr': arr_seerr_port} if arr_seerr_tailscale_funnel else {}) }}
+arr_health_launch_agent_label: com.santiagohervella.arr-health
 arr_stuck_request_days: 2
 arr_stuck_request_hour: 10
 # Where the notification links to, e.g. the Mini's tailnet address

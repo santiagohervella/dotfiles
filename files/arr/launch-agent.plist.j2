@@ -11,6 +11,10 @@
     <string>{{ item.program }}</string>
   </array>
 
+{% if item.interval is defined %}
+  <key>StartInterval</key>
+  <integer>{{ item.interval }}</integer>
+{% else %}
   <key>StartCalendarInterval</key>
   <dict>
     <key>Hour</key>
@@ -18,6 +22,7 @@
     <key>Minute</key>
     <integer>0</integer>
   </dict>
+{% endif %}
 
   <!-- launchd can't write to removable volumes, so logs stay on the internal disk -->
   <key>StandardOutPath</key>

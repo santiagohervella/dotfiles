@@ -1,0 +1,157 @@
+#!/usr/bin/python3
+# Managed by Ansible (tasks/arr.yml). Edit the template in the dotfiles repo, not this file.
+#
+# Runs every {{ arr_health_interval_minutes }} minutes. Sends Santi a Pushover notification when something
+# in the media server breaks (once, after it fails two checks in a row, so brief blips like
+# the nightly backup pausing apps don't alert), and again when it recovers.
+import json
+import os
+import subprocess
+import sys
+import urllib.parse
+import urllib.request
+from datetime import datetime, timedelta
+
+DOCKER = "{{ orbstack_bin }}/docker"
+COMPOSE = "{{ orbstack_bin }}/docker-compose"
+COMPOSE_DIR = "{{ arr_compose_dir }}"
+MEDIA_DIR = "{{ arr_media_dir }}"
+BACKUP_DIR = "{{ arr_backup_dir }}"
+TAILSCALE = "{{ tailscale_cli }}"
+MIN_FREE_GB = {{ arr_health_min_free_gb }}
+STATE_FILE = os.path.join(COMPOSE_DIR, "health-state.json")
+PUSHOVER_TOKEN = "{{ arr_pushover_app_token }}"
+PUSHOVER_USER = "{{ arr_pushover_user_key }}"
+# name -> port of each Sonarr/Radarr, for their own health checks
+ARR_APPS = {"Sonarr": 8989, "Radarr": 7878, "Sonarr (Santi)": 8990, "Radarr (Santi)": 7879}
+# name -> local port that must be published through Tailscale Funnel
+FUNNELS = {{ arr_health_funnels | to_json }}
+
+
+def run(*cmd, timeout=60):
+    return subprocess.run(cmd, capture_output=True, text=True, timeout=timeout, cwd=COMPOSE_DIR)
+
+
+def http_ok(url, headers=None, timeout=15):
+    try:
+        with urllib.request.urlopen(urllib.request.Request(url, headers=headers or {}), timeout=timeout) as resp:
+            return resp.status < 400
+    except Exception:
+        return False
+
+
+def arr_key(container):
+    xml = run(DOCKER, "exec", container, "cat", "/config/config.xml").stdout
+    return xml.split("<ApiKey>")[1].split("</ApiKey>")[0]
+
+
+def check():
+    """Returns {problem key: human readable message} for everything currently wrong."""
+    problems = {}
+
+    if not os.path.ismount(MEDIA_DIR):
+        problems["drive"] = f"The media drive isn't mounted ({MEDIA_DIR}). Jellyfin and downloads are down."
+    else:
+        st = os.statvfs(MEDIA_DIR)
+        free_gb = st.f_bavail * st.f_frsize / 1e9
+        if free_gb < MIN_FREE_GB:
+            problems["space"] = f"Only {free_gb:.0f} GB free on the media drive (alert below {MIN_FREE_GB} GB)."
+
+    if not http_ok("http://127.0.0.1:{{ jellyfin_port }}/System/Info/Public"):
+        problems["jellyfin"] = "Jellyfin isn't responding."
+
+    ps = run(COMPOSE, "ps", "--all", "--format", "json", timeout=60)
+    if ps.returncode != 0:
+        problems["docker"] = "Can't reach Docker (is OrbStack running?)."
+        return problems
+    for line in ps.stdout.splitlines():
+        c = json.loads(line)
+        if c["State"] != "running":
+            problems[f"container:{c['Service']}"] = f"{c['Service']} is {c['State']}."
+        elif c.get("Health") == "unhealthy":
+            problems[f"container:{c['Service']}"] = f"{c['Service']} is unhealthy."
+
+    # VPN: tunnel up and the forwarded port actually reached qBittorrent
+    port = run(DOCKER, "exec", "arr-gluetun-1", "cat", "/tmp/gluetun/forwarded_port").stdout.strip()
+    prefs = run(DOCKER, "exec", "arr-qbittorrent-1", "curl", "-s", "-m", "10", "http://127.0.0.1:8080/api/v2/app/preferences").stdout
+    listen = json.loads(prefs).get("listen_port") if prefs.startswith("{") else None
+    if not port or port == "0":
+        problems["vpn"] = "Proton VPN has no forwarded port (tunnel down or port forwarding failing)."
+    elif str(listen) != port:
+        problems["vpn"] = f"qBittorrent listens on {listen} but Proton forwarded {port}."
+
+    for name, port_ in ARR_APPS.items():
+        container = "arr-" + name.split(" ")[0].lower() + ("-4k-1" if "Santi" in name else "-1")
+        try:
+            key = arr_key(container)
+            with urllib.request.urlopen(urllib.request.Request(f"http://127.0.0.1:{port_}/api/v3/health",
+                                                               headers={"X-Api-Key": key}), timeout=15) as resp:
+                errors = [h["message"] for h in json.load(resp) if h["type"] == "error"]
+        except Exception:
+            continue  # a stopped container is already reported above
+        if errors:
+            problems[f"arr:{name}"] = f"{name}: " + " / ".join(errors)
+
+    if FUNNELS:
+        status = run(TAILSCALE, "funnel", "status", "--json").stdout
+        for name, local_port in FUNNELS.items():
+            if f"http://127.0.0.1:{local_port}" not in status or '"AllowFunnel"' not in status:
+                problems[f"funnel:{name}"] = f"The public {name} address (Tailscale Funnel) is off."
+
+    # Last night's backup: a folder from the last 26 hours with every app in it
+    if os.path.ismount(MEDIA_DIR):
+        recent = [(datetime.now() - timedelta(days=d)).strftime("%Y-%m-%d") for d in (0, 1)]
+        apps = {{ arr_backup_apps | to_json }}
+        newest = next((os.path.join(BACKUP_DIR, d) for d in recent if os.path.isdir(os.path.join(BACKUP_DIR, d))), None)
+        if newest is None or datetime.now().timestamp() - os.path.getmtime(newest) > 26 * 3600:
+            problems["backup"] = "No app backup in the last day (check ~/Library/Logs/arr-backup.log)."
+        elif missing := [a for a in apps if not os.path.exists(os.path.join(newest, f"{a}.tar.gz"))]:
+            problems["backup"] = f"Last backup is missing: {', '.join(missing)}."
+
+    return problems
+
+
+def notify(title, message, priority=0):
+    data = urllib.parse.urlencode({"token": PUSHOVER_TOKEN, "user": PUSHOVER_USER, "title": title,
+                                   "message": message, "priority": priority}).encode()
+    urllib.request.urlopen("https://api.pushover.net/1/messages.json", data=data, timeout=30)
+
+
+def main():
+    try:
+        with open(STATE_FILE) as f:
+            state = json.load(f)
+    except (FileNotFoundError, ValueError):
+        state = {"seen": {}, "alerted": {}}
+    seen, alerted = state["seen"], state["alerted"]
+
+    problems = check()
+    now = datetime.now().strftime("%Y-%m-%d %H:%M")
+
+    for key, message in problems.items():
+        if key in alerted:
+            continue
+        if key in seen:  # failed the previous check too
+            notify("Media server problem", message, priority=1)
+            alerted[key] = message
+            print(f"{now} alerted: {message}")
+        seen[key] = message
+    for key in list(seen):
+        if key not in problems:
+            del seen[key]
+    for key in list(alerted):
+        if key not in problems:
+            notify("Media server recovered", f"Fixed: {alerted.pop(key)}")
+            print(f"{now} recovered: {key}")
+
+    with open(STATE_FILE, "w") as f:
+        json.dump({"seen": seen, "alerted": alerted}, f)
+    print(f"{now} checked: {len(problems)} problem(s){': ' + ', '.join(problems) if problems else ''}")
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:
+        print(f"{datetime.now():%Y-%m-%d %H:%M} error: {e}", file=sys.stderr)
+        sys.exit(1)

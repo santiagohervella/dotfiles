@@ -40,9 +40,11 @@
     path: "{{ arr_media_dir }}/downloads/{{ item }}"
     state: directory
     mode: "0755"
-  loop:
+  loop: # one per qBittorrent category (see README)
     - movies
     - tv
+    - santi-movies
+    - santi-tv
 
 - name: Install the compose file
   template:
@@ -89,6 +91,13 @@
     mode: "0700" # holds the Pushover keys
   when: arr_stuck_request_alerts
 
+- name: Install the health check
+  template:
+    src: files/arr/health-check.py.j2
+    dest: "{{ arr_compose_dir }}/health-check.py"
+    mode: "0700" # holds the Pushover keys
+  when: arr_health_alerts
+
 - name: Choose the scheduled jobs
   set_fact:
     arr_launch_agents: >-
@@ -96,7 +105,9 @@
         [{'label': arr_backup_launch_agent_label, 'program': arr_compose_dir ~ '/backup.sh',
           'hour': arr_backup_hour, 'log': 'arr-backup'}] +
         ([{'label': arr_stuck_request_launch_agent_label, 'program': arr_compose_dir ~ '/stuck-requests.py',
-           'hour': arr_stuck_request_hour, 'log': 'arr-stuck-requests'}] if arr_stuck_request_alerts else [])
+           'hour': arr_stuck_request_hour, 'log': 'arr-stuck-requests'}] if arr_stuck_request_alerts else []) +
+        ([{'label': arr_health_launch_agent_label, 'program': arr_compose_dir ~ '/health-check.py',
+           'interval': arr_health_interval_minutes * 60, 'log': 'arr-health'}] if arr_health_alerts else [])
       }}
 
 - name: Install the scheduled job LaunchAgents
