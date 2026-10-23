@@ -56,13 +56,52 @@
     dest: "{{ arr_compose_dir }}/.env"
     mode: "0600"
 
-# Pulls any missing images and (re)creates containers whose config changed
+# The containers never update themselves, so each run of this tag is also how they get updated
+- name: Pull the latest *arr images
+  command: "{{ orbstack_bin }}/docker-compose pull --quiet"
+  args:
+    chdir: "{{ arr_compose_dir }}"
+  changed_when: false
+
+# (Re)creates containers whose config or image changed
 - name: Start the *arr stack
   command: "{{ orbstack_bin }}/docker-compose up --detach --remove-orphans --wait"
   args:
     chdir: "{{ arr_compose_dir }}"
   register: arr_compose_up
   changed_when: arr_compose_up.stderr is search('Created|Recreated|Started|Removed')
+
+- name: Remove images replaced by updates
+  command: "{{ orbstack_bin }}/docker image prune --force"
+  register: arr_image_prune
+  changed_when: "'Total reclaimed space: 0B' not in arr_image_prune.stdout"
+
+- name: Install the nightly config backup script
+  template:
+    src: files/arr/backup.sh.j2
+    dest: "{{ arr_compose_dir }}/backup.sh"
+    mode: "0755"
+
+- name: Install the nightly config backup LaunchAgent
+  template:
+    src: files/arr/arr-backup.plist.j2
+    dest: "{{ arr_backup_launch_agent_path }}"
+    mode: "0644"
+  register: arr_backup_launch_agent
+
+- name: Check if the backup LaunchAgent is loaded
+  command: "launchctl print gui/{{ ansible_user_uid }}/{{ arr_backup_launch_agent_label }}"
+  register: arr_backup_loaded
+  changed_when: false
+  failed_when: false
+
+- name: Unload the old backup LaunchAgent so changes take effect
+  command: "launchctl bootout gui/{{ ansible_user_uid }}/{{ arr_backup_launch_agent_label }}"
+  when: arr_backup_launch_agent.changed and arr_backup_loaded.rc == 0
+
+- name: Load the backup LaunchAgent
+  command: "launchctl bootstrap gui/{{ ansible_user_uid }} {{ arr_backup_launch_agent_path }}"
+  when: arr_backup_launch_agent.changed or arr_backup_loaded.rc != 0
 
 - name: Check Tailscale Funnel config
   command: "{{ tailscale_cli }} funnel status --json"

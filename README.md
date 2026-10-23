@@ -218,12 +218,14 @@ Seerr (requests) → Sonarr (TV) / Radarr (movies) → Prowlarr (indexers) → q
   then run `ansible-playbook main.yml --tags arr`
 - First run only, on the Mini's screen: open OrbStack.app and finish onboarding (choose Docker), and approve its prompt to access removable volumes. Until that's approved, any container touching the drive hangs OrbStack's VM
 - App config is in Docker volumes inside OrbStack, not in this repo. The one-time wiring done through the apps' APIs/UIs:
-  - Sonarr/Radarr: root folders `/data/TV Shows` + `/data/Santi TV Shows`, `/data/Movies` + `/data/Santi Movies`; naming matches the existing library (`Show (Year)/Season 01/Show S01E01`, `Movie (Year)/Movie (Year)`); a Jellyfin connection (`host.docker.internal:8096`, API key `arr-stack`) that refreshes the library on import; qBittorrent download client at `gluetun:8080`
+  - Sonarr/Radarr: root folders `/data/TV Shows` + `/data/Santi TV Shows`, `/data/Movies` + `/data/Santi Movies`; naming matches the existing library (`Show (Year)/Season 01/Show S01E01`, `Movie (Year)/Movie (Year)`); a Jellyfin connection (`host.docker.internal:8096`, API key `arr-stack`) that refreshes the library on import; qBittorrent download client at `gluetun:8080`; "Unmonitor deleted" on, so media deleted from Jellyfin/Infuse isn't downloaded again; minimum free space 100 GB
   - Prowlarr: Sonarr/Radarr apps (`http://sonarr:8989`, `http://radarr:7878`), public indexers, and a FlareSolverr proxy (`http://flaresolverr:8191`) for indexers tagged `flaresolverr` (1337x, EZTV, ...)
-  - Recyclarr: `recyclarr config create -t web-1080p -t hd-bluray-web` inside the container, URLs + API keys filled in; it syncs TRaSH quality profiles daily
-  - qBittorrent: "Bypass authentication for clients on localhost" on, so gluetun can set the port Proton forwards
-  - Seerr: signed in with Jellyfin at `host.docker.internal:8096`, "Enable Proxy Support" on (it's behind Funnel)
+  - Recyclarr: `/config/configs/{sonarr,radarr}.yml` (API keys in `/config/secrets.yml`) sync two TRaSH-based profiles daily: "1080p (720p fallback)" with upgrades off for the shared libraries, and "4K (1080p fallback)" preferring Dolby Vision for Santi's
+  - qBittorrent: "Bypass authentication for clients on localhost" on, so gluetun can set the port Proton forwards; categories `tv-sonarr`/`radarr`; seed to ratio 1 or 24h, then stop (Sonarr/Radarr then remove it); upload capped at 2 Mbit/s since home upload is ~34 Mbit/s
+  - Seerr: signed in with Jellyfin at `host.docker.internal:8096`, "Enable Proxy Support" on (it's behind Funnel), only the shared Jellyfin libraries enabled. Sonarr and Radarr are each added twice: the default server uses the 1080p profile and shared folders, the "4K" server the 4K profile and Santi's folders. Users get Request + Auto-approve but not 4K
 - Admin UIs on the LAN/tailnet: Seerr `:5055`, Sonarr `:8989`, Radarr `:7878`, Prowlarr `:9696`, qBittorrent `:8080`. Login is `santi` with the password in `~/.arr-stack/admin-password`
+- Updating: the containers don't update themselves. Rerun `--tags arr` every month or so: it pulls new images and recreates whatever changed
+- Backups: a LaunchAgent runs `~/.arr-stack/backup.sh` nightly, which archives each app's config volume to `<arr_media_dir>/arr-backups/<date>/` (14 days kept). To restore an app: `docker-compose stop <app>`, extract its archive into the `arr_<app>` volume, `docker-compose start <app>`. Log: `~/Library/Logs/arr-backup.log`
 - Logs: `docker-compose logs <service>` in `~/.arr-stack` (`docker-compose` is in OrbStack.app/Contents/MacOS/xbin if not on PATH)
 
 ## On work Macs

@@ -1,0 +1,48 @@
+#!/bin/zsh
+# Managed by Ansible (tasks/arr.yml). Edit the template in the dotfiles repo, not this file.
+#
+# Nightly copy of the *arr apps' config volumes (settings + databases) to the media drive,
+# since they live in OrbStack's VM, which isn't backed up. The copying runs in a container,
+# which already has access to the drive, so launchd needs no removable volume permission.
+# Restore: stop the app, untar into its volume (arr_<app>), start it.
+set -u
+
+docker={{ orbstack_bin }}/docker
+stamp=$(date +%Y-%m-%d)
+failed=()
+
+# Docker reports a container as unhealthy from the moment it's paused until its next
+# health check passes, which would make `docker-compose up --wait` fail in the meantime
+wait_until_healthy() {
+  for _ in {1..30}; do
+{% raw %}
+    [[ $($docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{end}}' $1) != unhealthy ]] && return
+{% endraw %}
+    sleep 2
+  done
+}
+
+for app in {{ arr_backup_apps | join(' ') }}; do
+  # Freeze the app so its database and WAL files are copied at a single instant
+  if ! $docker pause arr-$app-1 >/dev/null; then
+    failed+=$app
+    continue
+  fi
+  $docker run --rm -v arr_$app:/config:ro -v "{{ arr_backup_dir }}":/backups alpine sh -c "
+    mkdir -p /backups/$stamp &&
+    tar czf /backups/$stamp/$app.tar.gz -C /config \
+      --exclude=./MediaCover --exclude=./logs --exclude=./Sentry --exclude=./cache \
+      --exclude=./Definitions --exclude=./resources --exclude='./*.pid' \
+      --exclude=./qBittorrent/ipc-socket ." || failed+=$app
+  $docker unpause arr-$app-1 >/dev/null
+  wait_until_healthy arr-$app-1
+done
+
+$docker run --rm -v "{{ arr_backup_dir }}":/backups alpine \
+  find /backups -mindepth 1 -maxdepth 1 -type d -mtime +{{ arr_backup_keep_days }} -exec rm -rf {} +
+
+if [[ -n "${failed[*]}" ]]; then
+  echo "$(date) backup failed for: ${failed[*]}" >&2
+  exit 1
+fi
+echo "$(date) backed up {{ arr_backup_apps | join(', ') }} to {{ arr_backup_dir }}/$stamp"

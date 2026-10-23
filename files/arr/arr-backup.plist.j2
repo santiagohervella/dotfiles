@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Managed by Ansible (tasks/arr.yml). Edit the template in the dotfiles repo, not this file. -->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>{{ arr_backup_launch_agent_label }}</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>{{ arr_compose_dir }}/backup.sh</string>
+  </array>
+
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>{{ arr_backup_hour }}</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+
+  <!-- launchd can't write to removable volumes, so logs stay on the internal disk -->
+  <key>StandardOutPath</key>
+  <string>{{ ansible_env.HOME }}/Library/Logs/arr-backup.log</string>
+  <key>StandardErrorPath</key>
+  <string>{{ ansible_env.HOME }}/Library/Logs/arr-backup.log</string>
+</dict>
+</plist>
