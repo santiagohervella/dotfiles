@@ -89,6 +89,15 @@ services:
       - radarr:/config
       - "{{ arr_media_dir }}:/data"
 
+  # Watches the shared library's Sonarr/Radarr queues (Eli's requests) and removes stalled,
+  # slow or broken downloads, blocklisting them so the next-best copy gets grabbed. Its
+  # config (with API keys) lives in its volume: see README
+  decluttarr:
+    <<: *common
+    image: ghcr.io/manimatter/decluttarr:latest
+    volumes:
+      - decluttarr:/app/config
+
   # Syncs the TRaSH Guides quality profiles into Sonarr and Radarr daily. Its config
   # (with their API keys) lives in its volume: see README for how it was created
   recyclarr:
@@ -147,4 +156,5 @@ volumes:
   radarr-4k:
   sonarr-4k:
   recyclarr:
+  decluttarr:
   seerr:
