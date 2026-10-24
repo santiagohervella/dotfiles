@@ -169,6 +169,11 @@ Without the `greedy` flag, apps that are set to autoupdate will not update via t
     - Logic (Primary only)
     - Volumes
     - iCloud Drive
+- Proton VPN
+  - Install the [Proton VPN extension](https://chromewebstore.google.com/detail/proton-vpn-fast-secure/jplgfhpmjnbigmhklmmbgecoobifkmpa) in whichever Arc and Crest profiles should use the VPN, then sign in
+    - Only those profiles go through the VPN. Everything else (other profiles, terminals, etc) stays on the normal connection
+    - No need for the Proton VPN Mac app. Its split tunneling can only exclude apps, not include just a few, so it can't do this
+  - Tailscale URLs won't load in a VPN profile, so open them from a non-VPN profile instead
 
 ### If primary Mac
 
@@ -192,6 +197,7 @@ Without the `greedy` flag, apps that are set to autoupdate will not update via t
   ```
 
   then run `ansible-playbook main.yml --ask-become-pass --tags jellyfin`
+
 - If using Funnel:
   - Approve the link the playbook prints to enable Funnel on the tailnet
   - Add Tailscale to Login Items in System Settings (its own "Launch at login" setting can't turn itself on)
@@ -200,7 +206,7 @@ Without the `greedy` flag, apps that are set to autoupdate will not update via t
 - Approve the macOS prompt allowing `jellyfin` to access the removable volume, if one appears
 - Finish setup at `http://<mac-mini>:8096`. Logs are in `<jellyfin_storage_dir>/log`, plus `~/Library/Logs/jellyfin-launchd.log` (stderr only) if the server fails to start
 
-### *arr stack
+### \*arr stack
 
 Seerr (requests) → Sonarr (TV) / Radarr (movies) → Prowlarr (indexers) → qBittorrent (behind Proton VPN via gluetun) → libraries on the media drive → Jellyfin rescans. Runs with Docker Compose in OrbStack; Jellyfin stays native for hardware transcoding.
 
@@ -218,6 +224,7 @@ There are two Sonarr/Radarr pairs. `sonarr`/`radarr` manage the shared `TV Shows
   ```
 
   then run `ansible-playbook main.yml --tags arr`
+
 - First run only, on the Mini's screen: open OrbStack.app and finish onboarding (choose Docker), and approve its prompt to access removable volumes. Until that's approved, any container touching the drive hangs OrbStack's VM
 - App config is in Docker volumes inside OrbStack, not in this repo. The one-time wiring done through the apps' APIs/UIs:
   - Sonarr/Radarr (and the `-4k` pair, same settings): root folders `/data/TV Shows` / `/data/Movies` (`-4k`: `/data/Santi TV Shows` / `/data/Santi Movies`); naming matches the existing library (`Show (Year)/Season 01/Show S01E01`, `Movie (Year)/Movie (Year)`); a Jellyfin connection (`host.docker.internal:8096`, API key `arr-stack`) that refreshes the library on import; qBittorrent download client at `gluetun:8080` (categories `tv-sonarr`/`radarr`, `-4k`: `tv-sonarr-4k`/`radarr-4k`); "Unmonitor deleted" on, so media deleted from Jellyfin/Infuse isn't downloaded again; minimum free space 100 GB
