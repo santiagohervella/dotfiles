@@ -98,10 +98,8 @@ common_homebrew_cask_apps:
 personal_homebrew_cask_apps:
   - handbrake
   - little-snitch@5
-  - mullvadvpn
   - tor-browser
   - transnomino
-  - transmission
   - zoom
 
 work_homebrew_cask_apps:
