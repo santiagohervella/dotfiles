@@ -169,6 +169,11 @@ Without the `greedy` flag, apps that are set to autoupdate will not update via t
     - Logic (Primary only)
     - Volumes
     - iCloud Drive
+- Proton VPN
+  - Install the [Proton VPN extension](https://chromewebstore.google.com/detail/proton-vpn-fast-secure/jplgfhpmjnbigmhklmmbgecoobifkmpa) in whichever Arc and Crest profiles should use the VPN, then sign in
+    - Only those profiles go through the VPN. Everything else (other profiles, terminals, etc) stays on the normal connection
+    - No need for the Proton VPN Mac app. Its split tunneling can only exclude apps, not include just a few, so it can't do this
+  - Tailscale URLs won't load in a VPN profile, so open them from a non-VPN profile instead
 
 ### If primary Mac
 
