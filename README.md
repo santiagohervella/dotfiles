@@ -33,7 +33,11 @@ export PATH="/opt/homebrew/bin:$PATH"
 
 # Configure playbook
 
-Change the `machine_type` variable in `./default.config.yml` to be 'personal' or 'work'
+Don't edit `./default.config.yml` for one machine. Put that machine's overrides in `./config.yml` (gitignored), which the playbook loads after the defaults. `machine_type` defaults to `personal`; on a work Mac, create `./config.yml` with:
+
+```yaml
+machine_type: work
+```
 
 # Run playbook
 
