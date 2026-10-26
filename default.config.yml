@@ -6,13 +6,14 @@ configure_osx: true
 machine_type: 'personal'
 
 homebrew_installed_packages:
+  - atac # Experiment: Postman replacement in the terminal
   - atuin
   - awscli
   - bat
   - cloudflared
   - csvlens
   - dockutil
-  - duti
+  - duti # TODO: Create tasks/duti.yml to automate default app associations
   - ffmpeg
   # - FelixKratz/formulae/sketchybar # Not currently using. Loved it, but macOS notifications cover it
   - fzf # Used by tmux-sessionizer script
@@ -23,10 +24,12 @@ homebrew_installed_packages:
   - go
   - jq
   - lazygit
+  - mole # Experiment: Kind of like a combination of daisydisk and cleanmymac
   - neovim
   - nodenv
   - ohueter/tap/autokbisw # Used for Charachorder keyboard input switching
   - anomalyco/tap/opencode # OpenCode from the official tap for latest releases
+  - pi-coding-agent
   - potrace
   - gromgit/brewtils/taproom
   - pyenv
@@ -51,23 +54,29 @@ homebrew_taps:
 
 homebrew_cask_appdir: /Applications
 
+# Casks removed here are uninstalled before the install list is applied
+homebrew_cask_uninstalled_apps:
+  - claude-code # Conflicts with claude-code@latest; remove once stable catches up
+
 # List of apps common to all machine types
 common_homebrew_cask_apps:
   - 1password
   - alt-tab
   - bartender
   - boop
-  - claude-code
-  - displaylink
+  - claude-code@latest
+  - deskpad # Experiment: Dedicated floating desktop for screensharing on Zoom
   - easyfind
   - font-meslo-lg-nerd-font # Not sure why a font is a cask, but ok
   - grandperspective
   - hammerspoon
-  - helium-browser
   - hoppscotch
-  - istat-menus # I'd need to buy a license?
+  - iina
+  - imageoptim
+  - istat-menus # Need to add my license?
   - karabiner-elements
   - kdiff3 # Diffing tool I'm trying out
+  - keka
   - keyboard-maestro
   - localsend
   - mouseless
@@ -83,7 +92,9 @@ common_homebrew_cask_apps:
 
   # Browsers
   - arc
+  - helium-browser
   - min
+  - orion
   - vivaldi
   - zen
 
@@ -95,10 +106,6 @@ common_homebrew_cask_apps:
   - wezterm
 
 personal_homebrew_cask_apps:
-  - handbrake
-  - little-snitch@5
-  - tor-browser
-  - transnomino
   - zoom
 
 work_homebrew_cask_apps:
