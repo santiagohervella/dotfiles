@@ -11,15 +11,8 @@ selected=$(printf '%s\n' "$repos" | grep "/$selected_basename$")
 
 selected_name=$(basename "$selected" | tr . _)
 
-tmuxinator_path="$HOME/.config/tmuxinator"
-
-if [[ -f "$tmuxinator_path/$selected_name.yml" ]]; then
-  tmuxinator $selected_name
-  exit 0
-fi
-
-# Use default template if no specific template exists
-if [[ -f "$tmuxinator_path/default.yml" ]]; then
+# Use default template for git repos
+if git -C "$selected" rev-parse --is-inside-work-tree &> /dev/null; then
   # Pass the session name and root path as arguments to the template
   tmuxinator start default "$selected_name" "$selected" -n "$selected_name"
   exit 0

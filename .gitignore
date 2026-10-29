@@ -9,10 +9,6 @@ roles*
 .config/tmux/plugins/
 .config/tmux/gh-repos-cache
 .config/gh
-.config/tmuxinator/*
-!.config/tmuxinator/scratch.yml
-!.config/tmuxinator/dotfiles.yml
-!.config/tmuxinator/default.yml
 .config/zed/
 !.config/zed/keymap.json
 !.config/zed/settings.json

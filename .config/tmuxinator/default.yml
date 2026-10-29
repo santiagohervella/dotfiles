@@ -1,5 +1,5 @@
 # ~/.config/tmuxinator/default.yml
-# Default template for projects without a specific tmuxinator config
+# Template for sessions started in a git repo
 
 name: <%= @args[0] %>
 root: <%= @args[1] %>
