@@ -7,8 +7,12 @@ window-padding-color = background
 font-feature = -liga
 font-feature = -calt
 font-feature = -dlig
+font-family = MesloLGS Nerd Font Mono
+font-size = 13
+font-thicken = true
+
 window-padding-y = 0
-adjust-cell-height = 9
+adjust-cell-height = 34.5%
 
 # theme = iTerm2 Default
 theme = Gruvbox Material

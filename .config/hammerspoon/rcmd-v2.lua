@@ -18,6 +18,7 @@ local OVERRIDES = {
 
 local dockAppsCache = {}
 local mruByKey = {}
+local cycle = {}
 local debugLogging = false
 
 --------------------------------------------------------------------------------
@@ -137,7 +138,10 @@ end
 
 -- Activate the next app for a given key
 local function activateNextApp(key)
-	local apps = getAppsForKey(key)
+	local currentApp = hs.application.frontmostApplication()
+	local currentName = currentApp and currentApp:name()
+	local isContinuingCycle = cycle.key == key and cycle.target == currentName
+	local apps = isContinuingCycle and cycle.apps or getAppsForKey(key)
 
 	if #apps == 0 then
 		hs.alert.show("No apps for '" .. key:upper() .. "'", 0.5)
@@ -145,8 +149,6 @@ local function activateNextApp(key)
 	end
 
 	-- Find current app's position in the list
-	local currentApp = hs.application.frontmostApplication()
-	local currentName = currentApp and currentApp:name()
 	local currentIndex = indexOf(apps, currentName) or 0
 
 	-- Cycle to next app (or first if current isn't in list)
@@ -169,9 +171,11 @@ local function activateNextApp(key)
 	end
 
 	if success then
+		cycle = { key = key, apps = apps, target = targetName }
 		updateMRU(targetName)
 	else
 		-- App is gone, clean up and retry
+		cycle = {}
 		dockAppsCache[targetName] = nil
 		local appKey = getAppKey(targetName)
 		if appKey and mruByKey[appKey] then
