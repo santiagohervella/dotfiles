@@ -451,4 +451,5 @@ return {
 	setAuditInterval = setAuditInterval,
 	audit = auditForMissingApps,
 	overrides = OVERRIDES,
+	watcher = appWatcher,
 }
