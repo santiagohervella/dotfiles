@@ -1,0 +1,22 @@
+apps:
+  com.mitchellh.ghostty:
+    keys: [g, i]
+    launch: true
+
+  com.amazonaws.acvc.osx:
+    keys: [v]
+
+  md.obsidian:
+    launch: true
+
+  company.thebrowser.Browser:
+    launch: true
+
+  com.apple.MobileSMS:
+    launch: true
+
+  us.zoom.xos:
+    launch: true
+
+  com.sql-studio.app:
+    launch: true
