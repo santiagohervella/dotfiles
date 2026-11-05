@@ -1,22 +1,25 @@
+show_no_apps_message: true
+hide_other_apps: true
+
 apps:
-  com.mitchellh.ghostty:
+  Ghostty:
     keys: [g, i]
     launch: true
 
-  com.amazonaws.acvc.osx:
+  AWS VPN Client:
     keys: [v]
 
-  md.obsidian:
+  Obsidian:
     launch: true
 
-  company.thebrowser.Browser:
+  Arc:
     launch: true
 
-  com.apple.MobileSMS:
+  Messages:
     launch: true
 
-  us.zoom.xos:
+  zoom.us:
     launch: true
 
-  com.sql-studio.app:
+  JamSQLStudio:
     launch: true
