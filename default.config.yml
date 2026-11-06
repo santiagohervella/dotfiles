@@ -50,6 +50,7 @@ homebrew_taps:
   - buo/cask-upgrade
   # - FelixKratz/formulae # Dormant: only needed for sketchybar
   - koekeishiya/formulae
+  - mantrakp04/tap
   - ohueter/tap
 
 homebrew_cask_appdir: /Applications
@@ -92,6 +93,7 @@ common_homebrew_cask_apps:
 
   # Browsers
   - arc
+  - mantrakp04/tap/ardia
   - helium-browser
   - min
   - orion
