@@ -16,13 +16,18 @@
 
   roles:
     - role: elliotweiser.osx-command-line-tools
-    - role: geerlingguy.mac.homebrew
+
+  tasks:
+    - import_tasks: tasks/homebrew.yml
+      environment:
+        XDG_CONFIG_HOME: "{{ playbook_dir }}/.config"
       tags: ["homebrew"]
-    - role: geerlingguy.mac.mas
+
+    - import_role:
+        name: geerlingguy.mac.mas
       when: mas_installed_apps
       tags: ["mas"]
 
-  tasks:
     - import_tasks: tasks/stow.yml
       when: configure_dotfiles
       tags: ["dotfiles"]

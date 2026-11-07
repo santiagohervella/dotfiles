@@ -1,0 +1,20 @@
+---
+- name: Install Homebrew and tap the configured taps
+  import_role:
+    name: geerlingguy.mac.homebrew
+  vars:
+    homebrew_cask_uninstalled_apps: []
+    homebrew_cask_apps: []
+    homebrew_uninstalled_packages: []
+    homebrew_installed_packages: []
+    homebrew_use_brewfile: false
+
+- name: Trust the configured taps
+  command: "{{ homebrew_brew_bin_path }}/brew trust --tap {{ item }}"
+  loop: "{{ homebrew_taps }}"
+  register: homebrew_trust
+  changed_when: "'Already trusted' not in homebrew_trust.stdout"
+
+- name: Install the configured Homebrew packages
+  import_role:
+    name: geerlingguy.mac.homebrew
