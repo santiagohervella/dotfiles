@@ -48,6 +48,7 @@ homebrew_installed_packages:
 homebrew_taps:
   - anomalyco/tap
   - buo/cask-upgrade
+  - dannystewart/apps
   # - FelixKratz/formulae # Dormant: only needed for sketchybar
   - koekeishiya/formulae
   - mantrakp04/tap
@@ -89,6 +90,7 @@ common_homebrew_cask_apps:
   - transnomino
   - uhk-agent
   - vlc
+  - dannystewart/apps/volumehud
   - zed
 
   # Browsers
