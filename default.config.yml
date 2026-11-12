@@ -94,6 +94,7 @@ common_homebrew_cask_apps:
   # Browsers
   - arc
   - mantrakp04/tap/ardia
+  - crest-browser
   - helium-browser
   - min
   - orion
