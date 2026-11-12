@@ -554,21 +554,34 @@ uv tool install --python 3.12 posting
 # This way I don't have to duplicate the applescript line for each app
 apps_to_startup=(
   "AltTab"
-  "Bartender 5"
+  "Bartender 6"
   "Hammerspoon"
   # "iStat Menus" # TODO: Does this need to be here?
   # "Karabiner-Elements" # TODO: Does this need to be here?
-  "Keyboard Maestro"
   "Raycast"
   "Supercharge"
   "Menu Bar Calendar"
 )
 for app in "${apps_to_startup[@]}"; do
-  echo "setting to \"${app}\" to launch at startup."
-  # log "setting to \"${app}\" to launch at startup."
+  app_path="/Applications/${app}.app"
 
-  # Enable apps at startup
-  osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/${app}.app", hidden:true}' >/dev/null && log_ok "DONE"
+  if [[ ! -d "$app_path" ]]; then
+    echo "skipping \"${app}\": not installed at ${app_path}"
+    continue
+  fi
+
+  echo "setting \"${app}\" to launch at startup."
+
+  osascript \
+    -e 'on run {p}' \
+    -e 'tell application "System Events"' \
+    -e 'set existingPaths to path of every login item' \
+    -e 'if p is not in existingPaths then' \
+    -e 'make login item at end with properties {path:p, hidden:true}' \
+    -e 'end if' \
+    -e 'end tell' \
+    -e 'end run' \
+    "$app_path" >/dev/null && log_ok "DONE"
 done
 
 ###############################################################################
