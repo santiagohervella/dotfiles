@@ -63,6 +63,10 @@ defaults write NSGlobalDomain AppleReduceDesktopTinting -int 1
 # Turn off "Click wallpaper to reveal desktop"
 defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -int 0
 
+# Never show widgets
+defaults write com.apple.WindowManager StandardHideWidgets -int 1
+defaults write com.apple.WindowManager StageManagerHideWidgets -int 1
+
 # Show battery in menu bar. 
 defaults write com.apple.controlcenter "NSStatusItem Visible Battery" -bool true
 
