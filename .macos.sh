@@ -271,17 +271,31 @@ defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 # Use column view in all Finder windows by default
 # Four-letter codes for the other view modes: `icnv`, `Nlsv`, `clmv`, `Flwv`
 defaults write com.apple.finder FXPreferredViewStyle -string "clmv"
-defaults write com.apple.Finder FXDefaultSortOrder -string "dateAdded"
 
 # Show the ~/Library folder
 chflags nohidden ~/Library
 
 # Expand the following File Info panes:
-# “General”, “Open with”, and “Sharing & Permissions”
+# “General”, “More Info”, “Open with”, and “Sharing & Permissions”
 defaults write com.apple.finder FXInfoPanesExpanded -dict \
 	General -bool true \
+	MetaData -bool true \
 	OpenWith -bool true \
 	Privileges -bool true
+
+# Column view options, including the preview column
+defaults write com.apple.finder StandardViewOptions -dict-add ColumnViewOptions '
+<dict>
+	<key>ArrangeBy</key><string>pAdd</string>
+	<key>ColumnShowFolderArrow</key><true/>
+	<key>ColumnShowIcons</key><true/>
+	<key>ColumnWidth</key><integer>245</integer>
+	<key>FontSize</key><integer>13</integer>
+	<key>PreviewDisclosureState</key><true/>
+	<key>SharedArrangeBy</key><string>kipl</string>
+	<key>ShowIconThumbnails</key><true/>
+	<key>ShowPreview</key><true/>
+</dict>'
 
 ###############################################################################
 # Dock, Dashboard, and hot corners                                            #
