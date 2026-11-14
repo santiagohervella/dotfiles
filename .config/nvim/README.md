@@ -62,6 +62,10 @@ This purpose of this section is so I don't continue to see these plugins as shin
   - I had this in my config for like 2 years haha. I love that this exists, but I no longer need it living in my config
 - [ThePrimeagen/99](https://github.com/ThePrimeagen/99)
   - Very cool plugin, but I think the advancements in agents make this no longer the right workflow
+- [stevearc/ aerial.nvim](https://github.com/stevearc/aerial.nvim)
+  - Seems like the best version of this idea that I've seen so far.
+  - I have this as a manual custom Telescope thing right now and I never used it because it includes every little constant
+  - Thing is that I no longer feel like I would even use a plugin like this
 
 # Old README
 

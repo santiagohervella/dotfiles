@@ -287,6 +287,7 @@ local themes = {
 		-- Found out about this one here: https://www.youtube.com/post/UgkxYydF-aM2J7j_mhuzw-e4R63O1ZsDsHxK
 		-- These are really quite nice! This is a contendor for my go-to green theme
 		-- There are even multiple green versions in here that I'm enjoying!
+		-- Update: The recently added mfd-lumon is sick and pretty tron-like
 		"kungfusheep/mfd.nvim",
 	},
 	-- {
@@ -313,6 +314,11 @@ local themes = {
 		-- This theme bills itself as low contrast and it certainly is. Low contrast themes are not really for me
 		-- But as far as low contrast themes go, this one is well done
 		"aikhe/fleur.nvim",
+	},
+	{
+		-- Totally reasonable, pretty straightforward, nothing offensive. Reminds me a tiny bit of the JetBrains theme
+		-- I wish the github had a screenshot
+		"bavajitu/brellary.nvim",
 	},
 }
 
