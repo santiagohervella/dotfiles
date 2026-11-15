@@ -71,5 +71,3 @@ eval "$(pyenv init -)"
 # autin for better terminal command history
 # https://docs.atuin.sh/guide/installation/#installing-the-shell-plugin
 eval "$(atuin init zsh)"
-
-. "$HOME/.local/bin/env"

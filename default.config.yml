@@ -50,6 +50,7 @@ homebrew_taps:
   - buo/cask-upgrade
   - dannystewart/apps
   # - FelixKratz/formulae # Dormant: only needed for sketchybar
+  - gromgit/brewtils # For taproom
   - koekeishiya/formulae
   - mantrakp04/tap
   - ohueter/tap
