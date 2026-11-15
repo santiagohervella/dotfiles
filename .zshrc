@@ -2,6 +2,9 @@ export EDITOR=nvim
 export VISUAL="$EDITOR"
 export TMUX_INACTIVE_PANE_BG="#0a0a0a"
 
+# Raise the open-file limit so tmux servers don't run out of file descriptors and crash around ~250 panes
+ulimit -n 8192
+
 bindkey -s ^f "~/.config/tmux/tmux-sessionizer\n"
 
 # Until I find out why these broke, hardcoding them back in
@@ -14,6 +17,7 @@ if [ -f "$HOME/.zsh_env_vars" ]; then
 fi
 
 [ -f "$HOME/.config/zsh/local.zsh" ] && source "$HOME/.config/zsh/local.zsh"
+[ -f "$HOME/.config/zsh/n-agents" ] && source "$HOME/.config/zsh/n-agents"
 
 # This is so programs don't look for config files in application support
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -54,8 +58,8 @@ alias gitundo='git reset HEAD~1'
 # Aliases for custom scripts
 alias ggit="$HOME/.config/zsh/new-git-branch"
 
-eval "$(starship init zsh)"
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
+eval "$(starship init zsh)"
 
 
 # nodenv as the node version manager
