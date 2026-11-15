@@ -19,7 +19,6 @@ homebrew_installed_packages:
   # - FelixKratz/formulae/sketchybar # Not currently using. Loved it, but macOS notifications cover it
   - fzf # Used by tmux-sessionizer script
   - asmvik/formulae/yabai
-  - gemini-cli
   - gh
   - git
   - go
@@ -101,13 +100,11 @@ common_homebrew_cask_apps:
   - ardia-browser/tap/ardia
   - crest-browser
   - helium-browser
-  - min
   - orion
   - vivaldi
   - zen
 
   # Terminals, gotta catch 'em all!
-  - alacritty
   - ghostty
   - iterm2
   - kitty
@@ -124,7 +121,6 @@ work_homebrew_cask_apps:
   - docker
   - figma
   - inkscape
-  - intellij-idea-ce
   - obs
   - postico # Beekeeper competitor, let's see if I like it
   - pycharm
