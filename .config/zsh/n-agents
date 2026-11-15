@@ -1,0 +1,62 @@
+_n_agent_split() {
+  local label="$1"
+  local cmd="$2"
+  shift 2
+
+  if [ -z "$TMUX" ]; then
+    echo "${label}: not in a tmux session"
+    return 1
+  fi
+
+  local scratch_file
+
+  if [ "$1" = "resume" ] || [ "$1" = "r" ]; then
+    local files=($(ls .scratch-*.md 2>/dev/null))
+    if [ ${#files[@]} -eq 0 ]; then
+      echo "${label}: no .scratch-*.md files found in CWD"
+      return 1
+    fi
+    scratch_file=$(printf '%s\n' "${files[@]}" | fzf --prompt="Pick scratch file: ")
+    if [ -z "$scratch_file" ]; then
+      return 0
+    fi
+  else
+    local n=1
+    while [ -f ".scratch-$n.md" ]; do
+      n=$((n + 1))
+    done
+    scratch_file=".scratch-$n.md"
+    touch "$scratch_file"
+  fi
+
+  local agent_pane=$(tmux split-window -h -b -d -l 50% -P -F '#{pane_id}')
+  tmux send-keys -t "$agent_pane" "$cmd" Enter
+  nvim "$scratch_file"
+}
+
+nclaude()   { _n_agent_split nclaude   claude   "$@"; }
+nopencode() { _n_agent_split nopencode opencode "$@"; }
+npi()       { _n_agent_split npi       pi       "$@"; }
+
+# --- MCP-enabled claude launchers (opt-in; flags baked into $2 so _n_agent_split forwards them) ---
+nclaude-m()      { _n_agent_split nclaude-m      "claude --mcp-config ~/.config/claude/mcp/all.json"       "$@"; }
+nclaude-l()      { _n_agent_split nclaude-l      "claude --mcp-config ~/.config/claude/mcp/linear.json"    "$@"; }
+nclaude-oncall() { _n_agent_split nclaude-oncall "claude --mcp-config ~/.config/claude/mcp/oncall.json"    "$@"; }
+
+# --- todo-sessions launcher: centered popup menu with task association ---
+na() {
+  if [ -z "$TMUX" ]; then
+    todo-sessions launch "$@"
+    return
+  fi
+
+  local out
+  out=$(mktemp)
+  tmux display-popup -E -w 60% -h 60% \
+    "todo-sessions launch $* --pane $TMUX_PANE --scratch-out $out"
+
+  local scratch
+  scratch=$(cat "$out" 2>/dev/null)
+  rm -f "$out"
+  [ -n "$scratch" ] && ${EDITOR:-nvim} "$scratch"
+}
