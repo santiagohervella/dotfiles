@@ -9,6 +9,7 @@ homebrew_installed_packages:
   - atac # Experiment: Postman replacement in the terminal
   - atuin
   - awscli
+  - cameroncooke/axe/axe # Drives the iOS Simulator for the ios-sim skill in purchase-categorizer-app
   - bat
   - cloudflared
   - csvlens
@@ -17,7 +18,7 @@ homebrew_installed_packages:
   - ffmpeg
   # - FelixKratz/formulae/sketchybar # Not currently using. Loved it, but macOS notifications cover it
   - fzf # Used by tmux-sessionizer script
-  - koekeishiya/formulae/yabai
+  - asmvik/formulae/yabai
   - gemini-cli
   - gh
   - git
@@ -48,11 +49,13 @@ homebrew_installed_packages:
 homebrew_taps:
   - anomalyco/tap
   - buo/cask-upgrade
+  - cameroncooke/axe
   - dannystewart/apps
   # - FelixKratz/formulae # Dormant: only needed for sketchybar
   - gromgit/brewtils # For taproom
-  - koekeishiya/formulae
-  - mantrakp04/tap
+  - xcodesorg/made # For xcodes
+  - asmvik/formulae
+  - ardia-browser/tap
   - ohueter/tap
 
 homebrew_cask_appdir: /Applications
@@ -66,7 +69,6 @@ common_homebrew_cask_apps:
   - 1password
   - alt-tab
   - bartender
-  - boop
   - claude-code@latest
   - deskpad # Experiment: Dedicated floating desktop for screensharing on Zoom
   - easyfind
@@ -96,7 +98,7 @@ common_homebrew_cask_apps:
 
   # Browsers
   - arc
-  - mantrakp04/tap/ardia
+  - ardia-browser/tap/ardia
   - crest-browser
   - helium-browser
   - min
