@@ -88,6 +88,10 @@ defaults write com.apple.controlcenter 'NSStatusItem Visible NowPlaying' -bool f
 # Always show the sound item in the menu bar
 defaults -currentHost write com.apple.controlcenter Sound -int 18
 
+# Tighten the spacing between menu bar icons
+defaults -currentHost write -globalDomain NSStatusItemSpacing -int 1
+defaults -currentHost write -globalDomain NSStatusItemSelectionPadding -int 6
+
 # Disable the “Are you sure you want to open this application?” dialog
 defaults write com.apple.LaunchServices LSQuarantine -bool false
 
